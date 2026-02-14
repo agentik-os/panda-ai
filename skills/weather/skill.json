@@ -1,0 +1,38 @@
+{
+  "id": "weather",
+  "name": "Weather API",
+  "version": "1.0.0",
+  "description": "Get weather forecasts, current conditions, and alerts using OpenWeatherMap API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "data",
+  "tags": ["weather", "forecast", "climate", "data", "api"],
+  "permissions": [
+    "network:https:api.openweathermap.org",
+    "api:openweathermap",
+    "kv:read:weather:*",
+    "kv:write:weather:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 60,
+    "windowMs": 60000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "OpenWeatherMap API Key"
+    },
+    "units": {
+      "type": "string",
+      "required": false,
+      "default": "metric",
+      "description": "Temperature units (metric, imperial, standard)"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "license": "MIT"
+}
