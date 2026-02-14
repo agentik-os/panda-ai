@@ -1,0 +1,41 @@
+{
+  "id": "e2b",
+  "name": "E2B Sandboxed Code Execution",
+  "version": "1.0.0",
+  "description": "Execute code safely in cloud sandboxes via E2B MCP - Python, JavaScript, Bash, and more",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "developer-tools",
+  "tags": ["sandbox", "code-execution", "e2b", "mcp", "python", "javascript"],
+  "permissions": [
+    "network:https:api.e2b.dev",
+    "api:e2b",
+    "kv:read:e2b:*",
+    "kv:write:e2b:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 20,
+    "windowMs": 60000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "E2B API key"
+    },
+    "defaultTemplate": {
+      "type": "string",
+      "required": false,
+      "default": "base",
+      "description": "Default sandbox template (base, python, nodejs, etc.)"
+    },
+    "maxExecutionTime": {
+      "type": "number",
+      "required": false,
+      "default": 30000,
+      "description": "Maximum code execution time in milliseconds"
+    }
+  },
+  "license": "MIT"
+}
