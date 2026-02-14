@@ -1,0 +1,48 @@
+{
+  "id": "browserbase",
+  "name": "Browserbase Browser Automation",
+  "version": "1.0.0",
+  "description": "Cloud browser automation via Browserbase MCP - navigate, screenshot, extract data, and interact with web pages",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "automation",
+  "tags": [
+    "browser",
+    "automation",
+    "scraping",
+    "mcp",
+    "browserbase",
+    "screenshot"
+  ],
+  "permissions": [
+    "network:https:api.browserbase.com",
+    "network:wss:connect.browserbase.com",
+    "api:browserbase",
+    "kv:read:browserbase:*",
+    "kv:write:browserbase:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 30,
+    "windowMs": 60000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Browserbase API key"
+    },
+    "projectId": {
+      "type": "string",
+      "required": true,
+      "description": "Browserbase project ID"
+    },
+    "timeout": {
+      "type": "number",
+      "required": false,
+      "default": 30000,
+      "description": "Page load timeout in milliseconds"
+    }
+  },
+  "license": "MIT"
+}

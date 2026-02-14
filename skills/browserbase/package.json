@@ -1,0 +1,36 @@
+{
+  "name": "@agentik-os/skill-browserbase",
+  "version": "1.0.0",
+  "description": "Browserbase browser automation skill for Agentik OS",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@agentik-os/tsconfig": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^4.0.18"
+  },
+  "keywords": [
+    "agentik-os",
+    "skill",
+    "browserbase",
+    "browser-automation",
+    "mcp"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT"
+}
