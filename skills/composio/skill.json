@@ -1,0 +1,44 @@
+{
+  "id": "composio",
+  "name": "Composio App Integrations",
+  "version": "1.0.0",
+  "description": "Connect to 200+ apps via Composio MCP - GitHub, Slack, Notion, Jira, Gmail, and more",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "integrations",
+  "tags": [
+    "composio",
+    "integrations",
+    "mcp",
+    "github",
+    "slack",
+    "notion",
+    "automation"
+  ],
+  "permissions": [
+    "network:https:api.composio.dev",
+    "api:composio",
+    "kv:read:composio:*",
+    "kv:write:composio:*",
+    "external:composio:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 60,
+    "windowMs": 60000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Composio API key"
+    },
+    "entityId": {
+      "type": "string",
+      "required": false,
+      "default": "default",
+      "description": "Entity ID for multi-user scenarios"
+    }
+  },
+  "license": "MIT"
+}
