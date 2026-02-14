@@ -1,0 +1,44 @@
+{
+  "id": "linkedin",
+  "name": "LinkedIn API",
+  "version": "1.0.0",
+  "description": "Professional networking, post updates, manage connections, and interact with LinkedIn API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["linkedin", "professional", "networking", "social-media", "api"],
+  "permissions": [
+    "network:https:api.linkedin.com",
+    "api:linkedin",
+    "kv:read:linkedin:*",
+    "kv:write:linkedin:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 86400000
+  },
+  "config": {
+    "clientId": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "LinkedIn OAuth2 Client ID"
+    },
+    "clientSecret": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "LinkedIn OAuth2 Client Secret"
+    },
+    "accessToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "LinkedIn Access Token"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "license": "MIT"
+}
