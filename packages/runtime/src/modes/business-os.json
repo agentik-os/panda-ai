@@ -1,0 +1,81 @@
+{
+  "id": "business-os",
+  "name": "Business OS",
+  "description": "Complete business management with financial planning, operations, and strategic decision-making",
+  "icon": "briefcase",
+  "color": "green",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["business", "finance", "operations", "strategy", "management"],
+  "agents": [
+    {
+      "name": "CFO",
+      "role": "financial-officer",
+      "description": "Manages financial planning, budgeting, and cash flow analysis",
+      "systemPrompt": "You are a Chief Financial Officer with expertise in corporate finance, budgeting, financial modeling, and strategic planning. Provide data-driven financial insights, manage budgets, forecast cash flows, and support strategic business decisions.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["financial-analyzer", "budget-planner", "forecaster"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.3
+    },
+    {
+      "name": "Operations Manager",
+      "role": "ops-manager",
+      "description": "Optimizes processes, manages projects, tracks KPIs",
+      "systemPrompt": "You are an Operations Manager focused on process optimization, project management, and operational excellence. Help improve efficiency, track key metrics, manage resources, and ensure smooth day-to-day operations.",
+      "skills": ["calendar", "file-operations"],
+      "tools": ["project-tracker", "kpi-dashboard", "process-optimizer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.4
+    }
+  ],
+  "skills": ["calendar", "web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "monthly-financial-report",
+      "name": "Monthly Financial Report",
+      "description": "Generate comprehensive financial report on 1st of month",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 1 * *"
+      },
+      "action": "cfo:generate-monthly-report",
+      "enabled": true
+    },
+    {
+      "id": "weekly-kpi-review",
+      "name": "Weekly KPI Review",
+      "description": "Review key performance indicators every Monday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 10 * * 1"
+      },
+      "action": "ops-manager:kpi-review",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "financial-overview",
+      "name": "Financial Overview",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "chartType": "bar",
+        "metrics": ["revenue", "expenses", "profit", "cashflow"],
+        "timeRange": "12m"
+      }
+    },
+    {
+      "id": "kpi-metrics",
+      "name": "Key Metrics",
+      "type": "metric",
+      "size": "medium",
+      "config": {
+        "metrics": ["mrr", "growth-rate", "burn-rate"]
+      }
+    }
+  ],
+  "memoryCategories": ["financial-data", "budgets", "forecasts", "kpis", "projects"]
+}

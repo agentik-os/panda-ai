@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig/node.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "types": ["node", "bun"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@agentik-os/shared": ["../shared/src"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.json"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"],
+  "references": [
+    { "path": "../shared" }
+  ]
+}

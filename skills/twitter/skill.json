@@ -1,0 +1,155 @@
+{
+  "id": "twitter",
+  "name": "Twitter/X API",
+  "version": "1.0.0",
+  "description": "Post tweets, read timeline, manage DMs, and interact with Twitter/X API v2",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["twitter", "x", "social-media", "api", "tweets", "dm"],
+  "permissions": [
+    "network:https:api.twitter.com",
+    "network:https:api.x.com",
+    "api:twitter",
+    "kv:read:twitter:*",
+    "kv:write:twitter:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 900000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twitter API Key"
+    },
+    "apiSecret": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twitter API Secret"
+    },
+    "accessToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twitter Access Token"
+    },
+    "accessTokenSecret": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twitter Access Token Secret"
+    },
+    "bearerToken": {
+      "type": "string",
+      "required": false,
+      "sensitive": true,
+      "description": "Twitter Bearer Token (for API v2)"
+    }
+  },
+  "dependencies": {
+    "twitter-api-v2": "^1.17.2"
+  },
+  "exports": [
+    {
+      "name": "postTweet",
+      "description": "Post a new tweet to Twitter",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": "Tweet text content (max 280 characters)"
+        },
+        {
+          "name": "replyTo",
+          "type": "string",
+          "required": false,
+          "description": "Tweet ID to reply to"
+        }
+      ],
+      "returns": {
+        "type": "Promise",
+        "description": "Created tweet data including ID and URL"
+      }
+    },
+    {
+      "name": "getTimeline",
+      "description": "Get user's home timeline tweets",
+      "parameters": [
+        {
+          "name": "maxResults",
+          "type": "number",
+          "required": false,
+          "description": "Maximum number of tweets to return (default: 10)"
+        }
+      ],
+      "returns": {
+        "type": "Promise",
+        "description": "Array of tweets from timeline"
+      }
+    },
+    {
+      "name": "sendDM",
+      "description": "Send a direct message to a user",
+      "parameters": [
+        {
+          "name": "recipientId",
+          "type": "string",
+          "required": true,
+          "description": "Twitter user ID of recipient"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": "Message text content"
+        }
+      ],
+      "returns": {
+        "type": "Promise",
+        "description": "Sent message data"
+      }
+    },
+    {
+      "name": "searchTweets",
+      "description": "Search for tweets matching a query",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "maxResults",
+          "type": "number",
+          "required": false,
+          "description": "Maximum number of results (default: 10)"
+        }
+      ],
+      "returns": {
+        "type": "Promise",
+        "description": "Array of matching tweets"
+      }
+    }
+  ],
+  "examples": [
+    {
+      "description": "Post a simple tweet",
+      "code": "await postTweet('Hello from Agentik OS! 🤖');"
+    },
+    {
+      "description": "Reply to a tweet",
+      "code": "await postTweet('Great insight!', { replyTo: '1234567890' });"
+    },
+    {
+      "description": "Search for tweets about AI",
+      "code": "const tweets = await searchTweets('#AI #MachineLearning', { maxResults: 20 });"
+    }
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@agentik-os/skill-hubspot",
+  "version": "1.0.0",
+  "description": "HubSpot skill for Agentik OS - CRM integration",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": ["agentik", "skill", "hubspot", "crm"],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@hubspot/api-client": "^12.0.0"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

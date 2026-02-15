@@ -1,0 +1,37 @@
+{
+  "id": "stripe",
+  "name": "Stripe Payments",
+  "version": "1.0.0",
+  "description": "Process payments, manage subscriptions, create invoices with Stripe API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "productivity",
+  "tags": ["stripe", "payments", "subscriptions", "billing", "api"],
+  "permissions": [
+    "network:https:api.stripe.com",
+    "api:stripe",
+    "kv:read:stripe:*",
+    "kv:write:stripe:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 1000
+  },
+  "config": {
+    "secretKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Stripe Secret Key"
+    },
+    "publishableKey": {
+      "type": "string",
+      "required": false,
+      "description": "Stripe Publishable Key"
+    }
+  },
+  "dependencies": {
+    "stripe": "^17.6.0"
+  },
+  "license": "MIT"
+}

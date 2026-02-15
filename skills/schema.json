@@ -1,0 +1,357 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentik-os.com/schemas/skill.json",
+  "title": "Agentik OS Skill Manifest",
+  "description": "Schema for skill.json manifest files in Agentik OS",
+  "type": "object",
+  "required": ["id", "name", "version", "description", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the skill (kebab-case)",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 2,
+      "maxLength": 50,
+      "examples": ["web-search", "file-ops", "calendar"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the skill",
+      "minLength": 1,
+      "maxLength": 100,
+      "examples": ["Web Search", "File Operations", "Google Calendar"]
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the skill",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$",
+      "examples": ["1.0.0", "2.1.3", "0.1.0-beta"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what the skill does",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "author": {
+      "type": "string",
+      "description": "Author or organization name",
+      "maxLength": 100,
+      "examples": ["Agentik OS", "John Doe", "Acme Corp"]
+    },
+    "type": {
+      "type": "string",
+      "description": "Skill type",
+      "enum": ["builtin", "community", "private"],
+      "default": "community"
+    },
+    "category": {
+      "type": "string",
+      "description": "Skill category for organization",
+      "enum": [
+        "productivity",
+        "communication",
+        "data",
+        "security",
+        "development",
+        "automation",
+        "ai",
+        "utility",
+        "other"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "description": "Search tags for skill discovery",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 30
+      },
+      "maxItems": 10,
+      "uniqueItems": true,
+      "examples": [["search", "web", "api"], ["calendar", "schedule", "google"]]
+    },
+    "permissions": {
+      "type": "array",
+      "description": "Required permissions for the skill",
+      "items": {
+        "type": "string",
+        "description": "Permission string in format 'category:resource' or 'category:resource:path'",
+        "pattern": "^[a-z]+:[a-z]+(:.*)?$",
+        "examples": [
+          "network:http",
+          "network:https:api.example.com",
+          "fs:read:/app/data",
+          "api:openai",
+          "kv:write:cache:"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "rateLimit": {
+      "type": "object",
+      "description": "Rate limiting configuration",
+      "properties": {
+        "maxRequests": {
+          "type": "integer",
+          "description": "Maximum number of requests allowed",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "windowMs": {
+          "type": "integer",
+          "description": "Time window in milliseconds",
+          "minimum": 1000,
+          "maximum": 86400000
+        }
+      },
+      "required": ["maxRequests", "windowMs"]
+    },
+    "config": {
+      "type": "object",
+      "description": "Default configuration values for the skill",
+      "additionalProperties": true
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "NPM package dependencies",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Package version or version range",
+        "pattern": "^[~^]?\\d+\\.\\d+\\.\\d+.*$"
+      },
+      "examples": [
+        {
+          "axios": "^1.6.0",
+          "cheerio": "^1.0.0",
+          "openai": "^4.20.0"
+        }
+      ]
+    },
+    "entrypoint": {
+      "type": "string",
+      "description": "Main skill file (relative to skill directory)",
+      "default": "index.ts",
+      "examples": ["index.ts", "index.js", "main.ts"]
+    },
+    "exports": {
+      "type": "array",
+      "description": "Exported functions available to agents",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Function name",
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          },
+          "description": {
+            "type": "string",
+            "description": "What the function does",
+            "minLength": 10,
+            "maxLength": 200
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Function parameters",
+            "items": {
+              "type": "object",
+              "required": ["name", "type"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["string", "number", "boolean", "object", "array", "any"]
+                },
+                "required": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 5,
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "Return value specification",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["string", "number", "boolean", "object", "array", "void", "Promise"]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 200
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "description": "Usage examples for the skill",
+      "items": {
+        "type": "object",
+        "required": ["description", "code"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200
+          },
+          "code": {
+            "type": "string",
+            "description": "Example code snippet",
+            "minLength": 10
+          }
+        }
+      }
+    },
+    "documentation": {
+      "type": "string",
+      "description": "URL to full documentation",
+      "format": "uri",
+      "examples": ["https://docs.agentik-os.com/skills/web-search"]
+    },
+    "repository": {
+      "type": "string",
+      "description": "Git repository URL",
+      "format": "uri",
+      "examples": ["https://github.com/agentik-os/skill-web-search"]
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier (SPDX)",
+      "default": "MIT",
+      "examples": ["MIT", "Apache-2.0", "GPL-3.0", "BSD-3-Clause"]
+    },
+    "pricing": {
+      "type": "object",
+      "description": "Pricing information for paid skills",
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["free", "one-time", "subscription", "usage"],
+          "default": "free"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price in USD",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code",
+          "default": "USD",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": ["model"]
+    },
+    "platforms": {
+      "type": "array",
+      "description": "Supported platforms",
+      "items": {
+        "type": "string",
+        "enum": ["linux", "darwin", "win32", "all"]
+      },
+      "default": ["all"],
+      "uniqueItems": true
+    },
+    "minAgentikVersion": {
+      "type": "string",
+      "description": "Minimum Agentik OS version required",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "2.1.0"]
+    },
+    "deprecated": {
+      "type": "boolean",
+      "description": "Whether the skill is deprecated",
+      "default": false
+    },
+    "replacedBy": {
+      "type": "string",
+      "description": "Skill ID that replaces this deprecated skill",
+      "examples": ["new-web-search"]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": "web-search",
+      "name": "Web Search",
+      "version": "1.0.0",
+      "description": "Search the web using Brave Search API with fallback to Serper",
+      "author": "Agentik OS",
+      "type": "builtin",
+      "category": "productivity",
+      "tags": ["search", "web", "brave", "serper"],
+      "permissions": [
+        "network:http",
+        "network:https",
+        "api:brave",
+        "api:serper"
+      ],
+      "rateLimit": {
+        "maxRequests": 100,
+        "windowMs": 3600000
+      },
+      "config": {
+        "maxResults": 10,
+        "safeSearch": "moderate",
+        "timeout": 5000
+      },
+      "dependencies": {
+        "axios": "^1.6.0",
+        "cheerio": "^1.0.0"
+      },
+      "license": "MIT"
+    },
+    {
+      "id": "file-ops",
+      "name": "File Operations",
+      "version": "2.0.0",
+      "description": "Read, write, and manipulate files with permission checks",
+      "author": "Agentik OS",
+      "type": "builtin",
+      "category": "utility",
+      "tags": ["filesystem", "files", "io"],
+      "permissions": [
+        "fs:read:/app/workspace",
+        "fs:write:/app/workspace",
+        "fs:delete:/app/workspace/temp"
+      ],
+      "exports": [
+        {
+          "name": "readFile",
+          "description": "Read contents of a file",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "description": "Absolute path to the file"
+            }
+          ],
+          "returns": {
+            "type": "Promise",
+            "description": "File contents as string"
+          }
+        }
+      ],
+      "license": "MIT"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "version": "2026-02-14",
+  "description": "AI Model Pricing (USD per 1M tokens)",
+  "lastUpdated": "2026-02-14",
+  "models": {
+    "anthropic": {
+      "claude-opus-4": {
+        "input": 15.0,
+        "output": 75.0,
+        "contextWindow": 200000,
+        "description": "Most capable Claude model"
+      },
+      "claude-sonnet-4-5": {
+        "input": 3.0,
+        "output": 15.0,
+        "contextWindow": 200000,
+        "description": "Balanced performance and speed"
+      },
+      "claude-haiku-4-5": {
+        "input": 1.0,
+        "output": 5.0,
+        "contextWindow": 200000,
+        "description": "Fastest Claude model"
+      }
+    },
+    "openai": {
+      "gpt-4o": {
+        "input": 5.0,
+        "output": 15.0,
+        "contextWindow": 128000,
+        "description": "GPT-4 Omni - multimodal flagship"
+      },
+      "gpt-4o-mini": {
+        "input": 0.15,
+        "output": 0.6,
+        "contextWindow": 128000,
+        "description": "Smaller, faster GPT-4 variant"
+      },
+      "gpt-4-turbo": {
+        "input": 10.0,
+        "output": 30.0,
+        "contextWindow": 128000,
+        "description": "GPT-4 Turbo"
+      },
+      "gpt-3.5-turbo": {
+        "input": 0.5,
+        "output": 1.5,
+        "contextWindow": 16385,
+        "description": "Fast and economical"
+      }
+    },
+    "google": {
+      "gemini-pro": {
+        "input": 0.5,
+        "output": 1.5,
+        "contextWindow": 32768,
+        "description": "Google's Gemini Pro"
+      },
+      "gemini-pro-vision": {
+        "input": 0.5,
+        "output": 1.5,
+        "contextWindow": 16384,
+        "description": "Gemini Pro with vision"
+      },
+      "gemini-ultra": {
+        "input": 5.0,
+        "output": 15.0,
+        "contextWindow": 32768,
+        "description": "Google's most capable model"
+      }
+    },
+    "ollama": {
+      "llama-3-70b": {
+        "input": 0.0,
+        "output": 0.0,
+        "contextWindow": 8192,
+        "description": "Local Llama 3 70B - free (self-hosted)"
+      },
+      "llama-3-8b": {
+        "input": 0.0,
+        "output": 0.0,
+        "contextWindow": 8192,
+        "description": "Local Llama 3 8B - free (self-hosted)"
+      },
+      "mistral": {
+        "input": 0.0,
+        "output": 0.0,
+        "contextWindow": 8192,
+        "description": "Local Mistral - free (self-hosted)"
+      },
+      "codellama": {
+        "input": 0.0,
+        "output": 0.0,
+        "contextWindow": 16384,
+        "description": "Local CodeLlama - free (self-hosted)"
+      }
+    }
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "id": "salesforce",
+  "name": "Salesforce",
+  "version": "1.0.0",
+  "description": "Salesforce CRM integration - Accounts, contacts, leads, opportunities",
+  "category": "crm",
+  "permissions": [
+    "salesforce.read",
+    "salesforce.write"
+  ],
+  "actions": [
+    {
+      "name": "query",
+      "description": "Execute SOQL query",
+      "input": {
+        "type": "object",
+        "properties": {
+          "soql": {
+            "type": "string",
+            "description": "SOQL query string",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "getAccount",
+      "description": "Get account by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Account ID",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "createAccount",
+      "description": "Create a new account",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Account name",
+            "required": true
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "website": {
+            "type": "string",
+            "description": "Website URL"
+          }
+        }
+      }
+    },
+    {
+      "name": "updateAccount",
+      "description": "Update an account",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Account ID",
+            "required": true
+          },
+          "updates": {
+            "type": "object",
+            "description": "Fields to update",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "getContact",
+      "description": "Get contact by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Contact ID",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "createContact",
+      "description": "Create a new contact",
+      "input": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "required": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "accountId": {
+            "type": "string",
+            "description": "Associated account ID"
+          }
+        }
+      }
+    },
+    {
+      "name": "getLead",
+      "description": "Get lead by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Lead ID",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "createLead",
+      "description": "Create a new lead",
+      "input": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "required": true
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name",
+            "required": true
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address"
+          },
+          "status": {
+            "type": "string",
+            "description": "Lead status"
+          }
+        }
+      }
+    },
+    {
+      "name": "getOpportunity",
+      "description": "Get opportunity by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Opportunity ID",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "createOpportunity",
+      "description": "Create a new opportunity",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Opportunity name",
+            "required": true
+          },
+          "accountId": {
+            "type": "string",
+            "description": "Associated account ID",
+            "required": true
+          },
+          "closeDate": {
+            "type": "string",
+            "description": "Close date (YYYY-MM-DD)",
+            "required": true
+          },
+          "stage": {
+            "type": "string",
+            "description": "Sales stage",
+            "required": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "instanceUrl": {
+        "type": "string",
+        "description": "Salesforce instance URL (e.g., https://yourinstance.salesforce.com)",
+        "required": true
+      },
+      "accessToken": {
+        "type": "string",
+        "description": "OAuth access token",
+        "required": true,
+        "secret": true
+      }
+    }
+  }
+}

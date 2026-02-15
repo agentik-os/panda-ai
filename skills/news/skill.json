@@ -1,0 +1,44 @@
+{
+  "id": "news",
+  "name": "News Aggregator",
+  "version": "1.0.0",
+  "description": "Fetch news articles, headlines, and sources from NewsAPI",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "data",
+  "tags": ["news", "articles", "headlines", "media", "api"],
+  "permissions": [
+    "network:https:newsapi.org",
+    "api:newsapi",
+    "kv:read:news:*",
+    "kv:write:news:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 86400000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "NewsAPI Key"
+    },
+    "country": {
+      "type": "string",
+      "required": false,
+      "default": "us",
+      "description": "Default country code (us, gb, etc.)"
+    },
+    "language": {
+      "type": "string",
+      "required": false,
+      "default": "en",
+      "description": "Default language code"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "license": "MIT"
+}

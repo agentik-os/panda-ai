@@ -1,0 +1,90 @@
+{
+  "id": "dev-os",
+  "name": "Dev OS",
+  "description": "Complete development workflow with code review, bug hunting, testing, and deployment automation",
+  "icon": "code",
+  "color": "blue",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["development", "coding", "testing", "devops", "automation"],
+  "agents": [
+    {
+      "name": "Code Reviewer",
+      "role": "code-reviewer",
+      "description": "Reviews code quality, suggests improvements, enforces best practices",
+      "systemPrompt": "You are an expert code reviewer with deep knowledge of software engineering principles, design patterns, and best practices across multiple languages. Perform thorough code reviews focusing on correctness, performance, security, maintainability, and adherence to coding standards.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["git", "linter", "test-runner"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.3
+    },
+    {
+      "name": "Bug Hunter",
+      "role": "bug-hunter",
+      "description": "Identifies bugs, analyzes stack traces, suggests fixes",
+      "systemPrompt": "You are a systematic debugging expert skilled at root cause analysis, log interpretation, and issue reproduction. Help developers identify, diagnose, and fix bugs efficiently through logical analysis and proven debugging techniques.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["debugger", "log-analyzer", "profiler"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.4
+    },
+    {
+      "name": "Test Engineer",
+      "role": "test-engineer",
+      "description": "Writes tests, improves coverage, ensures code quality",
+      "systemPrompt": "You are a test automation specialist focused on building comprehensive test suites. Help developers write unit tests, integration tests, and E2E tests that catch bugs early and ensure code reliability.",
+      "skills": ["file-operations"],
+      "tools": ["test-runner", "coverage-reporter"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.3
+    }
+  ],
+  "skills": ["web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "pre-commit-review",
+      "name": "Pre-commit Code Review",
+      "description": "Automatically review code before commits",
+      "trigger": {
+        "type": "event",
+        "event": "git:pre-commit"
+      },
+      "action": "code-reviewer:quick-review",
+      "enabled": true
+    },
+    {
+      "id": "daily-test-run",
+      "name": "Daily Test Suite",
+      "description": "Run full test suite every morning",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 * * 1-5"
+      },
+      "action": "test-engineer:run-full-suite",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "code-quality-metrics",
+      "name": "Code Quality",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "metrics": ["coverage", "complexity", "duplication"],
+        "timeRange": "30d"
+      }
+    },
+    {
+      "id": "bug-tracker",
+      "name": "Active Bugs",
+      "type": "kanban",
+      "size": "medium",
+      "config": {
+        "groupBy": "severity"
+      }
+    }
+  ],
+  "memoryCategories": ["code-reviews", "bugs", "test-results", "refactorings"]
+}

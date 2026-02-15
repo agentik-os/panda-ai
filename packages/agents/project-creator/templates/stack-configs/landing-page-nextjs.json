@@ -1,0 +1,198 @@
+{
+  "name": "Landing Page - Next.js Static",
+  "description": "High-performance marketing site with SEO optimization and analytics",
+  "useCase": "Marketing websites, landing pages, portfolio sites, blogs",
+  "stack": {
+    "frontend": {
+      "framework": "Next.js 16",
+      "rendering": "Static Site Generation (SSG)",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS v4",
+      "ui": "shadcn/ui",
+      "icons": "Lucide React",
+      "animations": "Framer Motion",
+      "reasoning": "Next.js SSG generates static HTML at build time for blazing-fast performance. Perfect SEO, zero server costs, CDN distribution."
+    },
+    "backend": {
+      "platform": "None (static)",
+      "forms": "Resend + React Email",
+      "cms": "MDX (content in Git) or Sanity CMS",
+      "reasoning": "Static sites don't need a backend. Forms submit to Resend API. Content managed via MDX files or headless CMS."
+    },
+    "deployment": {
+      "platform": "Vercel",
+      "features": ["Edge CDN", "Image optimization", "Analytics", "A/B testing"],
+      "reasoning": "Vercel offers free hosting for static sites with global CDN, automatic HTTPS, and preview deployments."
+    },
+    "seo": {
+      "meta": "next-seo",
+      "sitemap": "next-sitemap",
+      "schema": "JSON-LD structured data",
+      "reasoning": "next-seo simplifies meta tags. Automatic sitemaps. Rich snippets for better search visibility."
+    },
+    "analytics": {
+      "provider": "Plausible Analytics",
+      "reasoning": "Privacy-friendly analytics (GDPR compliant), lightweight (<1KB script), no cookie banner needed."
+    },
+    "forms": {
+      "provider": "Resend",
+      "features": ["Contact forms", "Newsletter signup", "Email templates (React Email)"],
+      "reasoning": "Resend provides simple email API with React Email for beautiful transactional emails."
+    }
+  },
+  "packages": [
+    "next@16",
+    "react@19",
+    "typescript@5",
+    "tailwindcss@4",
+    "framer-motion@latest",
+    "lucide-react@latest",
+    "next-seo@latest",
+    "next-sitemap@latest",
+    "resend@latest",
+    "react-email@latest",
+    "plausible-tracker@latest"
+  ],
+  "structure": {
+    "app": {
+      "page.tsx": "Homepage",
+      "about": "About page",
+      "pricing": "Pricing page",
+      "blog": {
+        "page.tsx": "Blog index",
+        "[slug]": "Blog post pages (MDX)"
+      },
+      "contact": "Contact form",
+      "layout.tsx": "Root layout with SEO",
+      "sitemap.ts": "Dynamic sitemap",
+      "robots.ts": "Robots.txt",
+      "opengraph-image.tsx": "OG image generation"
+    },
+    "components": {
+      "ui": "shadcn/ui components",
+      "marketing": ["Hero.tsx", "Features.tsx", "Testimonials.tsx", "CTA.tsx", "FAQ.tsx"],
+      "blog": "Blog components"
+    },
+    "content": {
+      "blog": "MDX blog posts",
+      "case-studies": "Customer stories"
+    },
+    "emails": {
+      "contact.tsx": "Contact form email (React Email)",
+      "newsletter.tsx": "Newsletter welcome email"
+    },
+    "lib": {
+      "seo.ts": "SEO config",
+      "analytics.ts": "Plausible setup",
+      "resend.ts": "Email client"
+    }
+  },
+  "envVars": [
+    "RESEND_API_KEY",
+    "NEXT_PUBLIC_PLAUSIBLE_DOMAIN"
+  ],
+  "devCommands": {
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "export": "npm run build && npm run export",
+    "deploy": "vercel --prod"
+  },
+  "estimatedSetupTime": "20 minutes",
+  "estimatedBuildTime": "1-3 hours (with AI team)",
+  "monthlyCost": {
+    "vercel": "$0 (hobby tier free)",
+    "resend": "$0-20 (100 emails/day free → $20/month for 50K)",
+    "plausible": "$9 (10K pageviews/month)",
+    "total": "$9-29/month"
+  },
+  "pros": [
+    "Zero server costs (static files)",
+    "Blazing fast (pre-rendered HTML)",
+    "Perfect SEO (Google loves static sites)",
+    "Unlimited scalability (CDN distribution)",
+    "99.99% uptime (no server to crash)",
+    "Easy to maintain (no database, no backend complexity)",
+    "Git-based workflow (version control for content)",
+    "Fast to build (1-3 hours with AI team)"
+  ],
+  "cons": [
+    "No dynamic content (user-specific pages require client-side rendering)",
+    "Build time increases with pages (100+ pages may slow builds)",
+    "Form submissions require third-party API",
+    "No real-time features",
+    "Content updates require rebuild (unless using CMS)"
+  ],
+  "whenToUse": [
+    "Marketing websites",
+    "Landing pages",
+    "Portfolio sites",
+    "Blogs",
+    "Documentation sites",
+    "Event pages",
+    "Product launch pages"
+  ],
+  "alternatives": [
+    {
+      "name": "Astro",
+      "whenToChoose": "Need maximum performance, multi-framework components",
+      "tradeoffs": "Smaller ecosystem than Next.js, newer framework"
+    },
+    {
+      "name": "Gatsby",
+      "whenToChoose": "GraphQL preference, plugin ecosystem",
+      "tradeoffs": "Slower builds, less active development than Next.js"
+    },
+    {
+      "name": "Hugo/Jekyll",
+      "whenToChoose": "Simple blog, no JavaScript needed",
+      "tradeoffs": "No React, limited interactivity"
+    }
+  ],
+  "seoChecklist": [
+    "Unique title tags (<60 chars)",
+    "Meta descriptions (<160 chars)",
+    "Open Graph images (1200x630px)",
+    "Twitter Cards",
+    "Structured data (JSON-LD)",
+    "XML sitemap",
+    "Robots.txt",
+    "Canonical URLs",
+    "Mobile-friendly",
+    "Fast Core Web Vitals",
+    "HTTPS",
+    "Alt text on images"
+  ],
+  "performanceTargets": {
+    "lighthouse": {
+      "performance": ">95",
+      "accessibility": ">95",
+      "bestPractices": ">95",
+      "seo": "100"
+    },
+    "coreWebVitals": {
+      "lcp": "<2.5s (Largest Contentful Paint)",
+      "fid": "<100ms (First Input Delay)",
+      "cls": "<0.1 (Cumulative Layout Shift)"
+    }
+  },
+  "examples": [
+    {
+      "name": "Vercel",
+      "url": "vercel.com",
+      "features": "Marketing pages, blog, docs",
+      "stackFit": "Perfect - static generation, excellent performance"
+    },
+    {
+      "name": "Tailwind CSS",
+      "url": "tailwindcss.com",
+      "features": "Docs, component examples, blog",
+      "stackFit": "Perfect - static docs with search"
+    },
+    {
+      "name": "Stripe",
+      "url": "stripe.com",
+      "features": "Product pages, guides, API docs",
+      "stackFit": "Good - mix of static and dynamic content"
+    }
+  ]
+}

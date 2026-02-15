@@ -1,0 +1,4556 @@
+{
+  "project": "Agentik OS",
+  "version": "1.0",
+  "totalPhases": 5,
+  "totalSteps": 261,
+  "estimatedTotalHours": 4170,
+  "phases": [
+    {
+      "id": "phase-0",
+      "name": "Foundation",
+      "duration": "Months 1-2",
+      "description": "Set up monorepo infrastructure, implement core runtime, build basic CLI",
+      "steps": [
+        {
+          "id": "step-001",
+          "phase": 0,
+          "title": "Initialize monorepo with Turborepo",
+          "description": "Set up Turborepo workspace with packages structure, configure build pipeline, add shared configs",
+          "dependencies": [],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "package.json",
+            "turbo.json",
+            "pnpm-workspace.yaml",
+            ".gitignore",
+            ".npmrc"
+          ],
+          "commands": [
+            "pnpm init",
+            "pnpm add -D turbo @turbo/gen",
+            "pnpm dlx @turbo/gen workspace"
+          ]
+        },
+        {
+          "id": "step-002",
+          "phase": 0,
+          "title": "Configure shared TypeScript config",
+          "description": "Create base tsconfig.json with strict mode, path aliases, and shared compiler options",
+          "dependencies": [
+            "step-001"
+          ],
+          "estimatedHours": 4,
+          "status": "pending",
+          "files": [
+            "packages/tsconfig/base.json",
+            "packages/tsconfig/nextjs.json",
+            "packages/tsconfig/node.json"
+          ]
+        },
+        {
+          "id": "step-003",
+          "phase": 0,
+          "title": "Set up ESLint and Prettier",
+          "description": "Configure code quality tools with shared configs, TypeScript rules, and auto-formatting",
+          "dependencies": [
+            "step-001"
+          ],
+          "estimatedHours": 4,
+          "status": "pending",
+          "files": [
+            ".eslintrc.js",
+            ".prettierrc",
+            ".editorconfig"
+          ],
+          "commands": [
+            "pnpm add -D eslint prettier eslint-config-prettier eslint-plugin-typescript"
+          ]
+        },
+        {
+          "id": "step-004",
+          "phase": 0,
+          "title": "Configure Husky for Git hooks",
+          "description": "Set up pre-commit hooks for linting and formatting",
+          "dependencies": [
+            "step-003"
+          ],
+          "estimatedHours": 2,
+          "status": "pending",
+          "files": [
+            ".husky/pre-commit",
+            ".husky/commit-msg"
+          ],
+          "commands": [
+            "pnpm add -D husky lint-staged",
+            "pnpm dlx husky install"
+          ]
+        },
+        {
+          "id": "step-005",
+          "phase": 0,
+          "title": "Set up GitHub Actions CI/CD",
+          "description": "Create CI pipeline for lint, typecheck, build, and test on pull requests",
+          "dependencies": [
+            "step-003"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            ".github/workflows/ci.yml",
+            ".github/workflows/release.yml"
+          ]
+        },
+        {
+          "id": "step-006",
+          "phase": 0,
+          "title": "Create shared package for types",
+          "description": "Set up @agentik-os/shared package with common TypeScript types and interfaces",
+          "dependencies": [
+            "step-002"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/shared/package.json",
+            "packages/shared/src/types/agent.ts",
+            "packages/shared/src/types/message.ts",
+            "packages/shared/src/types/model.ts",
+            "packages/shared/src/types/memory.ts",
+            "packages/shared/src/types/skill.ts",
+            "packages/shared/src/types/backend.ts",
+            "packages/shared/src/constants/index.ts",
+            "packages/shared/src/utils/index.ts"
+          ]
+        },
+        {
+          "id": "step-007",
+          "phase": 0,
+          "title": "Create runtime package scaffold",
+          "description": "Initialize @agentik-os/runtime package with directory structure",
+          "dependencies": [
+            "step-006"
+          ],
+          "estimatedHours": 4,
+          "status": "pending",
+          "files": [
+            "packages/runtime/package.json",
+            "packages/runtime/tsconfig.json",
+            "packages/runtime/src/index.ts",
+            "packages/runtime/src/pipeline/index.ts",
+            "packages/runtime/src/router/index.ts",
+            "packages/runtime/src/memory/index.ts",
+            "packages/runtime/src/skills/index.ts",
+            "packages/runtime/src/channels/index.ts"
+          ]
+        },
+        {
+          "id": "step-008",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 1: Normalize",
+          "description": "Create message normalization logic to convert channel-specific formats to unified Message type",
+          "dependencies": [
+            "step-007"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/normalize.ts",
+            "packages/runtime/src/pipeline/normalize.test.ts"
+          ]
+        },
+        {
+          "id": "step-009",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 2: Route",
+          "description": "Create routing logic to determine target agent(s) based on @mentions, channel, or default",
+          "dependencies": [
+            "step-008"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/route.ts",
+            "packages/runtime/src/pipeline/route.test.ts"
+          ]
+        },
+        {
+          "id": "step-010",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 3: Load Memory",
+          "description": "Create memory loading logic for short-term and session tiers",
+          "dependencies": [
+            "step-009"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/load-memory.ts",
+            "packages/runtime/src/memory/short-term.ts",
+            "packages/runtime/src/memory/session.ts",
+            "packages/runtime/src/memory/memory.test.ts"
+          ]
+        },
+        {
+          "id": "step-011",
+          "phase": 0,
+          "title": "Implement Model Router - Complexity Scoring",
+          "description": "Create complexity scoring algorithm (0-100) based on message length, keywords, code blocks",
+          "dependencies": [
+            "step-010"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/complexity.ts",
+            "packages/runtime/src/router/complexity.test.ts"
+          ]
+        },
+        {
+          "id": "step-012",
+          "phase": 0,
+          "title": "Implement Model Router - Model Selection",
+          "description": "Create model selection logic based on complexity, budget, and preferences",
+          "dependencies": [
+            "step-011"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/selector.ts",
+            "packages/runtime/src/router/selector.test.ts"
+          ]
+        },
+        {
+          "id": "step-013",
+          "phase": 0,
+          "title": "Implement Model Router - Anthropic Provider",
+          "description": "Create Anthropic API client for Claude models (Opus, Sonnet, Haiku)",
+          "dependencies": [
+            "step-012"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/providers/anthropic.ts",
+            "packages/runtime/src/router/providers/anthropic.test.ts"
+          ],
+          "commands": [
+            "pnpm add @anthropic-ai/sdk"
+          ]
+        },
+        {
+          "id": "step-014",
+          "phase": 0,
+          "title": "Implement Model Router - OpenAI Provider",
+          "description": "Create OpenAI API client for GPT models (o1, GPT-4o, GPT-4o Mini)",
+          "dependencies": [
+            "step-012"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/providers/openai.ts",
+            "packages/runtime/src/router/providers/openai.test.ts"
+          ],
+          "commands": [
+            "pnpm add openai"
+          ]
+        },
+        {
+          "id": "step-015",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 4: Model Select",
+          "description": "Integrate model router into pipeline to select optimal model for each message",
+          "dependencies": [
+            "step-013",
+            "step-014"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/model-select.ts",
+            "packages/runtime/src/pipeline/model-select.test.ts"
+          ]
+        },
+        {
+          "id": "step-016",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 5: Tool Resolution",
+          "description": "Create tool resolution logic to determine available tools for execution (stub for now)",
+          "dependencies": [
+            "step-015"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/tool-resolution.ts"
+          ]
+        },
+        {
+          "id": "step-017",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 6: Execute",
+          "description": "Create execution logic to call LLM API and handle tool calls",
+          "dependencies": [
+            "step-016"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/execute.ts",
+            "packages/runtime/src/pipeline/execute.test.ts"
+          ]
+        },
+        {
+          "id": "step-018",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 7: Save Memory",
+          "description": "Create memory saving logic to persist conversation to backend",
+          "dependencies": [
+            "step-017"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/save-memory.ts",
+            "packages/runtime/src/pipeline/save-memory.test.ts"
+          ]
+        },
+        {
+          "id": "step-019",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 8: Track Cost",
+          "description": "Create cost tracking logic to calculate and save cost events",
+          "dependencies": [
+            "step-017"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/track-cost.ts",
+            "packages/runtime/src/pipeline/cost-calculator.ts",
+            "packages/runtime/src/pipeline/cost.test.ts"
+          ]
+        },
+        {
+          "id": "step-020",
+          "phase": 0,
+          "title": "Implement Message Pipeline - Stage 9: Send Response",
+          "description": "Create response sending logic to deliver message via channel adapter",
+          "dependencies": [
+            "step-018",
+            "step-019"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/send-response.ts",
+            "packages/runtime/src/pipeline/send-response.test.ts"
+          ]
+        },
+        {
+          "id": "step-021",
+          "phase": 0,
+          "title": "Implement Pipeline Orchestrator",
+          "description": "Create main pipeline orchestrator that executes all 9 stages in sequence",
+          "dependencies": [
+            "step-020"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/pipeline/orchestrator.ts",
+            "packages/runtime/src/pipeline/orchestrator.test.ts"
+          ]
+        },
+        {
+          "id": "step-022",
+          "title": "Set Up Convex Schema",
+          "description": "Initialize Convex and define schema for conversations, agents, memories, cost events, skills, and cron jobs with vector indexes",
+          "dependencies": [
+            "step-021"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "convex/schema.ts",
+            "convex/tsconfig.json",
+            "convex/_generated/*",
+            "packages/runtime/convex.config.ts"
+          ],
+          "commands": [
+            "npx convex dev",
+            "npx convex deploy"
+          ]
+        },
+        {
+          "id": "step-023",
+          "title": "Implement Convex Conversations",
+          "description": "Create queries and mutations for saving and retrieving conversations with real-time subscriptions and pagination",
+          "dependencies": [
+            "step-022"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "convex/conversations.ts"
+          ],
+          "commands": []
+        },
+        {
+          "id": "step-024",
+          "title": "Implement Convex Agents",
+          "description": "Create queries and mutations for agent CRUD operations with real-time updates",
+          "dependencies": [
+            "step-022"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "convex/agents.ts"
+          ],
+          "commands": []
+        },
+        {
+          "id": "step-025",
+          "title": "Implement Convex Memory with Vector Search",
+          "description": "Create vector-indexed memory storage for agent long-term memory with similarity search and importance ranking",
+          "dependencies": [
+            "step-022"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "convex/memories.ts"
+          ],
+          "commands": []
+        },
+        {
+          "id": "step-026",
+          "title": "Implement Convex Cost Tracking",
+          "description": "Create real-time cost event logging with aggregation queries for dashboard Cost X-Ray",
+          "dependencies": [
+            "step-022"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "convex/costEvents.ts"
+          ],
+          "commands": []
+        },
+        {
+          "id": "step-027",
+          "phase": 0,
+          "title": "Implement CLI Channel Adapter",
+          "description": "Create CLI channel adapter for interactive terminal chat",
+          "dependencies": [
+            "step-021"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/cli.ts",
+            "packages/runtime/src/channels/cli.test.ts"
+          ],
+          "commands": [
+            "pnpm add inquirer chalk ora"
+          ]
+        },
+        {
+          "id": "step-028",
+          "phase": 0,
+          "title": "Implement API Channel Adapter",
+          "description": "Create REST API adapter for HTTP-based integrations",
+          "dependencies": [
+            "step-021"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/api.ts",
+            "packages/runtime/src/api/routes.ts",
+            "packages/runtime/src/api/middleware.ts"
+          ],
+          "commands": [
+            "pnpm add express cors helmet express-rate-limit"
+          ]
+        },
+        {
+          "id": "step-029",
+          "phase": 0,
+          "title": "Create CLI package scaffold",
+          "description": "Initialize @agentik-os/cli package with commander setup",
+          "dependencies": [
+            "step-006"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "packages/cli/package.json",
+            "packages/cli/src/index.ts",
+            "packages/cli/src/commands/index.ts"
+          ],
+          "commands": [
+            "pnpm add commander inquirer chalk ora"
+          ]
+        },
+        {
+          "id": "step-030",
+          "phase": 0,
+          "title": "Implement CLI - agentik-os init",
+          "description": "Create init command to initialize configuration file",
+          "dependencies": [
+            "step-029"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/init.ts",
+            "packages/cli/templates/config.template.json"
+          ]
+        },
+        {
+          "id": "step-031",
+          "phase": 0,
+          "title": "Implement CLI - agentik-os agent create",
+          "description": "Create agent create command with interactive wizard",
+          "dependencies": [
+            "step-030"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/agent/create.ts",
+            "packages/cli/src/prompts/agent-create.ts"
+          ]
+        },
+        {
+          "id": "step-032",
+          "phase": 0,
+          "title": "Implement CLI - agentik-os agent list",
+          "description": "Create agent list command to display all agents",
+          "dependencies": [
+            "step-030"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/agent/list.ts"
+          ]
+        },
+        {
+          "id": "step-033",
+          "phase": 0,
+          "title": "Implement CLI - agentik-os chat",
+          "description": "Create interactive chat command with readline interface",
+          "dependencies": [
+            "step-027",
+            "step-031"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/chat.ts",
+            "packages/cli/src/ui/chat-interface.ts"
+          ]
+        },
+        {
+          "id": "step-034",
+          "phase": 0,
+          "title": "Implement CLI - agentik-os logs",
+          "description": "Create logs command to view conversation history",
+          "dependencies": [
+            "step-030"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/logs.ts"
+          ]
+        },
+        {
+          "id": "step-035",
+          "phase": 0,
+          "title": "Set up Vitest for unit testing",
+          "description": "Configure Vitest across all packages with coverage reporting",
+          "dependencies": [
+            "step-002"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "vitest.config.ts",
+            "packages/runtime/vitest.config.ts",
+            "packages/cli/vitest.config.ts"
+          ],
+          "commands": [
+            "pnpm add -D vitest @vitest/coverage-v8"
+          ]
+        },
+        {
+          "id": "step-036",
+          "phase": 0,
+          "title": "Write integration tests for message pipeline",
+          "description": "Create end-to-end tests for complete message flow",
+          "dependencies": [
+            "step-021",
+            "step-035"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/tests/integration/pipeline.test.ts",
+            "packages/runtime/tests/integration/fixtures.ts"
+          ]
+        },
+        {
+          "id": "step-037",
+          "phase": 0,
+          "title": "Write documentation - Getting Started",
+          "description": "Create getting started guide with installation and first agent",
+          "dependencies": [
+            "step-033"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "docs/getting-started.md",
+            "docs/installation.md",
+            "docs/first-agent.md"
+          ]
+        },
+        {
+          "id": "step-038",
+          "phase": 0,
+          "title": "Write documentation - Architecture",
+          "description": "Document system architecture with diagrams",
+          "dependencies": [
+            "step-021"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "docs/architecture.md",
+            "docs/diagrams/pipeline.svg",
+            "docs/diagrams/monorepo.svg"
+          ]
+        },
+        {
+          "id": "step-039",
+          "phase": 0,
+          "title": "Create README.md",
+          "description": "Write comprehensive README with features, installation, quick start",
+          "dependencies": [
+            "step-037"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "README.md",
+            "CONTRIBUTING.md",
+            "LICENSE"
+          ]
+        },
+        {
+          "id": "step-040",
+          "phase": 0,
+          "title": "Phase 0 End-to-End Test",
+          "description": "Verify complete flow: CLI agent creation, conversation, response, memory saved",
+          "dependencies": [
+            "step-033",
+            "step-036"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "tests/e2e/phase-0.test.ts"
+          ]
+        }
+      ],
+      "estimatedHours": 390,
+      "totalSteps": 40
+    },
+    {
+      "id": "phase-1",
+      "name": "Core Features",
+      "duration": "Months 3-5",
+      "description": "Launch dashboard, implement Cost X-Ray, add Telegram/Discord channels, build skill execution engine",
+      "steps": [
+        {
+          "id": "step-041",
+          "phase": 1,
+          "title": "Create dashboard package with Next.js 16",
+          "description": "Initialize @agentik-os/dashboard with Next.js App Router, TypeScript, Tailwind",
+          "dependencies": [
+            "step-040"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/package.json",
+            "packages/dashboard/next.config.js",
+            "packages/dashboard/tailwind.config.js",
+            "packages/dashboard/app/layout.tsx",
+            "packages/dashboard/app/page.tsx"
+          ],
+          "commands": [
+            "pnpm create next-app@latest packages/dashboard --typescript --tailwind --app --src-dir"
+          ]
+        },
+        {
+          "id": "step-042",
+          "phase": 1,
+          "title": "Install shadcn/ui in dashboard",
+          "description": "Set up shadcn/ui components library with theme configuration",
+          "dependencies": [
+            "step-041"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components.json",
+            "packages/dashboard/components/ui/button.tsx",
+            "packages/dashboard/components/ui/card.tsx",
+            "packages/dashboard/lib/utils.ts"
+          ],
+          "commands": [
+            "cd packages/dashboard && pnpm dlx shadcn-ui@latest init",
+            "pnpm dlx shadcn-ui@latest add button card table badge dialog"
+          ]
+        },
+        {
+          "id": "step-043",
+          "phase": 1,
+          "title": "Create dashboard API routes",
+          "description": "Set up Next.js API routes to communicate with runtime",
+          "dependencies": [
+            "step-041"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/api/agents/route.ts",
+            "packages/dashboard/app/api/agents/[id]/route.ts",
+            "packages/dashboard/app/api/conversations/route.ts",
+            "packages/dashboard/app/api/cost/route.ts",
+            "packages/dashboard/lib/api-client.ts"
+          ]
+        },
+        {
+          "id": "step-044",
+          "phase": 1,
+          "title": "Implement Dashboard - Sidebar Navigation",
+          "description": "Create responsive sidebar with navigation links and logo",
+          "dependencies": [
+            "step-042"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/layout/sidebar.tsx",
+            "packages/dashboard/components/layout/nav-item.tsx"
+          ]
+        },
+        {
+          "id": "step-045",
+          "phase": 1,
+          "title": "Implement Dashboard - Overview Page",
+          "description": "Create overview page with agent status, cost summary, recent activity",
+          "dependencies": [
+            "step-043",
+            "step-044"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/page.tsx",
+            "packages/dashboard/components/overview/agent-status-card.tsx",
+            "packages/dashboard/components/overview/cost-summary-card.tsx",
+            "packages/dashboard/components/overview/activity-feed.tsx"
+          ]
+        },
+        {
+          "id": "step-046",
+          "phase": 1,
+          "title": "Implement Dashboard - Agents List Page",
+          "description": "Create agents list page with table, filters, create button",
+          "dependencies": [
+            "step-043"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/agents/page.tsx",
+            "packages/dashboard/components/agents/agents-table.tsx",
+            "packages/dashboard/components/agents/agent-row.tsx"
+          ]
+        },
+        {
+          "id": "step-047",
+          "phase": 1,
+          "title": "Implement Dashboard - Agent Create Wizard",
+          "description": "Create multi-step agent creation form with validation",
+          "dependencies": [
+            "step-046"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/agents/create/page.tsx",
+            "packages/dashboard/components/agents/create-wizard.tsx",
+            "packages/dashboard/components/agents/step-basic-info.tsx",
+            "packages/dashboard/components/agents/step-model-config.tsx",
+            "packages/dashboard/components/agents/step-tools.tsx"
+          ],
+          "commands": [
+            "pnpm add react-hook-form zod @hookform/resolvers"
+          ]
+        },
+        {
+          "id": "step-048",
+          "phase": 1,
+          "title": "Implement Dashboard - Agent Detail Page",
+          "description": "Create agent detail page with conversation history, edit, delete",
+          "dependencies": [
+            "step-046"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/agents/[id]/page.tsx",
+            "packages/dashboard/components/agents/agent-header.tsx",
+            "packages/dashboard/components/agents/conversation-list.tsx",
+            "packages/dashboard/components/agents/agent-settings.tsx"
+          ]
+        },
+        {
+          "id": "step-049",
+          "phase": 1,
+          "title": "Implement Event-Sourced Cost Events",
+          "description": "Create immutable cost event log with append-only writes",
+          "dependencies": [
+            "step-026"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/cost/event-store.ts",
+            "packages/runtime/src/cost/event-store.test.ts",
+            "backends/sqlite/migrations/002_cost_events.sql"
+          ]
+        },
+        {
+          "id": "step-050",
+          "phase": 1,
+          "title": "Implement Real-Time Cost Calculation",
+          "description": "Create cost calculator that computes cost on every message",
+          "dependencies": [
+            "step-049"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/cost/calculator.ts",
+            "packages/runtime/src/cost/pricing.json",
+            "packages/runtime/src/cost/calculator.test.ts"
+          ]
+        },
+        {
+          "id": "step-051",
+          "phase": 1,
+          "title": "Implement Cost Aggregation Queries",
+          "description": "Create SQL queries for daily/weekly/monthly cost summaries",
+          "dependencies": [
+            "step-049"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "backends/sqlite/src/cost-queries.ts",
+            "backends/sqlite/src/cost-queries.test.ts"
+          ]
+        },
+        {
+          "id": "step-052",
+          "phase": 1,
+          "title": "Implement Dashboard - Cost X-Ray Page",
+          "description": "Create cost tracking page with charts, breakdowns, export",
+          "dependencies": [
+            "step-043",
+            "step-051"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/cost/page.tsx",
+            "packages/dashboard/components/cost/cost-chart.tsx",
+            "packages/dashboard/components/cost/model-distribution.tsx",
+            "packages/dashboard/components/cost/cost-table.tsx",
+            "packages/dashboard/components/cost/export-button.tsx"
+          ],
+          "commands": [
+            "pnpm add recharts date-fns"
+          ]
+        },
+        {
+          "id": "step-053",
+          "phase": 1,
+          "title": "Implement Budget Alerts",
+          "description": "Create budget limit checks and email/Telegram notifications",
+          "dependencies": [
+            "step-050"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/cost/budget-checker.ts",
+            "packages/runtime/src/cost/notifications.ts"
+          ]
+        },
+        {
+          "id": "step-054",
+          "phase": 1,
+          "title": "Implement Cost Export (CSV/PDF)",
+          "description": "Create cost report export in CSV and PDF formats",
+          "dependencies": [
+            "step-052"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/lib/export-csv.ts",
+            "packages/dashboard/lib/export-pdf.ts"
+          ],
+          "commands": [
+            "pnpm add papaparse jspdf jspdf-autotable"
+          ]
+        },
+        {
+          "id": "step-055",
+          "phase": 1,
+          "title": "Implement WebSocket for Real-Time Updates",
+          "description": "Create WebSocket server for pushing real-time updates to dashboard",
+          "dependencies": [
+            "step-043"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/websocket/server.ts",
+            "packages/dashboard/lib/websocket-client.ts",
+            "packages/dashboard/hooks/use-realtime.ts"
+          ],
+          "commands": [
+            "pnpm add ws @types/ws socket.io-client"
+          ]
+        },
+        {
+          "id": "step-056",
+          "phase": 1,
+          "title": "Implement Telegram Bot Integration",
+          "description": "Create Telegram bot channel adapter with telegram-bot-api",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/telegram.ts",
+            "packages/runtime/src/channels/telegram.test.ts"
+          ],
+          "commands": [
+            "pnpm add node-telegram-bot-api @types/node-telegram-bot-api"
+          ]
+        },
+        {
+          "id": "step-057",
+          "phase": 1,
+          "title": "Implement Discord Bot Integration",
+          "description": "Create Discord bot channel adapter with discord.js",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/discord.ts",
+            "packages/runtime/src/channels/discord.test.ts"
+          ],
+          "commands": [
+            "pnpm add discord.js"
+          ]
+        },
+        {
+          "id": "step-058",
+          "phase": 1,
+          "title": "Implement Webhook Channel Adapter",
+          "description": "Create generic webhook adapter for custom integrations",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/webhook.ts",
+            "packages/runtime/src/channels/webhook.test.ts"
+          ]
+        },
+        {
+          "id": "step-059",
+          "phase": 1,
+          "title": "Implement MCP Protocol Integration",
+          "description": "Add MCP (Model Context Protocol) support for tool discovery and execution",
+          "dependencies": [
+            "step-021"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/mcp/client.ts",
+            "packages/runtime/src/mcp/registry.ts",
+            "packages/runtime/src/mcp/tool-executor.ts"
+          ],
+          "commands": [
+            "pnpm add @modelcontextprotocol/sdk"
+          ]
+        },
+        {
+          "id": "step-060",
+          "phase": 1,
+          "title": "Implement WASM Sandbox with Extism",
+          "description": "Create WASM-based skill sandbox using Extism",
+          "dependencies": [
+            "step-059"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/sandbox/wasm.ts",
+            "packages/runtime/src/sandbox/permissions.ts",
+            "packages/runtime/src/sandbox/host-functions.ts"
+          ],
+          "commands": [
+            "pnpm add @extism/extism"
+          ]
+        },
+        {
+          "id": "step-061",
+          "phase": 1,
+          "title": "Implement Permission System for Skills",
+          "description": "Create permission declarations and runtime checks for skills",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/skills/permissions.ts",
+            "packages/runtime/src/skills/permission-checker.ts",
+            "skills/schema.json"
+          ]
+        },
+        {
+          "id": "step-062",
+          "phase": 1,
+          "title": "Create Built-in Skill: Web Search",
+          "description": "Build web search skill using Brave Search API or Serper",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "skills/web-search/skill.json",
+            "skills/web-search/index.ts",
+            "skills/web-search/README.md"
+          ],
+          "commands": [
+            "pnpm add axios cheerio"
+          ]
+        },
+        {
+          "id": "step-063",
+          "phase": 1,
+          "title": "Create Built-in Skill: File Operations",
+          "description": "Build file read/write/list skill with sandboxed access",
+          "dependencies": [
+            "step-061"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/file-ops/skill.json",
+            "skills/file-ops/index.ts",
+            "skills/file-ops/README.md"
+          ]
+        },
+        {
+          "id": "step-064",
+          "phase": 1,
+          "title": "Create Built-in Skill: Calendar",
+          "description": "Build calendar skill with Google Calendar integration",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/calendar/skill.json",
+            "skills/calendar/index.ts",
+            "skills/calendar/README.md"
+          ],
+          "commands": [
+            "pnpm add googleapis"
+          ]
+        },
+        {
+          "id": "step-065",
+          "phase": 1,
+          "title": "Implement Skill Installation Flow",
+          "description": "Create CLI and dashboard flows for installing skills",
+          "dependencies": [
+            "step-062",
+            "step-063",
+            "step-064"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/skill/install.ts",
+            "packages/dashboard/app/skills/page.tsx",
+            "packages/runtime/src/skills/installer.ts"
+          ]
+        },
+        {
+          "id": "step-066",
+          "phase": 1,
+          "title": "Write Documentation - Skills Development",
+          "description": "Create comprehensive guide for skill development",
+          "dependencies": [
+            "step-065"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "docs/skills/development-guide.md",
+            "docs/skills/permissions.md",
+            "docs/skills/mcp-integration.md"
+          ]
+        },
+        {
+          "id": "step-067",
+          "phase": 1,
+          "title": "Implement Dashboard Dark Mode",
+          "description": "Add dark mode theme with toggle and persistence",
+          "dependencies": [
+            "step-042"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/theme-toggle.tsx",
+            "packages/dashboard/lib/theme-provider.tsx"
+          ],
+          "commands": [
+            "pnpm add next-themes"
+          ]
+        },
+        {
+          "id": "step-068",
+          "phase": 1,
+          "title": "Implement Dashboard Mobile Responsiveness",
+          "description": "Optimize dashboard for mobile screens with responsive design",
+          "dependencies": [
+            "step-045",
+            "step-046",
+            "step-052"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/layout/mobile-nav.tsx",
+            "packages/dashboard/components/layout/mobile-header.tsx"
+          ]
+        },
+        {
+          "id": "step-069",
+          "phase": 1,
+          "title": "Write Integration Tests for Dashboard",
+          "description": "Create Playwright tests for dashboard pages and flows",
+          "dependencies": [
+            "step-048"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/tests/agents.spec.ts",
+            "packages/dashboard/tests/cost.spec.ts",
+            "packages/dashboard/playwright.config.ts"
+          ],
+          "commands": [
+            "pnpm add -D @playwright/test"
+          ]
+        },
+        {
+          "id": "step-070",
+          "phase": 1,
+          "title": "Phase 1 End-to-End Test",
+          "description": "Verify dashboard works, cost tracking accurate, Telegram bot responds",
+          "dependencies": [
+            "step-056",
+            "step-069"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "tests/e2e/phase-1.test.ts"
+          ]
+        }
+      ],
+      "estimatedHours": 398,
+      "totalSteps": 30
+    },
+    {
+      "id": "phase-2",
+      "name": "Advanced Features",
+      "duration": "Months 6-9",
+      "description": "Launch Agent Marketplace, implement OS Modes, add multi-AI consensus, build natural language automation builder",
+      "steps": [
+        {
+          "id": "step-071",
+          "phase": 2,
+          "title": "Design Marketplace Database Schema",
+          "description": "Create schema for agents, skills, ratings, reviews, purchases",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "backends/sqlite/migrations/003_marketplace.sql",
+            "backends/sqlite/src/marketplace.ts"
+          ]
+        },
+        {
+          "id": "step-072",
+          "phase": 2,
+          "title": "Implement Marketplace - Browse Page",
+          "description": "Create marketplace browse page with search, filters, categories",
+          "dependencies": [
+            "step-071"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/marketplace/page.tsx",
+            "packages/dashboard/components/marketplace/search-bar.tsx",
+            "packages/dashboard/components/marketplace/filters.tsx",
+            "packages/dashboard/components/marketplace/agent-grid.tsx"
+          ]
+        },
+        {
+          "id": "step-073",
+          "phase": 2,
+          "title": "Implement Marketplace - Agent Detail Page",
+          "description": "Create agent detail page with description, screenshots, reviews, install button",
+          "dependencies": [
+            "step-072"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/marketplace/[id]/page.tsx",
+            "packages/dashboard/components/marketplace/agent-detail.tsx",
+            "packages/dashboard/components/marketplace/reviews-section.tsx",
+            "packages/dashboard/components/marketplace/install-button.tsx"
+          ]
+        },
+        {
+          "id": "step-074",
+          "phase": 2,
+          "title": "Implement Live Preview Sandbox",
+          "description": "Create isolated sandbox environment for testing agents before installation",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/sandbox/preview.ts",
+            "packages/dashboard/components/marketplace/live-preview.tsx",
+            "packages/dashboard/app/marketplace/[id]/preview/page.tsx"
+          ]
+        },
+        {
+          "id": "step-075",
+          "phase": 2,
+          "title": "Integrate Stripe for Payments",
+          "description": "Set up Stripe integration for marketplace purchases",
+          "dependencies": [
+            "step-073"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/api/stripe/checkout/route.ts",
+            "packages/dashboard/app/api/stripe/webhook/route.ts",
+            "packages/runtime/src/payments/stripe.ts"
+          ],
+          "commands": [
+            "pnpm add stripe @stripe/stripe-js"
+          ]
+        },
+        {
+          "id": "step-076",
+          "phase": 2,
+          "title": "Implement Revenue Split Logic",
+          "description": "Create 70/30 revenue split calculation and payout tracking",
+          "dependencies": [
+            "step-075"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/payments/revenue-split.ts",
+            "backends/sqlite/migrations/004_payouts.sql",
+            "backends/sqlite/src/payouts.ts"
+          ]
+        },
+        {
+          "id": "step-077",
+          "phase": 2,
+          "title": "Implement Developer Dashboard - Analytics",
+          "description": "Create analytics dashboard for marketplace creators",
+          "dependencies": [
+            "step-076"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/developer/page.tsx",
+            "packages/dashboard/components/developer/analytics-chart.tsx",
+            "packages/dashboard/components/developer/revenue-table.tsx",
+            "packages/dashboard/components/developer/download-stats.tsx"
+          ]
+        },
+        {
+          "id": "step-078",
+          "phase": 2,
+          "title": "Implement CLI - agentik-os publish",
+          "description": "Create CLI command to publish agents/skills to marketplace",
+          "dependencies": [
+            "step-071"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/publish.ts",
+            "packages/cli/src/utils/package-validator.ts",
+            "packages/cli/src/utils/uploader.ts"
+          ]
+        },
+        {
+          "id": "step-079",
+          "phase": 2,
+          "title": "Implement Security Scanning - Semgrep",
+          "description": "Integrate Semgrep for static code analysis on skill uploads",
+          "dependencies": [
+            "step-078"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/semgrep.ts",
+            "packages/runtime/src/security/rules.yml"
+          ],
+          "commands": [
+            "pnpm add @semgrep/core"
+          ]
+        },
+        {
+          "id": "step-080",
+          "phase": 2,
+          "title": "Implement Security Scanning - Bandit",
+          "description": "Integrate Bandit for Python security scanning",
+          "dependencies": [
+            "step-078"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/bandit.ts"
+          ]
+        },
+        {
+          "id": "step-081",
+          "phase": 2,
+          "title": "Implement Manual Review Workflow",
+          "description": "Create admin interface for manual review and certification",
+          "dependencies": [
+            "step-079",
+            "step-080"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/admin/reviews/page.tsx",
+            "packages/dashboard/components/admin/review-queue.tsx",
+            "packages/dashboard/components/admin/security-report.tsx"
+          ]
+        },
+        {
+          "id": "step-082",
+          "phase": 2,
+          "title": "Create OS Modes Database Schema",
+          "description": "Create schema for modes, mode agents, mode tools, mode activations",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "backends/sqlite/migrations/005_modes.sql",
+            "backends/sqlite/src/modes.ts"
+          ]
+        },
+        {
+          "id": "step-083",
+          "phase": 2,
+          "title": "Implement Mode Definitions - Human OS",
+          "description": "Create Human OS mode with health agents and tools",
+          "dependencies": [
+            "step-082"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/modes/human-os.json",
+            "packages/runtime/src/modes/agents/health-coach.json",
+            "packages/runtime/src/modes/agents/sleep-tracker.json",
+            "packages/runtime/src/modes/agents/habit-builder.json"
+          ]
+        },
+        {
+          "id": "step-084",
+          "phase": 2,
+          "title": "Implement Mode Definitions - Business OS",
+          "description": "Create Business OS mode with financial agents and tools",
+          "dependencies": [
+            "step-082"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/modes/business-os.json",
+            "packages/runtime/src/modes/agents/cfo.json",
+            "packages/runtime/src/modes/agents/ops-manager.json"
+          ]
+        },
+        {
+          "id": "step-085",
+          "phase": 2,
+          "title": "Implement Mode Definitions - Dev OS",
+          "description": "Create Dev OS mode with development agents and tools",
+          "dependencies": [
+            "step-082"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/modes/dev-os.json",
+            "packages/runtime/src/modes/agents/code-reviewer.json",
+            "packages/runtime/src/modes/agents/bug-hunter.json"
+          ]
+        },
+        {
+          "id": "step-086",
+          "phase": 2,
+          "title": "Implement Remaining Official Modes",
+          "description": "Create Marketing, Sales, Design, Art, Ask, Finance, Learning OS modes",
+          "dependencies": [
+            "step-082"
+          ],
+          "estimatedHours": 56,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/modes/marketing-os.json",
+            "packages/runtime/src/modes/sales-os.json",
+            "packages/runtime/src/modes/design-os.json",
+            "packages/runtime/src/modes/art-os.json",
+            "packages/runtime/src/modes/ask-os.json",
+            "packages/runtime/src/modes/finance-os.json",
+            "packages/runtime/src/modes/learning-os.json"
+          ]
+        },
+        {
+          "id": "step-087",
+          "phase": 2,
+          "title": "Implement Mode Activation Wizard",
+          "description": "Create multi-step wizard to activate and configure modes",
+          "dependencies": [
+            "step-083",
+            "step-084",
+            "step-085"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/modes/page.tsx",
+            "packages/dashboard/components/modes/mode-card.tsx",
+            "packages/dashboard/components/modes/activation-wizard.tsx"
+          ]
+        },
+        {
+          "id": "step-088",
+          "phase": 2,
+          "title": "Implement Mode Stacking",
+          "description": "Allow multiple modes to run simultaneously with shared memory",
+          "dependencies": [
+            "step-087"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/modes/stacker.ts",
+            "packages/runtime/src/modes/shared-memory.ts"
+          ]
+        },
+        {
+          "id": "step-089",
+          "phase": 2,
+          "title": "Implement Mode Dashboard Widgets",
+          "description": "Create mode-specific dashboard widgets (health metrics, revenue, etc.)",
+          "dependencies": [
+            "step-088"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/widgets/health-widget.tsx",
+            "packages/dashboard/components/widgets/revenue-widget.tsx",
+            "packages/dashboard/components/widgets/pipeline-widget.tsx"
+          ]
+        },
+        {
+          "id": "step-090",
+          "phase": 2,
+          "title": "Implement Multi-AI Consensus - Deliberation Engine",
+          "description": "Create deliberation protocol for parallel queries to multiple models",
+          "dependencies": [
+            "step-015"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/consensus/deliberation.ts",
+            "packages/runtime/src/consensus/quorum.ts",
+            "packages/runtime/src/consensus/parallel-query.ts"
+          ]
+        },
+        {
+          "id": "step-091",
+          "phase": 2,
+          "title": "Implement Multi-AI Consensus - Synthesis Agent",
+          "description": "Create meta-agent that synthesizes responses from multiple models",
+          "dependencies": [
+            "step-090"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/consensus/synthesis.ts",
+            "packages/runtime/src/consensus/agreement-detector.ts"
+          ]
+        },
+        {
+          "id": "step-092",
+          "phase": 2,
+          "title": "Implement Multi-AI Consensus - Debate Protocol",
+          "description": "Create structured debate rounds where models challenge each other",
+          "dependencies": [
+            "step-091"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/consensus/debate.ts",
+            "packages/runtime/src/consensus/round-manager.ts"
+          ]
+        },
+        {
+          "id": "step-093",
+          "phase": 2,
+          "title": "Implement Consensus Dashboard UI",
+          "description": "Create UI to trigger consensus, view debate, see recommendations",
+          "dependencies": [
+            "step-092"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/consensus/page.tsx",
+            "packages/dashboard/components/consensus/quorum-selector.tsx",
+            "packages/dashboard/components/consensus/debate-viewer.tsx",
+            "packages/dashboard/components/consensus/synthesis-card.tsx"
+          ]
+        },
+        {
+          "id": "step-094",
+          "phase": 2,
+          "title": "Implement Natural Language Automation Parser",
+          "description": "Create LLM-based parser to convert plain English to automation config",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/automations/parser.ts",
+            "packages/runtime/src/automations/intent-classifier.ts",
+            "packages/runtime/src/automations/parser.test.ts"
+          ]
+        },
+        {
+          "id": "step-095",
+          "phase": 2,
+          "title": "Implement Automation Execution Engine",
+          "description": "Create cron-based automation scheduler and executor",
+          "dependencies": [
+            "step-094"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/automations/scheduler.ts",
+            "packages/runtime/src/automations/executor.ts",
+            "packages/runtime/src/automations/cron.ts"
+          ],
+          "commands": [
+            "pnpm add node-cron @types/node-cron"
+          ]
+        },
+        {
+          "id": "step-096",
+          "phase": 2,
+          "title": "Implement Visual Automation Builder",
+          "description": "Create drag-and-drop flow builder UI for automations",
+          "dependencies": [
+            "step-094"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/automations/create/page.tsx",
+            "packages/dashboard/components/automations/flow-builder.tsx",
+            "packages/dashboard/components/automations/node-library.tsx"
+          ],
+          "commands": [
+            "pnpm add reactflow"
+          ]
+        },
+        {
+          "id": "step-097",
+          "phase": 2,
+          "title": "Implement Automation History & Logs",
+          "description": "Create execution history viewer with logs and error tracking",
+          "dependencies": [
+            "step-095"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/automations/page.tsx",
+            "packages/dashboard/components/automations/history-table.tsx",
+            "packages/dashboard/components/automations/log-viewer.tsx"
+          ]
+        },
+        {
+          "id": "step-098",
+          "phase": 2,
+          "title": "Implement Google Gemini Provider",
+          "description": "Add Google Gemini models to model router",
+          "dependencies": [
+            "step-012"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/providers/google.ts",
+            "packages/runtime/src/router/providers/google.test.ts"
+          ],
+          "commands": [
+            "pnpm add @google-cloud/aiplatform"
+          ]
+        },
+        {
+          "id": "step-099",
+          "phase": 2,
+          "title": "Implement Ollama Provider",
+          "description": "Add Ollama local models to model router",
+          "dependencies": [
+            "step-012"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/router/providers/ollama.ts",
+            "packages/runtime/src/router/providers/ollama.test.ts"
+          ],
+          "commands": [
+            "pnpm add ollama"
+          ]
+        },
+        {
+          "id": "step-100",
+          "phase": 2,
+          "title": "Phase 2 End-to-End Test",
+          "description": "Verify marketplace works, modes activate, consensus runs, automations execute",
+          "dependencies": [
+            "step-093",
+            "step-097"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "tests/e2e/phase-2.test.ts"
+          ]
+        }
+      ],
+      "estimatedHours": 516,
+      "totalSteps": 30
+    },
+    {
+      "id": "phase-3",
+      "name": "Enterprise & Scale",
+      "duration": "Months 10-12",
+      "description": "Implement Agent Dreams, launch Time Travel Debug, enterprise features (SSO, RBAC, audit logs)",
+      "steps": [
+        {
+          "id": "step-104",
+          "phase": 3,
+          "title": "Implement Convex Backend Adapter - Schema",
+          "description": "Create Convex schema with tables and indexes",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "backends/convex/schema.ts",
+            "backends/convex/convex.json"
+          ],
+          "commands": [
+            "pnpm add convex"
+          ]
+        },
+        {
+          "id": "step-105",
+          "phase": 3,
+          "title": "Implement Convex Backend Adapter - Mutations & Queries",
+          "description": "Create Convex mutations and queries for CRUD operations",
+          "dependencies": [
+            "step-104"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "backends/convex/agents.ts",
+            "backends/convex/conversations.ts",
+            "backends/convex/memory.ts",
+            "backends/convex/cost.ts"
+          ]
+        },
+        {
+          "id": "step-107",
+          "phase": 3,
+          "title": "Implement Agent Dreams - Scheduler",
+          "description": "Create dream session scheduler with time-based triggers",
+          "dependencies": [
+            "step-095"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/dreams/scheduler.ts",
+            "packages/runtime/src/dreams/session.ts"
+          ]
+        },
+        {
+          "id": "step-108",
+          "phase": 3,
+          "title": "Implement Agent Dreams - Approval Threshold",
+          "description": "Create approval threshold logic to auto-approve low-cost actions",
+          "dependencies": [
+            "step-107"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/dreams/approval.ts",
+            "packages/runtime/src/dreams/threshold-checker.ts"
+          ]
+        },
+        {
+          "id": "step-109",
+          "phase": 3,
+          "title": "Implement Agent Dreams - State Snapshots",
+          "description": "Create before/after state snapshots for rollback capability",
+          "dependencies": [
+            "step-107"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/dreams/snapshot.ts",
+            "packages/runtime/src/dreams/rollback.ts"
+          ]
+        },
+        {
+          "id": "step-110",
+          "phase": 3,
+          "title": "Implement Agent Dreams - Morning Report",
+          "description": "Create morning report generator with email/Telegram delivery",
+          "dependencies": [
+            "step-108",
+            "step-109"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/dreams/report-generator.ts",
+            "packages/runtime/src/dreams/email-sender.ts",
+            "packages/runtime/src/dreams/templates/morning-report.html"
+          ],
+          "commands": [
+            "pnpm add nodemailer @types/nodemailer"
+          ]
+        },
+        {
+          "id": "step-111",
+          "phase": 3,
+          "title": "Implement Agent Dreams Dashboard UI",
+          "description": "Create UI to schedule dreams, view reports, manage undo links",
+          "dependencies": [
+            "step-110"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/dreams/page.tsx",
+            "packages/dashboard/components/dreams/schedule-wizard.tsx",
+            "packages/dashboard/components/dreams/report-viewer.tsx",
+            "packages/dashboard/components/dreams/undo-button.tsx"
+          ]
+        },
+        {
+          "id": "step-112",
+          "phase": 3,
+          "title": "Implement Time Travel Debug - Event Store",
+          "description": "Create event-sourced conversation store for replay capability",
+          "dependencies": [
+            "step-049"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/time-travel/event-store.ts",
+            "backends/sqlite/migrations/006_conversation_events.sql"
+          ]
+        },
+        {
+          "id": "step-113",
+          "phase": 3,
+          "title": "Implement Time Travel Debug - Replay Engine",
+          "description": "Create conversation replay engine with different model/temperature",
+          "dependencies": [
+            "step-112"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/time-travel/replay.ts",
+            "packages/runtime/src/time-travel/parameter-override.ts"
+          ]
+        },
+        {
+          "id": "step-114",
+          "phase": 3,
+          "title": "Implement Time Travel Debug - Diff Viewer",
+          "description": "Create side-by-side diff viewer for original vs. replayed outputs",
+          "dependencies": [
+            "step-113"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/time-travel/page.tsx",
+            "packages/dashboard/components/time-travel/replay-panel.tsx",
+            "packages/dashboard/components/time-travel/diff-viewer.tsx"
+          ],
+          "commands": [
+            "pnpm add react-diff-viewer-continued"
+          ]
+        },
+        {
+          "id": "step-115",
+          "phase": 3,
+          "title": "Implement Time Travel Debug - Cost Comparison",
+          "description": "Calculate and display cost savings from model downgrade",
+          "dependencies": [
+            "step-113"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/time-travel/cost-comparison.ts",
+            "packages/dashboard/components/time-travel/cost-savings.tsx"
+          ]
+        },
+        {
+          "id": "step-116",
+          "phase": 3,
+          "title": "Implement SSO with SAML",
+          "description": "Add SAML-based SSO for enterprise authentication",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/auth/saml.ts",
+            "packages/dashboard/app/api/auth/saml/route.ts"
+          ],
+          "commands": [
+            "pnpm add passport-saml @types/passport-saml"
+          ]
+        },
+        {
+          "id": "step-117",
+          "phase": 3,
+          "title": "Implement OAuth Integration",
+          "description": "Add OAuth support for Google, Microsoft, GitHub",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/auth/oauth.ts",
+            "packages/dashboard/app/api/auth/oauth/route.ts"
+          ],
+          "commands": [
+            "pnpm add next-auth"
+          ]
+        },
+        {
+          "id": "step-118",
+          "phase": 3,
+          "title": "Implement RBAC (Role-Based Access Control)",
+          "description": "Create role and permission system with admin, developer, viewer roles",
+          "dependencies": [
+            "step-116"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/rbac/roles.ts",
+            "packages/runtime/src/rbac/permissions.ts",
+            "packages/runtime/src/rbac/middleware.ts",
+            "backends/sqlite/migrations/007_rbac.sql"
+          ]
+        },
+        {
+          "id": "step-119",
+          "phase": 3,
+          "title": "Implement Audit Logs",
+          "description": "Create immutable audit log for all user and agent actions",
+          "dependencies": [
+            "step-118"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/audit/logger.ts",
+            "packages/runtime/src/audit/event-types.ts",
+            "backends/sqlite/migrations/008_audit_logs.sql",
+            "packages/dashboard/app/admin/audit/page.tsx"
+          ]
+        },
+        {
+          "id": "step-120",
+          "phase": 3,
+          "title": "Implement Multi-Tenant Support",
+          "description": "Add organization/workspace support with data isolation",
+          "dependencies": [
+            "step-118"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/tenants/manager.ts",
+            "packages/runtime/src/tenants/isolator.ts",
+            "backends/sqlite/migrations/009_tenants.sql"
+          ]
+        },
+        {
+          "id": "step-121",
+          "phase": 3,
+          "title": "Implement Air-Gapped Deployment",
+          "description": "Create offline installation bundle and update mechanism",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "installer/air-gapped-bundle.sh",
+            "packages/runtime/src/updates/offline-updater.ts"
+          ]
+        },
+        {
+          "id": "step-122",
+          "phase": 3,
+          "title": "Implement Docker Compose for Production",
+          "description": "Create production-ready Docker Compose with all services",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "docker/docker-compose.prod.yml",
+            "docker/Dockerfile.runtime",
+            "docker/Dockerfile.dashboard",
+            "docker/.env.example"
+          ]
+        },
+        {
+          "id": "step-123",
+          "phase": 3,
+          "title": "Implement Kubernetes Helm Chart",
+          "description": "Create Helm chart for Kubernetes deployment",
+          "dependencies": [
+            "step-122"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "deploy/kubernetes/Chart.yaml",
+            "deploy/kubernetes/values.yaml",
+            "deploy/kubernetes/templates/deployment.yaml",
+            "deploy/kubernetes/templates/service.yaml",
+            "deploy/kubernetes/templates/ingress.yaml"
+          ]
+        },
+        {
+          "id": "step-124",
+          "phase": 3,
+          "title": "Implement Monitoring with Prometheus",
+          "description": "Add Prometheus metrics for performance monitoring",
+          "dependencies": [
+            "step-122"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/monitoring/prometheus.ts",
+            "packages/runtime/src/monitoring/metrics.ts"
+          ],
+          "commands": [
+            "pnpm add prom-client"
+          ]
+        },
+        {
+          "id": "step-125",
+          "phase": 3,
+          "title": "Implement Error Tracking with Sentry",
+          "description": "Integrate Sentry for error tracking and alerting",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/errors/sentry.ts",
+            "packages/dashboard/sentry.client.config.js"
+          ],
+          "commands": [
+            "pnpm add @sentry/node @sentry/nextjs"
+          ]
+        },
+        {
+          "id": "step-126",
+          "phase": 3,
+          "title": "Write Enterprise Documentation",
+          "description": "Create deployment guides for enterprises",
+          "dependencies": [
+            "step-123"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "docs/enterprise/deployment.md",
+            "docs/enterprise/sso-setup.md",
+            "docs/enterprise/rbac-guide.md",
+            "docs/enterprise/air-gapped.md"
+          ]
+        },
+        {
+          "id": "step-127",
+          "phase": 3,
+          "title": "Phase 3 End-to-End Test",
+          "description": "Verify Convex backend works, dreams execute, time travel replays, SSO authenticates",
+          "dependencies": [
+            "step-111",
+            "step-114",
+            "step-117"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "tests/e2e/phase-3.test.ts"
+          ]
+        }
+      ],
+      "estimatedHours": 364,
+      "totalSteps": 23
+    },
+    {
+      "id": "phase-4",
+      "name": "Community & Ecosystem",
+      "duration": "Ongoing",
+      "description": "Grow developer community, launch certification program, partner integrations, reach 100K stars",
+      "steps": [
+        {
+          "id": "step-128",
+          "phase": 4,
+          "title": "Implement CLI - agentik-os create skill",
+          "description": "Create skill scaffolding command with templates",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/create/skill.ts",
+            "packages/cli/templates/skill/index.ts.template",
+            "packages/cli/templates/skill/skill.json.template",
+            "packages/cli/templates/skill/README.md.template"
+          ]
+        },
+        {
+          "id": "step-129",
+          "phase": 4,
+          "title": "Implement CLI - agentik-os dev",
+          "description": "Create hot-reload development server for skills",
+          "dependencies": [
+            "step-128"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/dev.ts",
+            "packages/cli/src/dev-server/watcher.ts",
+            "packages/cli/src/dev-server/hot-reload.ts"
+          ]
+        },
+        {
+          "id": "step-130",
+          "phase": 4,
+          "title": "Implement Skill Testing Framework",
+          "description": "Create testing utilities for skill developers",
+          "dependencies": [
+            "step-128"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/sdk/src/testing/test-runner.ts",
+            "packages/sdk/src/testing/mock-runtime.ts",
+            "packages/sdk/src/testing/assertions.ts"
+          ]
+        },
+        {
+          "id": "step-131",
+          "phase": 4,
+          "title": "Create Certification Program - AOCD Curriculum",
+          "description": "Design AOCD (Developer) certification with 20-hour curriculum",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 40,
+          "status": "pending",
+          "files": [
+            "certifications/aocd/curriculum.md",
+            "certifications/aocd/modules/01-architecture.md",
+            "certifications/aocd/modules/02-skill-development.md",
+            "certifications/aocd/modules/03-best-practices.md",
+            "certifications/aocd/exam.md"
+          ]
+        },
+        {
+          "id": "step-132",
+          "phase": 4,
+          "title": "Create Certification Program - AOCM Curriculum",
+          "description": "Design AOCM (Marketer) certification with 10-hour curriculum",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "certifications/aocm/curriculum.md",
+            "certifications/aocm/modules/01-use-cases.md",
+            "certifications/aocm/modules/02-agent-design.md",
+            "certifications/aocm/case-studies/saas.md"
+          ]
+        },
+        {
+          "id": "step-133",
+          "phase": 4,
+          "title": "Create Certification Platform",
+          "description": "Build web platform for taking certification exams and issuing badges",
+          "dependencies": [
+            "step-131",
+            "step-132"
+          ],
+          "estimatedHours": 32,
+          "status": "pending",
+          "files": [
+            "website/app/certifications/page.tsx",
+            "website/app/certifications/[type]/page.tsx",
+            "website/app/certifications/[type]/exam/page.tsx",
+            "website/components/exam-question.tsx",
+            "website/lib/badge-issuer.ts"
+          ]
+        },
+        {
+          "id": "step-134",
+          "phase": 4,
+          "title": "Integrate Browserbase MCP",
+          "description": "Add official Browserbase integration for browser automation",
+          "dependencies": [
+            "step-059"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "skills/browserbase/skill.json",
+            "skills/browserbase/index.ts",
+            "docs/integrations/browserbase.md"
+          ],
+          "commands": [
+            "pnpm add @browserbasehq/sdk"
+          ]
+        },
+        {
+          "id": "step-135",
+          "phase": 4,
+          "title": "Integrate E2B MCP",
+          "description": "Add official E2B integration for code execution sandboxes",
+          "dependencies": [
+            "step-059"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "skills/e2b/skill.json",
+            "skills/e2b/index.ts",
+            "docs/integrations/e2b.md"
+          ],
+          "commands": [
+            "pnpm add @e2b/sdk"
+          ]
+        },
+        {
+          "id": "step-136",
+          "phase": 4,
+          "title": "Integrate Composio MCP",
+          "description": "Add official Composio integration for 100+ tool integrations",
+          "dependencies": [
+            "step-059"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/composio/skill.json",
+            "skills/composio/index.ts",
+            "docs/integrations/composio.md"
+          ],
+          "commands": [
+            "pnpm add composio-core"
+          ]
+        },
+        {
+          "id": "step-137",
+          "phase": 4,
+          "title": "Create Marketing Website with Next.js",
+          "description": "Build marketing website with landing page, features, pricing, blog",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 40,
+          "status": "pending",
+          "files": [
+            "website/app/page.tsx",
+            "website/app/features/page.tsx",
+            "website/app/pricing/page.tsx",
+            "website/app/blog/page.tsx",
+            "website/components/hero.tsx",
+            "website/components/feature-grid.tsx",
+            "website/components/pricing-cards.tsx"
+          ]
+        },
+        {
+          "id": "step-138",
+          "phase": 4,
+          "title": "Create Interactive Demo on Website",
+          "description": "Build embedded dashboard demo for website visitors",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "website/app/demo/page.tsx",
+            "website/components/demo/embedded-dashboard.tsx",
+            "website/components/demo/sample-data.ts"
+          ]
+        },
+        {
+          "id": "step-139",
+          "phase": 4,
+          "title": "Write Technical Blog Posts",
+          "description": "Create 10 technical blog posts for SEO and developer education",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 60,
+          "status": "pending",
+          "files": [
+            "website/content/blog/multi-model-routing.md",
+            "website/content/blog/building-ai-agents.md",
+            "website/content/blog/cost-optimization.md",
+            "website/content/blog/mcp-integration.md",
+            "website/content/blog/sandbox-security.md"
+          ]
+        },
+        {
+          "id": "step-140",
+          "phase": 4,
+          "title": "Set Up Discord Community Server",
+          "description": "Create Discord server with channels for support, showcase, feedback",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "docs/community/discord-guidelines.md",
+            "docs/community/code-of-conduct.md"
+          ]
+        },
+        {
+          "id": "step-141",
+          "phase": 4,
+          "title": "Create Monthly Community Call System",
+          "description": "Set up Zoom/YouTube Live for monthly community calls",
+          "dependencies": [
+            "step-140"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "docs/community/call-schedule.md",
+            "docs/community/call-template.md"
+          ]
+        },
+        {
+          "id": "step-142",
+          "phase": 4,
+          "title": "Implement Contributor Recognition Program",
+          "description": "Create system to track and reward contributors with swag, badges",
+          "dependencies": [
+            "step-140"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "CONTRIBUTORS.md",
+            "scripts/contributor-stats.ts",
+            "docs/community/swag-program.md"
+          ]
+        },
+        {
+          "id": "step-143",
+          "phase": 4,
+          "title": "Launch Hackathon Program",
+          "description": "Organize first hackathon with prizes and bounties",
+          "dependencies": [
+            "step-140"
+          ],
+          "estimatedHours": 32,
+          "status": "pending",
+          "files": [
+            "docs/hackathons/2026-q1.md",
+            "docs/hackathons/rules.md",
+            "docs/hackathons/prizes.md"
+          ]
+        },
+        {
+          "id": "step-144",
+          "phase": 4,
+          "title": "Set Up GitHub Sponsors",
+          "description": "Enable GitHub Sponsors for sustainable funding",
+          "dependencies": [
+            "step-100"
+          ],
+          "estimatedHours": 6,
+          "status": "pending",
+          "files": [
+            ".github/FUNDING.yml",
+            "docs/sponsors/tiers.md"
+          ]
+        },
+        {
+          "id": "step-145",
+          "phase": 4,
+          "title": "Create Video Tutorial Series",
+          "description": "Produce 10 YouTube tutorials covering key features",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 80,
+          "status": "pending",
+          "files": [
+            "docs/videos/01-getting-started.md",
+            "docs/videos/02-first-agent.md",
+            "docs/videos/03-marketplace.md",
+            "docs/videos/04-cost-xray.md",
+            "docs/videos/05-modes.md"
+          ]
+        },
+        {
+          "id": "step-146",
+          "phase": 4,
+          "title": "Prepare Product Hunt Launch",
+          "description": "Create assets and plan for Product Hunt launch",
+          "dependencies": [
+            "step-137",
+            "step-138"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "marketing/product-hunt/description.md",
+            "marketing/product-hunt/demo-video.mp4",
+            "marketing/product-hunt/screenshots/",
+            "marketing/product-hunt/launch-checklist.md"
+          ]
+        },
+        {
+          "id": "step-147",
+          "phase": 4,
+          "title": "Execute Product Hunt Launch",
+          "description": "Launch on Product Hunt and manage community engagement",
+          "dependencies": [
+            "step-146"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "marketing/product-hunt/launch-day-log.md"
+          ]
+        },
+        {
+          "id": "step-148",
+          "phase": 4,
+          "title": "Submit to Hacker News",
+          "description": "Post 'Show HN' with engaging title and respond to comments",
+          "dependencies": [
+            "step-147"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "marketing/hacker-news/show-hn-post.md",
+            "marketing/hacker-news/faq.md"
+          ]
+        },
+        {
+          "id": "step-149",
+          "phase": 4,
+          "title": "Reddit Marketing Campaign",
+          "description": "Post to r/selfhosted, r/LocalLLaMA, r/opensource with engagement",
+          "dependencies": [
+            "step-147"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "marketing/reddit/posts.md",
+            "marketing/reddit/responses.md"
+          ]
+        },
+        {
+          "id": "step-150",
+          "phase": 4,
+          "title": "Influencer Outreach Program",
+          "description": "Contact Fireship, Theo, The Primeagen, Simon Willison for coverage",
+          "dependencies": [
+            "step-138"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "marketing/influencers/outreach-template.md",
+            "marketing/influencers/tracking.md"
+          ]
+        },
+        {
+          "id": "step-151",
+          "phase": 4,
+          "title": "WhatsApp Bot Integration",
+          "description": "Create WhatsApp Business API integration for agent messaging",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/whatsapp.ts",
+            "packages/runtime/src/channels/whatsapp.test.ts"
+          ],
+          "commands": [
+            "pnpm add whatsapp-web.js"
+          ]
+        },
+        {
+          "id": "step-152",
+          "phase": 4,
+          "title": "Slack Bot Integration",
+          "description": "Create Slack app integration with slash commands, interactive messages",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/slack.ts"
+          ],
+          "commands": [
+            "pnpm add @slack/bolt"
+          ]
+        },
+        {
+          "id": "step-153",
+          "phase": 4,
+          "title": "Web Widget Embed",
+          "description": "Create embeddable chat widget for websites",
+          "dependencies": [
+            "step-041"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/widget/src/widget.ts",
+            "packages/widget/dist/agentik-widget.js"
+          ]
+        },
+        {
+          "id": "step-154",
+          "phase": 4,
+          "title": "SMS Integration (Twilio)",
+          "description": "Create SMS channel adapter using Twilio API",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/sms.ts"
+          ],
+          "commands": [
+            "pnpm add twilio"
+          ]
+        },
+        {
+          "id": "step-155",
+          "phase": 4,
+          "title": "Microsoft Teams Integration",
+          "description": "Create Microsoft Teams bot integration for enterprise",
+          "dependencies": [
+            "step-028"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/channels/teams.ts"
+          ]
+        },
+        {
+          "id": "step-156",
+          "phase": 4,
+          "title": "Email Skill (Gmail/Outlook)",
+          "description": "Read, send, search emails via Gmail and Outlook APIs",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "skills/email/skill.json",
+            "skills/email/gmail.ts",
+            "skills/email/outlook.ts",
+            "skills/email/templates/"
+          ],
+          "commands": [
+            "pnpm add googleapis @microsoft/microsoft-graph-client"
+          ],
+          "notes": "email.read, email.send, email.search"
+        },
+        {
+          "id": "step-157",
+          "phase": 4,
+          "title": "Database Skill (SQL)",
+          "description": "Execute SQL queries against databases (PostgreSQL, MySQL, SQLite)",
+          "dependencies": [
+            "step-061"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/database/skill.json",
+            "skills/database/postgres.ts",
+            "skills/database/mysql.ts",
+            "skills/database/sqlite.ts"
+          ],
+          "commands": [
+            "pnpm add pg mysql2 better-sqlite3"
+          ],
+          "notes": "database.read, database.write (with approval)"
+        },
+        {
+          "id": "step-158",
+          "phase": 4,
+          "title": "GitHub Skill",
+          "description": "Manage repos, issues, PRs, workflows via GitHub API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "skills/github/skill.json",
+            "skills/github/repos.ts",
+            "skills/github/issues.ts",
+            "skills/github/prs.ts",
+            "skills/github/actions.ts"
+          ],
+          "commands": [
+            "pnpm add @octokit/rest"
+          ],
+          "notes": "github.read, github.write, github.admin"
+        },
+        {
+          "id": "step-159",
+          "phase": 4,
+          "title": "Notion Skill",
+          "description": "Create, read, update Notion pages and databases",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/notion/skill.json",
+            "skills/notion/pages.ts",
+            "skills/notion/databases.ts"
+          ],
+          "commands": [
+            "pnpm add @notionhq/client"
+          ],
+          "notes": "notion.read, notion.write"
+        },
+        {
+          "id": "step-160",
+          "phase": 4,
+          "title": "Slack Skill",
+          "description": "Send messages, manage channels, users via Slack API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/slack/skill.json",
+            "skills/slack/messages.ts",
+            "skills/slack/channels.ts"
+          ],
+          "commands": [
+            "pnpm add @slack/web-api"
+          ],
+          "notes": "slack.channels.read, slack.chat.write"
+        },
+        {
+          "id": "step-161",
+          "phase": 4,
+          "title": "Twitter Skill",
+          "description": "Post tweets, read timeline, manage DMs via Twitter API v2",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/twitter/skill.json",
+            "skills/twitter/tweets.ts",
+            "skills/twitter/timeline.ts",
+            "skills/twitter/dms.ts"
+          ],
+          "commands": [
+            "pnpm add twitter-api-v2"
+          ],
+          "notes": "twitter.read, twitter.write"
+        },
+        {
+          "id": "step-162",
+          "phase": 4,
+          "title": "Linear Skill",
+          "description": "Manage issues, projects, teams via Linear API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/linear/skill.json",
+            "skills/linear/issues.ts",
+            "skills/linear/projects.ts"
+          ],
+          "commands": [
+            "pnpm add @linear/sdk"
+          ],
+          "notes": "linear.read, linear.write"
+        },
+        {
+          "id": "step-163",
+          "phase": 4,
+          "title": "Jira Skill",
+          "description": "Create, update Jira tickets, manage sprints",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/jira/skill.json",
+            "skills/jira/issues.ts",
+            "skills/jira/sprints.ts"
+          ],
+          "commands": [
+            "pnpm add jira-client"
+          ],
+          "notes": "jira.read, jira.write"
+        },
+        {
+          "id": "step-164",
+          "phase": 4,
+          "title": "Salesforce Skill",
+          "description": "Manage leads, opportunities, accounts via Salesforce API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "skills/salesforce/skill.json",
+            "skills/salesforce/leads.ts",
+            "skills/salesforce/opportunities.ts",
+            "skills/salesforce/accounts.ts"
+          ],
+          "commands": [
+            "pnpm add jsforce"
+          ],
+          "notes": "salesforce.read, salesforce.write"
+        },
+        {
+          "id": "step-165",
+          "phase": 4,
+          "title": "HubSpot Skill",
+          "description": "Manage contacts, deals, marketing via HubSpot API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/hubspot/skill.json",
+            "skills/hubspot/contacts.ts",
+            "skills/hubspot/deals.ts",
+            "skills/hubspot/marketing.ts"
+          ],
+          "commands": [
+            "pnpm add @hubspot/api-client"
+          ],
+          "notes": "hubspot.read, hubspot.write"
+        },
+        {
+          "id": "step-166",
+          "phase": 4,
+          "title": "Stripe Skill",
+          "description": "Manage customers, subscriptions, payments via Stripe API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/stripe/skill.json",
+            "skills/stripe/customers.ts",
+            "skills/stripe/subscriptions.ts",
+            "skills/stripe/payments.ts"
+          ],
+          "commands": [
+            "pnpm add stripe"
+          ],
+          "notes": "stripe.read, stripe.write"
+        },
+        {
+          "id": "step-167",
+          "phase": 4,
+          "title": "Airtable Skill",
+          "description": "Read, create, update Airtable records",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/airtable/skill.json",
+            "skills/airtable/records.ts",
+            "skills/airtable/tables.ts"
+          ],
+          "commands": [
+            "pnpm add airtable"
+          ],
+          "notes": "airtable.read, airtable.write"
+        },
+        {
+          "id": "step-168",
+          "phase": 4,
+          "title": "Figma Skill",
+          "description": "Read files, export assets, manage comments via Figma API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/figma/skill.json",
+            "skills/figma/files.ts",
+            "skills/figma/exports.ts",
+            "skills/figma/comments.ts"
+          ],
+          "commands": [
+            "pnpm add figma-api"
+          ],
+          "notes": "figma.read, figma.write"
+        },
+        {
+          "id": "step-169",
+          "phase": 4,
+          "title": "YouTube Skill",
+          "description": "Upload videos, manage playlists, read analytics via YouTube API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "skills/youtube/skill.json",
+            "skills/youtube/videos.ts",
+            "skills/youtube/playlists.ts",
+            "skills/youtube/analytics.ts"
+          ],
+          "commands": [
+            "pnpm add googleapis"
+          ],
+          "notes": "youtube.read, youtube.upload"
+        },
+        {
+          "id": "step-170",
+          "phase": 4,
+          "title": "Google Drive Skill",
+          "description": "Upload, download, manage files and folders via Drive API",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "skills/google-drive/skill.json",
+            "skills/google-drive/files.ts",
+            "skills/google-drive/folders.ts"
+          ],
+          "commands": [
+            "pnpm add googleapis"
+          ],
+          "notes": "drive.read, drive.write"
+        },
+        {
+          "id": "step-171",
+          "phase": 4,
+          "title": "Investment Advisor Agent",
+          "description": "Tracks portfolio, suggests rebalancing, monitors market",
+          "dependencies": [
+            "step-170"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "notes": "Tools: Stock APIs, crypto APIs, financial news"
+        },
+        {
+          "id": "step-172",
+          "phase": 4,
+          "title": "Tax Planner Agent",
+          "description": "Reminds of tax deadlines, suggests deductions, generates reports",
+          "dependencies": [
+            "step-171"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "notes": "Tools: TurboTax API, IRS data, document storage"
+        },
+        {
+          "id": "step-173",
+          "phase": 4,
+          "title": "Budget Optimizer Agent",
+          "description": "Analyzes spending, suggests optimizations, tracks goals",
+          "dependencies": [
+            "step-172"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "notes": "Tools: Banking APIs, expense categorization"
+        },
+        {
+          "id": "step-174",
+          "phase": 4,
+          "title": "Study Buddy Agent",
+          "description": "Creates study plans, summarizes materials, quizzes",
+          "dependencies": [
+            "step-173"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Notion, Anki, PDF reader"
+        },
+        {
+          "id": "step-175",
+          "phase": 4,
+          "title": "Quiz Generator Agent",
+          "description": "Generates questions from materials, tracks scores",
+          "dependencies": [
+            "step-174"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: AI generation, spaced repetition"
+        },
+        {
+          "id": "step-176",
+          "phase": 4,
+          "title": "Progress Tracker Agent",
+          "description": "Visualizes learning progress, suggests next topics",
+          "dependencies": [
+            "step-175"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: Analytics, knowledge graph"
+        },
+        {
+          "id": "step-177",
+          "phase": 4,
+          "title": "UI Critic Agent",
+          "description": "Reviews UI designs, suggests improvements",
+          "dependencies": [
+            "step-176"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Figma API, screenshot analysis"
+        },
+        {
+          "id": "step-178",
+          "phase": 4,
+          "title": "Color Palette Generator Agent",
+          "description": "Generates color schemes, checks accessibility",
+          "dependencies": [
+            "step-177"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "notes": "Tools: Color theory algorithms, WCAG checker"
+        },
+        {
+          "id": "step-179",
+          "phase": 4,
+          "title": "Design System Auditor Agent",
+          "description": "Audits consistency, checks spacing, typography",
+          "dependencies": [
+            "step-178"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Figma API, design tokens"
+        },
+        {
+          "id": "step-180",
+          "phase": 4,
+          "title": "Creative Director Agent",
+          "description": "Suggests art styles, references, mood boards",
+          "dependencies": [
+            "step-179"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Image generation, Pinterest API"
+        },
+        {
+          "id": "step-181",
+          "phase": 4,
+          "title": "Style Analyzer Agent",
+          "description": "Analyzes artwork style, suggests influences",
+          "dependencies": [
+            "step-180"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: Image recognition, art history database"
+        },
+        {
+          "id": "step-182",
+          "phase": 4,
+          "title": "Portfolio Curator Agent",
+          "description": "Organizes artworks, suggests best pieces",
+          "dependencies": [
+            "step-181"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: Image storage, metadata extraction"
+        },
+        {
+          "id": "step-183",
+          "phase": 4,
+          "title": "Research Assistant Agent",
+          "description": "Compiles research, cites sources, summarizes",
+          "dependencies": [
+            "step-182"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "notes": "Tools: Google Scholar, Wolfram Alpha, Wikipedia"
+        },
+        {
+          "id": "step-184",
+          "phase": 4,
+          "title": "Fact Checker Agent",
+          "description": "Verifies claims, finds sources, rates credibility",
+          "dependencies": [
+            "step-183"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Fact-checking APIs, news databases"
+        },
+        {
+          "id": "step-185",
+          "phase": 4,
+          "title": "Source Finder Agent",
+          "description": "Finds primary sources, academic papers",
+          "dependencies": [
+            "step-184"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: Library databases, academic search"
+        },
+        {
+          "id": "step-186",
+          "phase": 4,
+          "title": "Social Media Scheduler Agent",
+          "description": "Plans content calendar, optimizes posting times",
+          "dependencies": [
+            "step-185"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Buffer API, analytics"
+        },
+        {
+          "id": "step-187",
+          "phase": 4,
+          "title": "Ad Campaign Manager Agent",
+          "description": "Monitors ad performance, suggests optimizations",
+          "dependencies": [
+            "step-186"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "notes": "Tools: Google Ads, Facebook Ads APIs"
+        },
+        {
+          "id": "step-188",
+          "phase": 4,
+          "title": "Email Outreach Agent",
+          "description": "Generates outreach emails, tracks responses",
+          "dependencies": [
+            "step-187"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: Email API, templates, A/B testing"
+        },
+        {
+          "id": "step-189",
+          "phase": 4,
+          "title": "Meeting Scheduler Agent",
+          "description": "Finds optimal meeting times, sends invites",
+          "dependencies": [
+            "step-188"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "notes": "Tools: Calendar API, Calendly integration"
+        },
+        {
+          "id": "step-190",
+          "phase": 4,
+          "title": "Proposal Generator Agent",
+          "description": "Creates sales proposals from templates",
+          "dependencies": [
+            "step-189"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "notes": "Tools: PDF generation, CRM data"
+        },
+        {
+          "id": "step-191",
+          "phase": 4,
+          "title": "Neo4j Database Integration",
+          "description": "Integrate Neo4j graph database for knowledge graph storage",
+          "dependencies": [
+            "step-025"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/memory/neo4j-adapter.ts",
+            "backends/neo4j/schema.cypher",
+            "backends/neo4j/queries.ts"
+          ],
+          "commands": [
+            "pnpm add neo4j-driver"
+          ],
+          "notes": "Supports both self-hosted and Neo4j Aura cloud"
+        },
+        {
+          "id": "step-192",
+          "phase": 4,
+          "title": "Graph Visualization with D3.js",
+          "description": "Create interactive graph visualization in dashboard",
+          "dependencies": [
+            "step-191"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/memory-graph/graph-viewer.tsx",
+            "packages/dashboard/components/memory-graph/graph-canvas.tsx",
+            "packages/dashboard/lib/graph-layout.ts"
+          ],
+          "commands": [
+            "pnpm add d3 @types/d3 react-force-graph"
+          ],
+          "notes": "Zoom, pan, node search, relationship filtering, clustering"
+        },
+        {
+          "id": "step-193",
+          "phase": 4,
+          "title": "Entity Extraction Pipeline",
+          "description": "Extract entities (people, companies, concepts) from conversations using NER",
+          "dependencies": [
+            "step-191"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/memory/entity-extraction.ts",
+            "packages/runtime/src/memory/ner-model.ts"
+          ],
+          "commands": [
+            "pnpm add compromise wink-nlp"
+          ],
+          "notes": "Named entity recognition, custom entity types, confidence scores"
+        },
+        {
+          "id": "step-194",
+          "phase": 4,
+          "title": "Relationship Mapping",
+          "description": "Infer relationships between entities from context",
+          "dependencies": [
+            "step-193"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/memory/relationship-mapper.ts",
+            "packages/runtime/src/memory/relationship-types.ts"
+          ],
+          "notes": "works_for, created_by, related_to, mentioned_in, located_in"
+        },
+        {
+          "id": "step-195",
+          "phase": 4,
+          "title": "Graph Query API",
+          "description": "Create API to query knowledge graph with Cypher-like syntax",
+          "dependencies": [
+            "step-191"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/app/api/graph/query/route.ts",
+            "packages/runtime/src/memory/graph-query-builder.ts"
+          ],
+          "notes": "Find paths, shortest path, neighbors, clusters"
+        },
+        {
+          "id": "step-196",
+          "phase": 4,
+          "title": "Manual Graph Editing UI",
+          "description": "Allow users to manually edit nodes, edges, attributes",
+          "dependencies": [
+            "step-192"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/memory-graph/node-editor.tsx",
+            "packages/dashboard/components/memory-graph/edge-editor.tsx"
+          ],
+          "notes": "Drag to connect, right-click context menu, attribute editing"
+        },
+        {
+          "id": "step-197",
+          "phase": 4,
+          "title": "Graph Import/Export",
+          "description": "Import from CSV, JSON; export to GraphML, JSON, CSV",
+          "dependencies": [
+            "step-191"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/memory/graph-import.ts",
+            "packages/runtime/src/memory/graph-export.ts"
+          ],
+          "notes": "CSV, JSON, GraphML, Cypher"
+        },
+        {
+          "id": "step-198",
+          "phase": 4,
+          "title": "Graph Search",
+          "description": "Full-text search across nodes and relationships",
+          "dependencies": [
+            "step-191"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/memory/graph-search.ts",
+            "packages/dashboard/components/memory-graph/search-bar.tsx"
+          ],
+          "notes": "Fuzzy search, filters by type, search history"
+        },
+        {
+          "id": "step-199",
+          "phase": 4,
+          "title": "CodeQL Integration",
+          "description": "Integrate GitHub CodeQL for advanced code scanning",
+          "dependencies": [
+            "step-079"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/codeql.ts",
+            ".github/workflows/codeql.yml"
+          ],
+          "notes": "SQL injection, XSS, path traversal, crypto misuse"
+        },
+        {
+          "id": "step-200",
+          "phase": 4,
+          "title": "Trivy Container Scanning",
+          "description": "Scan Docker images for vulnerabilities with Trivy",
+          "dependencies": [
+            "step-122"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/trivy.ts",
+            "scripts/scan-containers.sh"
+          ],
+          "commands": [
+            "apt-get install trivy"
+          ]
+        },
+        {
+          "id": "step-201",
+          "phase": 4,
+          "title": "TruffleHog Secret Detection",
+          "description": "Scan code and git history for leaked secrets",
+          "dependencies": [
+            "step-079"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/trufflehog.ts",
+            "scripts/scan-secrets.sh"
+          ],
+          "commands": [
+            "go install github.com/trufflesecurity/trufflehog/v3@latest"
+          ]
+        },
+        {
+          "id": "step-202",
+          "phase": 4,
+          "title": "Gitleaks Integration",
+          "description": "Scan git repositories for secrets with Gitleaks",
+          "dependencies": [
+            "step-079"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/gitleaks.ts",
+            ".gitleaks.toml"
+          ],
+          "commands": [
+            "brew install gitleaks"
+          ]
+        },
+        {
+          "id": "step-203",
+          "phase": 4,
+          "title": "OWASP Dependency Check",
+          "description": "Check dependencies for known vulnerabilities",
+          "dependencies": [
+            "step-079"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/dependency-check.ts",
+            "scripts/owasp-check.sh"
+          ],
+          "notes": "npm audit, CVE database, severity scoring"
+        },
+        {
+          "id": "step-204",
+          "phase": 4,
+          "title": "Snyk Vulnerability Scanning",
+          "description": "Continuous security scanning with Snyk",
+          "dependencies": [
+            "step-079"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            ".snyk",
+            "packages/runtime/src/security/snyk.ts"
+          ],
+          "commands": [
+            "pnpm add -D snyk"
+          ]
+        },
+        {
+          "id": "step-205",
+          "phase": 4,
+          "title": "Runtime Behavior Monitoring",
+          "description": "Monitor skill behavior at runtime, detect anomalies",
+          "dependencies": [
+            "step-060"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/behavior-monitor.ts",
+            "packages/runtime/src/security/anomaly-detector.ts"
+          ],
+          "notes": "Excessive API calls, data exfiltration, unexpected network access"
+        },
+        {
+          "id": "step-206",
+          "phase": 4,
+          "title": "Honeypot Skill Detection",
+          "description": "Deploy honeypot skills to detect malicious marketplace uploads",
+          "dependencies": [
+            "step-205"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/honeypot.ts",
+            "skills/honeypot/trap-skill.json"
+          ],
+          "notes": "Fake API keys, fake data, behavioral traps"
+        },
+        {
+          "id": "step-207",
+          "phase": 4,
+          "title": "Security Score Calculator",
+          "description": "Calculate overall security score (0-100) for each skill",
+          "dependencies": [
+            "step-199",
+            "step-206"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/score-calculator.ts",
+            "packages/dashboard/components/security/score-badge.tsx"
+          ],
+          "notes": "Scan results, permissions, sandboxing, author reputation"
+        },
+        {
+          "id": "step-208",
+          "phase": 4,
+          "title": "Threat Intelligence Feed",
+          "description": "Subscribe to security threat feeds, auto-block malicious patterns",
+          "dependencies": [
+            "step-207"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/security/threat-feed.ts",
+            "packages/runtime/src/security/blocklist.ts"
+          ],
+          "notes": "CVE feeds, malware signatures, IP blocklists"
+        },
+        {
+          "id": "step-209",
+          "phase": 4,
+          "title": "Grafana Dashboard Setup",
+          "description": "Create Grafana dashboards for metrics visualization",
+          "dependencies": [
+            "step-124"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "deploy/grafana/dashboards/runtime.json",
+            "deploy/grafana/dashboards/agents.json",
+            "deploy/grafana/dashboards/cost.json"
+          ]
+        },
+        {
+          "id": "step-210",
+          "phase": 4,
+          "title": "DataDog Integration",
+          "description": "Integrate DataDog APM for distributed tracing and metrics",
+          "dependencies": [
+            "step-124"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/monitoring/datadog.ts",
+            "packages/dashboard/lib/datadog-rum.ts"
+          ],
+          "commands": [
+            "pnpm add dd-trace @datadog/browser-rum"
+          ]
+        },
+        {
+          "id": "step-211",
+          "phase": 4,
+          "title": "ELK Stack (Log Aggregation)",
+          "description": "Set up Elasticsearch, Logstash, Kibana for centralized logging",
+          "dependencies": [
+            "step-122"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "docker/elk/docker-compose.yml",
+            "docker/elk/logstash/pipeline.conf",
+            "docker/elk/kibana/dashboards/"
+          ],
+          "notes": "Log aggregation, full-text search, dashboards"
+        },
+        {
+          "id": "step-212",
+          "phase": 4,
+          "title": "Jaeger (Distributed Tracing)",
+          "description": "Implement distributed tracing with Jaeger",
+          "dependencies": [
+            "step-124"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/tracing/jaeger.ts",
+            "docker/jaeger/docker-compose.yml"
+          ],
+          "commands": [
+            "pnpm add jaeger-client"
+          ]
+        },
+        {
+          "id": "step-213",
+          "phase": 4,
+          "title": "Load Testing Framework (k6)",
+          "description": "Create load tests with k6 for runtime and dashboard",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "tests/load/runtime.js",
+            "tests/load/dashboard.js",
+            "tests/load/api.js"
+          ],
+          "commands": [
+            "brew install k6"
+          ],
+          "notes": "100 concurrent agents, 1000 req/s, 10K messages/hour"
+        },
+        {
+          "id": "step-214",
+          "phase": 4,
+          "title": "Stress Testing Suite",
+          "description": "Test system behavior under extreme load",
+          "dependencies": [
+            "step-213"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "tests/stress/memory-leak.js",
+            "tests/stress/connection-exhaustion.js",
+            "tests/stress/disk-full.js"
+          ],
+          "notes": "Memory leaks, connection exhaustion, disk full, CPU saturation"
+        },
+        {
+          "id": "step-215",
+          "phase": 4,
+          "title": "Performance Benchmarks",
+          "description": "Benchmark against OpenClaw and other competitors",
+          "dependencies": [
+            "step-213"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "benchmarks/message-latency.js",
+            "benchmarks/throughput.js",
+            "benchmarks/memory-usage.js",
+            "benchmarks/README.md"
+          ]
+        },
+        {
+          "id": "step-216",
+          "phase": 4,
+          "title": "APM (Application Performance Monitoring)",
+          "description": "Set up APM with performance alerts and SLOs",
+          "dependencies": [
+            "step-210"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/monitoring/apm.ts",
+            "config/slos.yaml"
+          ],
+          "notes": "99.9% uptime, <2s p95 latency, <5% error rate"
+        },
+        {
+          "id": "step-217",
+          "phase": 4,
+          "title": "Unit Test Coverage >80%",
+          "description": "Write unit tests to achieve >80% code coverage across all packages",
+          "dependencies": [
+            "step-035"
+          ],
+          "estimatedHours": 40,
+          "status": "pending"
+        },
+        {
+          "id": "step-218",
+          "phase": 4,
+          "title": "Integration Test Suite",
+          "description": "End-to-end integration tests for all major flows",
+          "dependencies": [
+            "step-036"
+          ],
+          "estimatedHours": 32,
+          "status": "pending",
+          "files": [
+            "tests/integration/agent-lifecycle.test.ts",
+            "tests/integration/marketplace.test.ts",
+            "tests/integration/cost-tracking.test.ts",
+            "tests/integration/modes.test.ts"
+          ],
+          "notes": "30+ integration test scenarios"
+        },
+        {
+          "id": "step-219",
+          "phase": 4,
+          "title": "E2E Tests (Playwright Full Suite)",
+          "description": "Complete Playwright E2E test suite for dashboard and workflows",
+          "dependencies": [
+            "step-069"
+          ],
+          "estimatedHours": 48,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/tests/e2e/onboarding.spec.ts",
+            "packages/dashboard/tests/e2e/agent-creation.spec.ts",
+            "packages/dashboard/tests/e2e/marketplace.spec.ts",
+            "packages/dashboard/tests/e2e/cost-xray.spec.ts",
+            "packages/dashboard/tests/e2e/modes.spec.ts"
+          ],
+          "notes": "60+ E2E test scenarios"
+        },
+        {
+          "id": "step-220",
+          "phase": 4,
+          "title": "Load Tests (k6)",
+          "description": "Comprehensive load testing scenarios",
+          "dependencies": [
+            "step-213"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "tests/load/scenarios/spike.js",
+            "tests/load/scenarios/soak.js",
+            "tests/load/scenarios/stress.js"
+          ],
+          "notes": "Spike test, soak test (24h), stress test"
+        },
+        {
+          "id": "step-221",
+          "phase": 4,
+          "title": "Stress Tests",
+          "description": "Chaos engineering and failure scenarios",
+          "dependencies": [
+            "step-214"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "tests/stress/chaos/network-partition.js",
+            "tests/stress/chaos/database-failure.js",
+            "tests/stress/chaos/api-timeout.js"
+          ],
+          "notes": "Network partition, DB failure, API timeout, OOM"
+        },
+        {
+          "id": "step-222",
+          "phase": 4,
+          "title": "Security Tests (OWASP ZAP)",
+          "description": "Automated security testing with OWASP ZAP",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "tests/security/zap-scan.sh",
+            "tests/security/api-security.test.ts"
+          ],
+          "commands": [
+            "docker run owasp/zap2docker-stable"
+          ],
+          "notes": "XSS, SQL injection, CSRF, auth bypass"
+        },
+        {
+          "id": "step-223",
+          "phase": 4,
+          "title": "Chaos Engineering Tests",
+          "description": "Chaos Monkey-style resilience testing",
+          "dependencies": [
+            "step-221"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "tests/chaos/pod-killer.js",
+            "tests/chaos/latency-injector.js",
+            "tests/chaos/disk-filler.js"
+          ],
+          "notes": "Chaos Mesh, Litmus Chaos"
+        },
+        {
+          "id": "step-224",
+          "phase": 4,
+          "title": "Accessibility Tests (axe-core)",
+          "description": "Automated accessibility testing with axe-core",
+          "dependencies": [
+            "step-069"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/tests/a11y/wcag.spec.ts",
+            "packages/dashboard/tests/a11y/keyboard-nav.spec.ts"
+          ],
+          "commands": [
+            "pnpm add -D @axe-core/playwright"
+          ],
+          "notes": "WCAG 2.1 AA compliance"
+        },
+        {
+          "id": "step-225",
+          "phase": 4,
+          "title": "Mobile Responsive Tests",
+          "description": "Test responsive design across devices",
+          "dependencies": [
+            "step-068"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/tests/responsive/mobile.spec.ts",
+            "packages/dashboard/tests/responsive/tablet.spec.ts"
+          ],
+          "notes": "iPhone SE, iPhone 12, iPad, Samsung Galaxy"
+        },
+        {
+          "id": "step-226",
+          "phase": 4,
+          "title": "Browser Compatibility Tests",
+          "description": "Test across Chrome, Firefox, Safari, Edge",
+          "dependencies": [
+            "step-069"
+          ],
+          "estimatedHours": 16,
+          "status": "pending"
+        },
+        {
+          "id": "step-227",
+          "phase": 4,
+          "title": "API Contract Tests",
+          "description": "Test API contracts with Pact or similar",
+          "dependencies": [
+            "step-043"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "tests/contracts/runtime-api.pact.ts",
+            "tests/contracts/dashboard-api.pact.ts"
+          ],
+          "commands": [
+            "pnpm add @pact-foundation/pact"
+          ]
+        },
+        {
+          "id": "step-228",
+          "phase": 4,
+          "title": "Snapshot Tests",
+          "description": "Component snapshot testing to catch unintended UI changes",
+          "dependencies": [
+            "step-035"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/components/**/__snapshots__/"
+          ],
+          "notes": "Vitest snapshot testing"
+        },
+        {
+          "id": "step-229",
+          "phase": 4,
+          "title": "API Reference (OpenAPI/Swagger)",
+          "description": "Complete OpenAPI specification for all API endpoints",
+          "dependencies": [
+            "step-043"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "docs/api/openapi.yaml",
+            "docs/api/swagger-ui.html"
+          ],
+          "notes": "50+ documented endpoints with examples"
+        },
+        {
+          "id": "step-230",
+          "phase": 4,
+          "title": "SDK Complete Documentation",
+          "description": "Comprehensive SDK documentation with examples",
+          "dependencies": [
+            "step-006"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/sdk/README.md",
+            "packages/sdk/docs/getting-started.md",
+            "packages/sdk/docs/api-reference.md",
+            "packages/sdk/docs/examples/"
+          ],
+          "notes": "30+ code examples"
+        },
+        {
+          "id": "step-231",
+          "phase": 4,
+          "title": "All Architecture Diagrams",
+          "description": "Complete architecture diagrams for all components",
+          "dependencies": [
+            "step-038"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "docs/diagrams/message-pipeline.svg",
+            "docs/diagrams/model-router.svg",
+            "docs/diagrams/memory-architecture.svg",
+            "docs/diagrams/security-layers.svg",
+            "docs/diagrams/deployment.svg"
+          ],
+          "notes": "Excalidraw, draw.io, Mermaid"
+        },
+        {
+          "id": "step-233",
+          "phase": 4,
+          "title": "Troubleshooting Guide Complete",
+          "description": "Comprehensive troubleshooting guide",
+          "dependencies": [
+            "step-037"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "docs/troubleshooting.md",
+            "docs/troubleshooting/installation.md",
+            "docs/troubleshooting/runtime.md",
+            "docs/troubleshooting/dashboard.md",
+            "docs/troubleshooting/skills.md"
+          ],
+          "notes": "100+ common issues with solutions"
+        },
+        {
+          "id": "step-234",
+          "phase": 4,
+          "title": "Security Whitepaper",
+          "description": "Detailed security whitepaper for enterprise buyers",
+          "dependencies": [
+            "step-199",
+            "step-208"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "docs/security/whitepaper.pdf",
+            "docs/security/whitepaper.md"
+          ],
+          "notes": "Threat model, security layers, incident response, compliance"
+        },
+        {
+          "id": "step-235",
+          "phase": 4,
+          "title": "Compliance Documentation",
+          "description": "Documentation for SOC 2, ISO 27001, GDPR, HIPAA",
+          "dependencies": [
+            "step-119"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "docs/compliance/soc2.md",
+            "docs/compliance/iso27001.md",
+            "docs/compliance/gdpr.md",
+            "docs/compliance/hipaa.md"
+          ]
+        },
+        {
+          "id": "step-236",
+          "phase": 4,
+          "title": "Deployment Guides (AWS/GCP/Azure)",
+          "description": "Step-by-step deployment guides for major cloud providers",
+          "dependencies": [
+            "step-123"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "docs/deployment/aws.md",
+            "docs/deployment/gcp.md",
+            "docs/deployment/azure.md",
+            "docs/deployment/digitalocean.md",
+            "docs/deployment/hetzner.md"
+          ]
+        },
+        {
+          "id": "step-237",
+          "phase": 4,
+          "title": "Best Practices Guide",
+          "description": "Best practices for agents, skills, security, performance",
+          "dependencies": [
+            "step-037"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "docs/best-practices/agents.md",
+            "docs/best-practices/skills.md",
+            "docs/best-practices/security.md",
+            "docs/best-practices/performance.md",
+            "docs/best-practices/cost-optimization.md"
+          ]
+        },
+        {
+          "id": "step-238",
+          "phase": 4,
+          "title": "Social Media Content Calendar",
+          "description": "3-month social media calendar across all platforms",
+          "dependencies": [
+            "step-139"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "marketing/social/calendar.md",
+            "marketing/social/twitter-threads.md",
+            "marketing/social/linkedin-posts.md",
+            "marketing/social/reddit-posts.md"
+          ]
+        },
+        {
+          "id": "step-239",
+          "phase": 4,
+          "title": "Press Kit Complete",
+          "description": "Complete press kit with logos, screenshots, fact sheet",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "marketing/press-kit/fact-sheet.pdf"
+          ]
+        },
+        {
+          "id": "step-240",
+          "phase": 4,
+          "title": "Demo Video Suite (10 Videos)",
+          "description": "Professional demo videos for each major feature",
+          "dependencies": [
+            "step-145"
+          ],
+          "estimatedHours": 40,
+          "status": "pending",
+          "files": [
+            "marketing/videos/01-overview.mp4",
+            "marketing/videos/02-dashboard.mp4",
+            "marketing/videos/03-cost-xray.mp4",
+            "marketing/videos/04-multi-model.mp4",
+            "marketing/videos/05-marketplace.mp4",
+            "marketing/videos/06-modes.mp4",
+            "marketing/videos/07-security.mp4",
+            "marketing/videos/08-automations.mp4",
+            "marketing/videos/09-enterprise.mp4",
+            "marketing/videos/10-vs-openclaw.mp4"
+          ],
+          "notes": "2-5 minutes each"
+        },
+        {
+          "id": "step-241",
+          "phase": 4,
+          "title": "Case Studies (5 Industries)",
+          "description": "Detailed case studies from 5 different industries",
+          "dependencies": [
+            "step-070"
+          ],
+          "estimatedHours": 30,
+          "status": "pending",
+          "files": [
+            "marketing/case-studies/saas-company.md",
+            "marketing/case-studies/ecommerce-store.md",
+            "marketing/case-studies/dev-team.md",
+            "marketing/case-studies/content-creator.md",
+            "marketing/case-studies/enterprise.md"
+          ],
+          "notes": "Challenge, solution, results with metrics"
+        },
+        {
+          "id": "step-242",
+          "phase": 4,
+          "title": "Landing Page A/B Variants",
+          "description": "Create 3 A/B test variants of landing page",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 20,
+          "status": "pending"
+        },
+        {
+          "id": "step-243",
+          "phase": 4,
+          "title": "Email Drip Campaigns",
+          "description": "Automated email campaigns for onboarding, engagement, conversion",
+          "dependencies": [
+            "step-137"
+          ],
+          "estimatedHours": 18,
+          "status": "pending"
+        },
+        {
+          "id": "step-244",
+          "phase": 4,
+          "title": "Webinar Series Setup",
+          "description": "Plan and promote monthly webinar series",
+          "dependencies": [
+            "step-141"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "marketing/webinars/schedule.md",
+            "marketing/webinars/webinar-1-intro.md",
+            "marketing/webinars/webinar-2-advanced.md",
+            "marketing/webinars/webinar-3-enterprise.md"
+          ]
+        },
+        {
+          "id": "step-245",
+          "phase": 4,
+          "title": "Community Guidelines & Swag",
+          "description": "Finalize community guidelines and design contributor swag",
+          "dependencies": [
+            "step-142"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "COMMUNITY_GUIDELINES.md",
+            "CODE_OF_CONDUCT.md"
+          ]
+        },
+        {
+          "id": "step-246",
+          "phase": 4,
+          "title": "Launch Week Plan",
+          "description": "Detailed hour-by-hour plan for launch week",
+          "dependencies": [
+            "step-146",
+            "step-245"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "marketing/launch-week/day-1-product-hunt.md",
+            "marketing/launch-week/day-2-hacker-news.md",
+            "marketing/launch-week/day-3-reddit.md",
+            "marketing/launch-week/day-4-twitter.md",
+            "marketing/launch-week/day-5-influencers.md"
+          ]
+        },
+        {
+          "id": "step-247",
+          "phase": 4,
+          "title": "Phase 4 Complete - End-to-End Verification",
+          "description": "Final verification that ALL 247 steps are complete and working - All tests passing (unit, integration, E2E, load, security), documentation complete, marketing assets ready",
+          "dependencies": [
+            "step-238",
+            "step-239",
+            "step-240",
+            "step-241",
+            "step-242",
+            "step-243",
+            "step-244",
+            "step-245",
+            "step-246"
+          ],
+          "estimatedHours": 16,
+          "status": "pending"
+        },
+        {
+          "id": "step-248",
+          "phase": 4,
+          "title": "FORGE GitHub Integration",
+          "description": "Install and integrate FORGE from GitHub repository during Agentik OS installation to always have latest version",
+          "dependencies": [
+            "step-001"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/installer/src/forge-installer.ts",
+            "packages/installer/src/forge-updater.ts"
+          ],
+          "commands": [
+            "git clone https://github.com/agentik-os/forge.git",
+            "cd forge && pnpm install && pnpm build"
+          ]
+        },
+        {
+          "id": "step-249",
+          "phase": 4,
+          "title": "FORGE CLI Integration",
+          "description": "Expose FORGE commands through Agentik OS CLI (agentik forge)",
+          "dependencies": [
+            "step-248"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/forge.ts",
+            "packages/cli/src/commands/forge/discovery.ts",
+            "packages/cli/src/commands/forge/branding.ts",
+            "packages/cli/src/commands/forge/prd.ts",
+            "packages/cli/src/commands/forge/build.ts"
+          ]
+        },
+        {
+          "id": "step-250",
+          "phase": 4,
+          "title": "FORGE Dashboard UI",
+          "description": "Create dashboard interface for FORGE workflow with live team progress",
+          "dependencies": [
+            "step-249",
+            "step-041"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/src/app/(authenticated)/forge/page.tsx",
+            "packages/dashboard/src/app/(authenticated)/forge/components/discovery-wizard.tsx",
+            "packages/dashboard/src/app/(authenticated)/forge/components/team-progress.tsx",
+            "packages/dashboard/src/app/(authenticated)/forge/components/code-preview.tsx"
+          ]
+        },
+        {
+          "id": "step-251",
+          "phase": 4,
+          "title": "FORGE Auto-Update System",
+          "description": "Implement automatic update check and installation for FORGE from GitHub releases",
+          "dependencies": [
+            "step-248"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/updater/src/forge-auto-update.ts"
+          ],
+          "commands": [
+            "agentik forge update"
+          ]
+        },
+        {
+          "id": "step-252",
+          "phase": 4,
+          "title": "FORGE Team Spawn Integration",
+          "description": "Integrate FORGE autonomous team building with Agentik OS multi-agent system",
+          "dependencies": [
+            "step-250",
+            "step-019"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/runtime/src/forge/team-spawner.ts",
+            "packages/runtime/src/forge/guardian-agent.ts"
+          ]
+        },
+        {
+          "id": "step-253",
+          "phase": 4,
+          "title": "FORGE Cost Tracking",
+          "description": "Integrate FORGE team costs with Cost X-Ray for per-agent expense tracking",
+          "dependencies": [
+            "step-252",
+            "step-029"
+          ],
+          "estimatedHours": 8,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/src/app/(authenticated)/forge/components/forge-cost-tracker.tsx"
+          ]
+        },
+        {
+          "id": "step-254",
+          "phase": 4,
+          "title": "Project Creator Agent Core",
+          "description": "Create the main Project Creator Agent with state machine workflow (Discovery → Branding → PRD → Stack → Team → QA → Deploy)",
+          "dependencies": [
+            "step-019",
+            "step-028"
+          ],
+          "estimatedHours": 32,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/index.ts",
+            "packages/agents/project-creator/state-machine.ts",
+            "packages/agents/project-creator/types.ts"
+          ]
+        },
+        {
+          "id": "step-255",
+          "phase": 4,
+          "title": "Discovery Phase Implementation",
+          "description": "Implement conversational discovery phase with strategic questions and PROJECT_DISCOVERY.json output",
+          "dependencies": [
+            "step-254"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/discovery.ts",
+            "packages/agents/project-creator/prompts/discovery-questions.md"
+          ]
+        },
+        {
+          "id": "step-256",
+          "phase": 4,
+          "title": "Branding Phase Implementation",
+          "description": "Implement branding generation (names, color palettes oklch, positioning) with BRANDING.json output",
+          "dependencies": [
+            "step-255"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/branding.ts",
+            "packages/agents/project-creator/templates/color-palettes.ts"
+          ]
+        },
+        {
+          "id": "step-257",
+          "phase": 4,
+          "title": "PRD Generation Phase",
+          "description": "Implement comprehensive PRD generation with user stories, architecture, success metrics",
+          "dependencies": [
+            "step-256"
+          ],
+          "estimatedHours": 20,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/prd.ts",
+            "packages/agents/project-creator/templates/prd-template.md"
+          ]
+        },
+        {
+          "id": "step-258",
+          "phase": 4,
+          "title": "Smart Stack Selection",
+          "description": "Implement intelligent stack selection with reasoning, alternatives, and trade-offs analysis",
+          "dependencies": [
+            "step-257"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/stack.ts",
+            "packages/agents/project-creator/templates/stack-configs/"
+          ]
+        },
+        {
+          "id": "step-259",
+          "phase": 4,
+          "title": "Team Spawning & Coordination",
+          "description": "Implement AI team spawning (Guardian, Frontend, Backend, Designer, QA) with parallel execution and coordination",
+          "dependencies": [
+            "step-258",
+            "step-252"
+          ],
+          "estimatedHours": 28,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/team.ts",
+            "packages/agents/project-creator/coordination/team-spawner.ts",
+            "packages/agents/project-creator/coordination/guardian.ts"
+          ]
+        },
+        {
+          "id": "step-260",
+          "phase": 4,
+          "title": "QA Orchestration",
+          "description": "Implement QA phase with MANIAC integration, test validation, and iteration loop",
+          "dependencies": [
+            "step-259"
+          ],
+          "estimatedHours": 16,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/qa.ts",
+            "packages/agents/project-creator/qa/maniac-integration.ts"
+          ]
+        },
+        {
+          "id": "step-261",
+          "phase": 4,
+          "title": "Deployment & Handoff",
+          "description": "Implement deployment to Vercel/Netlify and handoff package generation (docs, cost breakdown, next steps)",
+          "dependencies": [
+            "step-260"
+          ],
+          "estimatedHours": 14,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/phases/deploy.ts",
+            "packages/agents/project-creator/handoff/package-generator.ts"
+          ]
+        },
+        {
+          "id": "step-262",
+          "phase": 4,
+          "title": "Project Creator Dashboard UI",
+          "description": "Create dashboard interface for Project Creator with live workflow progress, team monitoring, and approval gates",
+          "dependencies": [
+            "step-261",
+            "step-250"
+          ],
+          "estimatedHours": 26,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/src/app/(authenticated)/create-project/page.tsx",
+            "packages/dashboard/src/app/(authenticated)/create-project/components/workflow-stepper.tsx",
+            "packages/dashboard/src/app/(authenticated)/create-project/components/team-monitor.tsx",
+            "packages/dashboard/src/app/(authenticated)/create-project/components/approval-gate.tsx"
+          ]
+        },
+        {
+          "id": "step-263",
+          "phase": 4,
+          "title": "Project Creator CLI Integration",
+          "description": "Expose Project Creator through CLI (agentik create) with interactive mode",
+          "dependencies": [
+            "step-261"
+          ],
+          "estimatedHours": 12,
+          "status": "pending",
+          "files": [
+            "packages/cli/src/commands/create.ts",
+            "packages/cli/src/commands/create/interactive.ts"
+          ]
+        },
+        {
+          "id": "step-264",
+          "phase": 4,
+          "title": "Project Templates Library",
+          "description": "Create library of project templates (SaaS, E-commerce, Blog, API, Chrome Extension) for faster scaffolding",
+          "dependencies": [
+            "step-261"
+          ],
+          "estimatedHours": 24,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/templates/saas/",
+            "packages/agents/project-creator/templates/ecommerce/",
+            "packages/agents/project-creator/templates/blog/",
+            "packages/agents/project-creator/templates/api/",
+            "packages/agents/project-creator/templates/chrome-extension/"
+          ]
+        },
+        {
+          "id": "step-265",
+          "phase": 4,
+          "title": "Project Creator Cost Tracking",
+          "description": "Integrate Project Creator costs with Cost X-Ray for detailed per-phase breakdown",
+          "dependencies": [
+            "step-262",
+            "step-253"
+          ],
+          "estimatedHours": 10,
+          "status": "pending",
+          "files": [
+            "packages/dashboard/src/app/(authenticated)/create-project/components/cost-breakdown.tsx"
+          ]
+        },
+        {
+          "id": "step-266",
+          "phase": 4,
+          "title": "Project Creator E2E Tests",
+          "description": "Comprehensive E2E tests for Project Creator workflow covering all phases and edge cases",
+          "dependencies": [
+            "step-263"
+          ],
+          "estimatedHours": 18,
+          "status": "pending",
+          "files": [
+            "packages/agents/project-creator/tests/e2e/full-workflow.test.ts",
+            "packages/agents/project-creator/tests/e2e/approval-gates.test.ts",
+            "packages/agents/project-creator/tests/e2e/team-coordination.test.ts"
+          ]
+        }
+      ],
+      "totalSteps": 138,
+      "estimatedHours": 2502
+    }
+  ],
+  "milestones": [
+    {
+      "id": "milestone-1",
+      "name": "Phase 0 Complete: Foundation Ready",
+      "description": "Monorepo set up, runtime working, basic CLI functional",
+      "targetDate": "Month 2",
+      "dependencies": [
+        "step-040"
+      ]
+    },
+    {
+      "id": "milestone-2",
+      "name": "Phase 1 Complete: Core Features Launched",
+      "description": "Dashboard live, Cost X-Ray working, Telegram bot responding",
+      "targetDate": "Month 5",
+      "dependencies": [
+        "step-070"
+      ]
+    },
+    {
+      "id": "milestone-3",
+      "name": "Phase 2 Complete: Advanced Features Released",
+      "description": "Marketplace launched with 100+ agents, modes activated, consensus running",
+      "targetDate": "Month 9",
+      "dependencies": [
+        "step-100"
+      ]
+    },
+    {
+      "id": "milestone-4",
+      "name": "Phase 3 Complete: Enterprise Ready",
+      "description": "SSO working, dreams executing",
+      "targetDate": "Month 12",
+      "dependencies": [
+        "step-127"
+      ]
+    },
+    {
+      "id": "milestone-5",
+      "name": "100K GitHub Stars",
+      "description": "Reach 100,000 GitHub stars",
+      "targetDate": "Month 12",
+      "dependencies": [
+        "step-150"
+      ]
+    },
+    {
+      "id": "milestone-6",
+      "name": "1,000 Certified Developers",
+      "description": "1,000+ developers certified (AOCD, AOCM, AOCE, AOCT)",
+      "targetDate": "Year 2",
+      "dependencies": [
+        "step-133"
+      ]
+    },
+    {
+      "id": "milestone-7",
+      "name": "$1M ARR from Cloud Plans",
+      "description": "Reach $1M annual recurring revenue from cloud subscriptions",
+      "targetDate": "Month 12",
+      "dependencies": [
+        "step-075"
+      ]
+    }
+  ],
+  "tags": [
+    "ai-agents",
+    "multi-model",
+    "mcp",
+    "self-hosted",
+    "open-source",
+    "typescript",
+    "next.js",
+    "marketplace",
+    "automation",
+    "cost-tracking"
+  ],
+  "techStack": {
+    "frontend": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Recharts"
+    ],
+    "backend": [
+      "Node.js 20+",
+      "Express",
+      "Convex"
+    ],
+    "runtime": [
+      "Turborepo",
+      "TypeScript",
+      "Vitest",
+      "Anthropic SDK",
+      "OpenAI SDK",
+      "Google AI SDK",
+      "Ollama"
+    ],
+    "infrastructure": [
+      "Docker",
+      "Kubernetes",
+      "Prometheus",
+      "Sentry"
+    ],
+    "security": [
+      "Extism (WASM)",
+      "gVisor",
+      "Kata Containers",
+      "Semgrep",
+      "Bandit"
+    ]
+  },
+  "risks": [
+    {
+      "risk": "OpenClaw releases major update before launch",
+      "mitigation": "Emphasize unique features (multi-model, dashboard, security) that OpenClaw lacks",
+      "probability": "Medium",
+      "impact": "Medium"
+    },
+    {
+      "risk": "LLM API pricing changes significantly",
+      "mitigation": "Cost X-Ray provides transparency, Ollama support for local models",
+      "probability": "High",
+      "impact": "Medium"
+    },
+    {
+      "risk": "Security vulnerability in skill sandbox",
+      "mitigation": "Multi-layer security (WASM, gVisor, Kata), bug bounty program",
+      "probability": "Medium",
+      "impact": "Critical"
+    },
+    {
+      "risk": "Developer adoption slower than expected",
+      "mitigation": "Strong developer experience, certification program, revenue sharing",
+      "probability": "Medium",
+      "impact": "High"
+    },
+    {
+      "risk": "Scaling challenges with marketplace",
+      "mitigation": "Start with manual review, automate gradually, Cloudflare CDN",
+      "probability": "Low",
+      "impact": "Medium"
+    }
+  ],
+  "notes": "Updated: Convex-only backend. Removed SQLite/Supabase adapters, added Convex implementation (54h). Total: 261 steps, 4170h. Updated: 2026-02-13"
+}

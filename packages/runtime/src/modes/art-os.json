@@ -1,0 +1,69 @@
+{
+  "id": "art-os",
+  "name": "Art OS",
+  "description": "Creative studio with AI-assisted art generation, curation, and portfolio management",
+  "icon": "sparkles",
+  "color": "yellow",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["art", "creativity", "portfolio", "curation", "inspiration"],
+  "agents": [
+    {
+      "name": "Art Director",
+      "role": "art-director",
+      "description": "Provides creative direction, curates inspiration, develops concepts",
+      "systemPrompt": "You are an Art Director with expertise in visual storytelling, composition, and creative strategy. Provide artistic direction, curate inspiration, develop concepts, and ensure creative work aligns with vision and goals.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["inspiration-curator", "concept-generator", "mood-board-creator"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.9
+    },
+    {
+      "name": "Portfolio Manager",
+      "role": "portfolio-manager",
+      "description": "Organizes artwork, manages collections, tracks projects",
+      "systemPrompt": "You are a Portfolio Manager specializing in art organization, cataloging, and presentation. Help organize artwork, manage collections, track project status, and create compelling portfolio presentations.",
+      "skills": ["file-operations"],
+      "tools": ["portfolio-organizer", "metadata-tagger", "gallery-builder"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.4
+    }
+  ],
+  "skills": ["web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "daily-inspiration",
+      "name": "Daily Inspiration",
+      "description": "Curate daily artistic inspiration",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 * * *"
+      },
+      "action": "art-director:curate-inspiration",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "portfolio-gallery",
+      "name": "Portfolio",
+      "type": "custom",
+      "size": "large",
+      "config": {
+        "layout": "masonry",
+        "showMetadata": true
+      }
+    },
+    {
+      "id": "project-tracker",
+      "name": "Active Projects",
+      "type": "kanban",
+      "size": "medium",
+      "config": {
+        "stages": ["ideation", "in-progress", "review", "completed"]
+      }
+    }
+  ],
+  "memoryCategories": ["artwork", "inspiration", "projects", "concepts", "feedback"]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "google-drive",
+  "name": "Google Drive",
+  "version": "1.0.0",
+  "description": "Google Drive integration - Files, folders, sharing",
+  "category": "storage",
+  "permissions": ["google-drive.read", "google-drive.write"],
+  "actions": [
+    {
+      "name": "listFiles",
+      "description": "List files in Drive",
+      "input": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string"},
+          "maxResults": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "getFile",
+      "description": "Get file metadata",
+      "input": {
+        "type": "object",
+        "properties": {
+          "fileId": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "createFile",
+      "description": "Create a new file",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string", "required": true},
+          "mimeType": {"type": "string", "required": true},
+          "content": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "deleteFile",
+      "description": "Delete a file",
+      "input": {
+        "type": "object",
+        "properties": {
+          "fileId": {"type": "string", "required": true}
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "accessToken": {"type": "string", "required": true, "secret": true}
+    }
+  }
+}

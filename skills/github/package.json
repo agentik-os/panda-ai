@@ -1,0 +1,32 @@
+{
+  "name": "@agentik-os/skill-github",
+  "version": "1.0.0",
+  "description": "GitHub skill for Agentik OS - Repositories, Issues, PRs, Workflows",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik",
+    "skill",
+    "github",
+    "git",
+    "repositories",
+    "issues",
+    "pull-requests",
+    "workflows"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^21.1.1"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

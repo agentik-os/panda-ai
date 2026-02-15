@@ -1,0 +1,194 @@
+{
+  "id": "notion",
+  "name": "Notion",
+  "version": "1.0.0",
+  "description": "Create, read, update Notion pages and databases",
+  "permissions": ["notion.read", "notion.write"],
+  "actions": [
+    {
+      "name": "listDatabases",
+      "description": "List all databases accessible to the integration",
+      "params": {
+        "type": "object",
+        "properties": {
+          "pageSize": {
+            "type": "number",
+            "description": "Number of results per page (max 100)"
+          }
+        }
+      }
+    },
+    {
+      "name": "getDatabase",
+      "description": "Get database details by ID",
+      "params": {
+        "type": "object",
+        "properties": {
+          "databaseId": {
+            "type": "string",
+            "description": "Database ID",
+            "required": true
+          }
+        },
+        "required": ["databaseId"]
+      }
+    },
+    {
+      "name": "queryDatabase",
+      "description": "Query database entries with filters and sorts",
+      "params": {
+        "type": "object",
+        "properties": {
+          "databaseId": {
+            "type": "string",
+            "description": "Database ID",
+            "required": true
+          },
+          "filter": {
+            "type": "object",
+            "description": "Filter conditions"
+          },
+          "sorts": {
+            "type": "array",
+            "description": "Sort criteria"
+          },
+          "pageSize": {
+            "type": "number",
+            "description": "Number of results per page"
+          }
+        },
+        "required": ["databaseId"]
+      }
+    },
+    {
+      "name": "createPage",
+      "description": "Create a new page in a database or as a child of another page",
+      "params": {
+        "type": "object",
+        "properties": {
+          "parent": {
+            "type": "object",
+            "description": "Parent database or page",
+            "required": true
+          },
+          "properties": {
+            "type": "object",
+            "description": "Page properties",
+            "required": true
+          },
+          "children": {
+            "type": "array",
+            "description": "Page content blocks"
+          }
+        },
+        "required": ["parent", "properties"]
+      }
+    },
+    {
+      "name": "getPage",
+      "description": "Get page details by ID",
+      "params": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string",
+            "description": "Page ID",
+            "required": true
+          }
+        },
+        "required": ["pageId"]
+      }
+    },
+    {
+      "name": "updatePage",
+      "description": "Update page properties",
+      "params": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string",
+            "description": "Page ID",
+            "required": true
+          },
+          "properties": {
+            "type": "object",
+            "description": "Properties to update",
+            "required": true
+          }
+        },
+        "required": ["pageId", "properties"]
+      }
+    },
+    {
+      "name": "archivePage",
+      "description": "Archive a page",
+      "params": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string",
+            "description": "Page ID",
+            "required": true
+          }
+        },
+        "required": ["pageId"]
+      }
+    },
+    {
+      "name": "getPageBlocks",
+      "description": "Get page content blocks",
+      "params": {
+        "type": "object",
+        "properties": {
+          "blockId": {
+            "type": "string",
+            "description": "Block ID (page ID for root blocks)",
+            "required": true
+          }
+        },
+        "required": ["blockId"]
+      }
+    },
+    {
+      "name": "appendBlocks",
+      "description": "Append content blocks to a page",
+      "params": {
+        "type": "object",
+        "properties": {
+          "blockId": {
+            "type": "string",
+            "description": "Parent block ID",
+            "required": true
+          },
+          "children": {
+            "type": "array",
+            "description": "Blocks to append",
+            "required": true
+          }
+        },
+        "required": ["blockId", "children"]
+      }
+    },
+    {
+      "name": "search",
+      "description": "Search all pages and databases",
+      "params": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "filter": {
+            "type": "object",
+            "description": "Filter by object type (page or database)"
+          },
+          "pageSize": {
+            "type": "number",
+            "description": "Number of results per page"
+          }
+        }
+      }
+    }
+  ]
+}

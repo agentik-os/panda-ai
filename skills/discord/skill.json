@@ -1,0 +1,38 @@
+{
+  "id": "discord",
+  "name": "Discord Bot",
+  "version": "1.0.0",
+  "description": "Manage Discord servers, send messages, create channels, and interact with Discord API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["discord", "messaging", "community", "gaming", "api"],
+  "permissions": [
+    "network:https:discord.com",
+    "network:https:discordapp.com",
+    "api:discord",
+    "kv:read:discord:*",
+    "kv:write:discord:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 50,
+    "windowMs": 1000
+  },
+  "config": {
+    "botToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Discord Bot Token"
+    },
+    "applicationId": {
+      "type": "string",
+      "required": true,
+      "description": "Discord Application ID"
+    }
+  },
+  "dependencies": {
+    "discord.js": "^14.16.0"
+  },
+  "license": "MIT"
+}

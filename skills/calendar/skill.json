@@ -1,0 +1,58 @@
+{
+  "id": "google-calendar",
+  "name": "Google Calendar",
+  "version": "1.0.0",
+  "description": "Manage Google Calendar events, schedules, and availability with OAuth2 authentication",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "permissions": [
+    "network:https:www.googleapis.com",
+    "network:https:oauth2.googleapis.com",
+    "api:google:calendar",
+    "fs:read:~/.agentik-os/data/credentials/google-calendar.json",
+    "fs:write:~/.agentik-os/data/credentials/google-calendar.json",
+    "kv:read:google_calendar:*",
+    "kv:write:google_calendar:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 600,
+    "windowMs": 60000
+  },
+  "config": {
+    "clientId": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Google OAuth2 Client ID"
+    },
+    "clientSecret": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Google OAuth2 Client Secret"
+    },
+    "redirectUri": {
+      "type": "string",
+      "required": false,
+      "default": "http://localhost:3000/oauth/callback",
+      "description": "OAuth2 redirect URI"
+    },
+    "defaultCalendar": {
+      "type": "string",
+      "required": false,
+      "default": "primary",
+      "description": "Default calendar ID to use"
+    },
+    "timeZone": {
+      "type": "string",
+      "required": false,
+      "default": "America/Los_Angeles",
+      "description": "Default timezone for events"
+    }
+  },
+  "dependencies": {
+    "googleapis": "^152.0.0",
+    "luxon": "^3.5.0"
+  },
+  "tags": ["calendar", "google", "scheduling", "oauth2", "events"]
+}

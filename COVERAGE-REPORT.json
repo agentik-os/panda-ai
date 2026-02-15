@@ -1,0 +1,163 @@
+{
+  "generatedAt": "2026-02-14T14:15:00Z",
+  "generatedBy": "testing-lead",
+  "packages": {
+    "runtime": {
+      "statements": 71.27,
+      "branches": 63.07,
+      "functions": 76.93,
+      "lines": 71.77,
+      "testFiles": 49,
+      "tests": 832,
+      "skipped": 1,
+      "status": "near-target",
+      "criticalGaps": [
+        {"file": "src/automations/intent-classifier.ts", "coverage": 0},
+        {"file": "src/websocket/server.ts", "coverage": 25.64},
+        {"file": "src/convex-client.ts", "coverage": 14.28},
+        {"file": "src/pipeline/load-memory.ts", "coverage": 18.18},
+        {"file": "src/pipeline/orchestrator.ts", "coverage": 26.66}
+      ],
+      "mediumGaps": [
+        {"file": "src/channels/cli.ts", "coverage": 45.16},
+        {"file": "src/channels/discord.ts", "coverage": 48.29},
+        {"file": "src/channels/telegram.ts", "coverage": 50.73},
+        {"file": "src/channels/webhook.ts", "coverage": 45.28},
+        {"file": "src/automations/parser.ts", "coverage": 53.46},
+        {"file": "src/storage/convex-adapter.ts", "coverage": 53.42}
+      ]
+    },
+    "cli": {
+      "statements": 48.17,
+      "branches": 44.44,
+      "functions": 55.83,
+      "lines": 47.75,
+      "testFiles": 9,
+      "tests": 122,
+      "status": "needs-work",
+      "criticalGaps": [
+        {"file": "src/index.ts", "coverage": 0},
+        {"file": "src/commands/deploy.ts", "coverage": 0},
+        {"file": "src/commands/metrics.ts", "coverage": 0},
+        {"file": "src/commands/publish.ts", "coverage": 0},
+        {"file": "src/commands/skill/install.ts", "coverage": 0},
+        {"file": "src/commands/skill/list.ts", "coverage": 0},
+        {"file": "src/commands/skill/uninstall.ts", "coverage": 0},
+        {"file": "src/ui/chat-interface.ts", "coverage": 0},
+        {"file": "src/utils/skill-validator.ts", "coverage": 0},
+        {"file": "src/utils/uploader.ts", "coverage": 0}
+      ],
+      "mediumGaps": [
+        {"file": "src/commands/init.ts", "coverage": 35.71}
+      ]
+    },
+    "dashboard": {
+      "statements": null,
+      "branches": null,
+      "functions": null,
+      "lines": null,
+      "testFiles": 7,
+      "tests": null,
+      "testType": "e2e-only",
+      "status": "no-unit-tests",
+      "note": "7 Playwright E2E test files exist, no unit tests"
+    },
+    "sdk": {
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0,
+      "testFiles": 0,
+      "tests": 0,
+      "status": "no-tests",
+      "sourceFiles": ["src/index.ts", "src/types.ts", "src/SkillBase.ts"]
+    },
+    "skills": {
+      "google-calendar": {
+        "testFiles": 2,
+        "tests": 60,
+        "status": "good",
+        "estimatedCoverage": "90+"
+      },
+      "file-ops": {
+        "testFiles": 1,
+        "tests": 140,
+        "status": "good",
+        "estimatedCoverage": "90+"
+      },
+      "web-search": {
+        "status": "has-tests",
+        "estimatedCoverage": "80+"
+      },
+      "other-skills": {
+        "count": 17,
+        "status": "needs-tests",
+        "estimatedCoverage": 0
+      }
+    }
+  },
+  "overall": {
+    "testFiles": 68,
+    "tests": 1154,
+    "skipped": 1,
+    "estimatedCoverage": "60-70%",
+    "target": ">80%",
+    "gap": "10-20%",
+    "status": "below-target"
+  },
+  "priorities": [
+    {
+      "priority": "CRITICAL",
+      "task": "Fix 0% coverage files",
+      "files": 10,
+      "estimatedTests": 200,
+      "estimatedHours": 50
+    },
+    {
+      "priority": "HIGH",
+      "task": "Fix <30% coverage files",
+      "files": 5,
+      "estimatedTests": 150,
+      "estimatedHours": 40
+    },
+    {
+      "priority": "MEDIUM",
+      "task": "Improve 30-70% coverage files",
+      "files": 12,
+      "estimatedTests": 250,
+      "estimatedHours": 70
+    },
+    {
+      "priority": "MEDIUM",
+      "task": "Add skill tests (17 skills)",
+      "files": 17,
+      "estimatedTests": 255,
+      "estimatedHours": 80
+    },
+    {
+      "priority": "MEDIUM",
+      "task": "E2E user journeys",
+      "flows": 10,
+      "estimatedTests": 60,
+      "estimatedHours": 40
+    },
+    {
+      "priority": "LOW",
+      "task": "Performance testing",
+      "estimatedTests": 30,
+      "estimatedHours": 24
+    },
+    {
+      "priority": "LOW",
+      "task": "Security testing",
+      "estimatedTests": 100,
+      "estimatedHours": 32
+    }
+  ],
+  "totalEffort": {
+    "estimatedNewTests": 1045,
+    "estimatedHours": 336,
+    "estimatedWeeks": 8,
+    "targetCompletion": "2026-04-10"
+  }
+}

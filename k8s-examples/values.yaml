@@ -1,0 +1,270 @@
+# ============================================================================
+# Agentik OS - Helm Chart Default Values
+#
+# Override these values with your own values.yaml or --set flags:
+#   helm install agentik-os . -f my-values.yaml
+#   helm install agentik-os . --set runtime.replicas=3
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Global Settings
+# ----------------------------------------------------------------------------
+global:
+  # Image registry (use your own registry for production)
+  imageRegistry: docker.io
+  imagePullSecrets: []
+
+  # Storage class for persistent volumes
+  storageClass: "gp3"  # AWS: gp3 | GCP: pd-ssd | Azure: managed-premium
+
+  # Namespace (default: agentik-os)
+  namespace: agentik-os
+
+# ----------------------------------------------------------------------------
+# Runtime Service
+# ----------------------------------------------------------------------------
+runtime:
+  # Number of replicas (StatefulSet)
+  replicas: 2
+
+  image:
+    repository: agentik-os/runtime
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 3000
+    annotations: {}
+
+  # Resource limits
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+
+  # Persistent storage
+  persistence:
+    enabled: true
+    size: 10Gi
+    # storageClass: ""  # Uses global.storageClass if not set
+
+  # Environment variables
+  env:
+    - name: NODE_ENV
+      value: "production"
+    - name: PORT
+      value: "3000"
+    - name: LOG_LEVEL
+      value: "info"
+
+  # Secrets (from Kubernetes secrets)
+  envFrom:
+    - secretRef:
+        name: agentik-os-secrets
+    - configMapRef:
+        name: agentik-os-config
+
+  # Health checks
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 3000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 3000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+  # Pod annotations
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3000"
+    prometheus.io/path: "/metrics"
+
+  # Security context
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    fsGroup: 1001
+
+  # Node affinity (optional)
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# ----------------------------------------------------------------------------
+# Dashboard Service
+# ----------------------------------------------------------------------------
+dashboard:
+  # Number of replicas (Deployment)
+  replicas: 2
+
+  image:
+    repository: agentik-os/dashboard
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 3001
+    annotations: {}
+
+  # Resource limits
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  # Horizontal Pod Autoscaler
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+
+  # Environment variables
+  env:
+    - name: NEXT_PUBLIC_RUNTIME_URL
+      value: "http://agentik-os-runtime:3000"
+
+  # Health checks
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 3001
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: 3001
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 2
+
+  # Pod annotations
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3001"
+
+  # Security context
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 101  # Nginx user
+    fsGroup: 101
+
+# ----------------------------------------------------------------------------
+# Ingress
+# ----------------------------------------------------------------------------
+ingress:
+  enabled: true
+  className: "nginx"  # or "traefik", "contour", etc.
+
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+  hosts:
+    - host: agentik-os.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: dashboard
+        - path: /api
+          pathType: Prefix
+          service: runtime
+
+  tls:
+    - secretName: agentik-os-tls
+      hosts:
+        - agentik-os.example.com
+
+# ----------------------------------------------------------------------------
+# Monitoring (Prometheus)
+# ----------------------------------------------------------------------------
+prometheus:
+  enabled: true
+
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+    scrapeTimeout: 10s
+
+# ----------------------------------------------------------------------------
+# Secrets Management
+# ----------------------------------------------------------------------------
+secrets:
+  # Use External Secrets Operator
+  externalSecrets:
+    enabled: false
+    # secretStore: aws-secrets-manager
+    # region: us-east-1
+
+  # Or create secrets manually
+  # kubectl create secret generic agentik-os-secrets \
+  #   --from-literal=CONVEX_URL=... \
+  #   --from-literal=ANTHROPIC_API_KEY=...
+
+# ----------------------------------------------------------------------------
+# ConfigMap
+# ----------------------------------------------------------------------------
+config:
+  CONVEX_URL: "https://your-deployment.convex.cloud"
+  LOG_LEVEL: "info"
+
+# ----------------------------------------------------------------------------
+# Pod Disruption Budget
+# ----------------------------------------------------------------------------
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1  # Always keep at least 1 pod running during updates
+
+# ----------------------------------------------------------------------------
+# Network Policies
+# ----------------------------------------------------------------------------
+networkPolicy:
+  enabled: true
+  policyTypes:
+    - Ingress
+    - Egress
+
+  # Allow ingress from ingress controller
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: ingress-nginx
+
+  # Allow egress to Convex API
+  egress:
+    - to:
+      - podSelector: {}
+    - to:  # Allow DNS
+      - namespaceSelector: {}
+        podSelector:
+          matchLabels:
+            k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53

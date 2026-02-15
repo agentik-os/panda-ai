@@ -1,0 +1,42 @@
+{
+  "id": "sendgrid",
+  "name": "SendGrid Email",
+  "version": "1.0.0",
+  "description": "Send transactional emails, manage templates, and interact with SendGrid API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["email", "sendgrid", "transactional", "messaging", "api"],
+  "permissions": [
+    "network:https:api.sendgrid.com",
+    "api:sendgrid",
+    "kv:read:sendgrid:*",
+    "kv:write:sendgrid:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 1000
+  },
+  "config": {
+    "apiKey": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "SendGrid API Key"
+    },
+    "fromEmail": {
+      "type": "string",
+      "required": false,
+      "description": "Default sender email address"
+    },
+    "fromName": {
+      "type": "string",
+      "required": false,
+      "description": "Default sender name"
+    }
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.3"
+  },
+  "license": "MIT"
+}

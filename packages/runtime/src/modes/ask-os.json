@@ -1,0 +1,58 @@
+{
+  "id": "ask-os",
+  "name": "Ask OS",
+  "description": "Intelligent Q&A system with research, fact-checking, and knowledge synthesis",
+  "icon": "help-circle",
+  "color": "cyan",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["research", "qa", "knowledge", "fact-checking", "synthesis"],
+  "agents": [
+    {
+      "name": "Researcher",
+      "role": "researcher",
+      "description": "Conducts deep research, synthesizes information, provides sources",
+      "systemPrompt": "You are a Research Specialist skilled at finding, analyzing, and synthesizing information from multiple sources. Conduct thorough research, verify facts, provide citations, and present findings in clear, structured formats.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["web-scraper", "citation-manager", "fact-checker"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.4
+    },
+    {
+      "name": "Fact Checker",
+      "role": "fact-checker",
+      "description": "Verifies claims, assesses credibility, flags misinformation",
+      "systemPrompt": "You are a Fact Checker focused on verifying claims, assessing source credibility, and identifying misinformation. Cross-reference information, evaluate evidence quality, and provide confidence ratings for factual claims.",
+      "skills": ["web-search"],
+      "tools": ["source-validator", "claim-checker", "credibility-scorer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.3
+    }
+  ],
+  "skills": ["web-search", "file-operations"],
+  "automations": [],
+  "dashboardWidgets": [
+    {
+      "id": "research-library",
+      "name": "Research Library",
+      "type": "list",
+      "size": "large",
+      "config": {
+        "showSources": true,
+        "groupByTopic": true
+      }
+    },
+    {
+      "id": "fact-check-log",
+      "name": "Fact Checks",
+      "type": "timeline",
+      "size": "medium",
+      "config": {
+        "showVerdict": true,
+        "showSources": true
+      }
+    }
+  ],
+  "memoryCategories": ["research", "sources", "fact-checks", "knowledge-base"]
+}

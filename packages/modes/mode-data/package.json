@@ -1,0 +1,23 @@
+{
+  "name": "@agentik-os/mode-data",
+  "version": "1.0.0",
+  "description": "Data Mode - Data analysis, visualization, and statistical modeling",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "keywords": ["agentik-os", "mode", "data-analysis", "visualization", "statistics"],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@agentik-os/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

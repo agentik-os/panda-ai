@@ -1,0 +1,43 @@
+{
+  "id": "twilio",
+  "name": "Twilio SMS",
+  "version": "1.0.0",
+  "description": "Send SMS messages, make calls, and interact with Twilio API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["twilio", "sms", "messaging", "phone", "api"],
+  "permissions": [
+    "network:https:api.twilio.com",
+    "api:twilio",
+    "kv:read:twilio:*",
+    "kv:write:twilio:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 60,
+    "windowMs": 60000
+  },
+  "config": {
+    "accountSid": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twilio Account SID"
+    },
+    "authToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Twilio Auth Token"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true,
+      "description": "Twilio phone number (from)"
+    }
+  },
+  "dependencies": {
+    "twilio": "^5.3.0"
+  },
+  "license": "MIT"
+}

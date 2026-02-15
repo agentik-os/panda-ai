@@ -1,0 +1,36 @@
+{
+  "name": "@agentik-os/skill-file-ops",
+  "version": "1.0.0",
+  "description": "Sandboxed file operations skill with permission-based access control",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "skill.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik-os",
+    "skill",
+    "filesystem",
+    "files",
+    "io",
+    "sandbox"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@agentik-os/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  }
+}

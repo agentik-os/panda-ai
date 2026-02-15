@@ -1,0 +1,113 @@
+{
+  "id": "human-os",
+  "name": "Human OS",
+  "description": "Complete life management system with health tracking, habit building, sleep optimization, and personal development",
+  "icon": "heart",
+  "color": "red",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["health", "wellness", "habits", "personal-development", "life-optimization"],
+  "agents": [
+    {
+      "name": "Health Coach",
+      "role": "health-coach",
+      "description": "Monitors health metrics, provides wellness advice, tracks fitness goals",
+      "systemPrompt": "You are a certified health coach specializing in evidence-based wellness strategies. Help users improve their physical health through nutrition, exercise, and lifestyle changes. Focus on sustainable, scientifically-backed recommendations tailored to individual needs and goals.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["reminder", "metric-tracker", "health-analyzer"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.5
+    },
+    {
+      "name": "Sleep Tracker",
+      "role": "sleep-optimizer",
+      "description": "Analyzes sleep patterns, suggests improvements, optimizes sleep schedule",
+      "systemPrompt": "You are a sleep optimization specialist with expertise in circadian rhythms, sleep hygiene, and evidence-based interventions. Analyze sleep data, identify patterns, and provide actionable recommendations to improve sleep quality and duration.",
+      "skills": ["calendar", "file-operations"],
+      "tools": ["sleep-analyzer", "reminder", "routine-builder"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.3
+    },
+    {
+      "name": "Habit Builder",
+      "role": "habit-coach",
+      "description": "Designs habit systems, tracks progress, provides accountability",
+      "systemPrompt": "You are a habit formation expert using principles from behavioral psychology (Atomic Habits, Tiny Habits methodology). Help users build sustainable habits through small incremental changes, environmental design, and proper tracking systems.",
+      "skills": ["calendar", "file-operations"],
+      "tools": ["habit-tracker", "reminder", "progress-visualizer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.4
+    }
+  ],
+  "skills": ["calendar", "web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "daily-health-check",
+      "name": "Daily Health Check-in",
+      "description": "Morning reminder to log health metrics and review goals",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 8 * * *"
+      },
+      "action": "health-coach:daily-checkin",
+      "enabled": true
+    },
+    {
+      "id": "sleep-reminder",
+      "name": "Sleep Time Reminder",
+      "description": "Evening reminder to prepare for optimal sleep time",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 22 * * *"
+      },
+      "action": "sleep-tracker:bedtime-prep",
+      "enabled": true
+    },
+    {
+      "id": "habit-review",
+      "name": "Weekly Habit Review",
+      "description": "Sunday evening review of habit completion rates",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 19 * * 0"
+      },
+      "action": "habit-builder:weekly-review",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "health-metrics",
+      "name": "Health Metrics",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "chartType": "line",
+        "metrics": ["weight", "sleep", "exercise", "water"],
+        "timeRange": "30d"
+      }
+    },
+    {
+      "id": "habit-streaks",
+      "name": "Habit Streaks",
+      "type": "kanban",
+      "size": "medium",
+      "config": {
+        "showCurrentStreak": true,
+        "showBestStreak": true
+      }
+    },
+    {
+      "id": "sleep-quality",
+      "name": "Sleep Quality",
+      "type": "metric",
+      "size": "small",
+      "config": {
+        "metric": "sleep-score",
+        "showTrend": true
+      }
+    }
+  ],
+  "memoryCategories": ["health-logs", "sleep-data", "habit-tracking", "goals", "achievements"]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "airtable",
+  "name": "Airtable",
+  "version": "1.0.0",
+  "description": "Airtable database integration - Tables, records, bases",
+  "category": "data",
+  "permissions": ["airtable.read", "airtable.write"],
+  "actions": [
+    {
+      "name": "listRecords",
+      "description": "List records from a table",
+      "input": {
+        "type": "object",
+        "properties": {
+          "baseId": {"type": "string", "required": true},
+          "tableId": {"type": "string", "required": true},
+          "maxRecords": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "getRecord",
+      "description": "Get a specific record",
+      "input": {
+        "type": "object",
+        "properties": {
+          "baseId": {"type": "string", "required": true},
+          "tableId": {"type": "string", "required": true},
+          "recordId": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "createRecord",
+      "description": "Create a new record",
+      "input": {
+        "type": "object",
+        "properties": {
+          "baseId": {"type": "string", "required": true},
+          "tableId": {"type": "string", "required": true},
+          "fields": {"type": "object", "required": true}
+        }
+      }
+    },
+    {
+      "name": "updateRecord",
+      "description": "Update a record",
+      "input": {
+        "type": "object",
+        "properties": {
+          "baseId": {"type": "string", "required": true},
+          "tableId": {"type": "string", "required": true},
+          "recordId": {"type": "string", "required": true},
+          "fields": {"type": "object", "required": true}
+        }
+      }
+    },
+    {
+      "name": "deleteRecord",
+      "description": "Delete a record",
+      "input": {
+        "type": "object",
+        "properties": {
+          "baseId": {"type": "string", "required": true},
+          "tableId": {"type": "string", "required": true},
+          "recordId": {"type": "string", "required": true}
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "apiKey": {"type": "string", "required": true, "secret": true}
+    }
+  }
+}

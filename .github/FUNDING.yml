@@ -1,0 +1,14 @@
+# GitHub Sponsors Configuration
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button
+
+github: [agentik-os]
+# patreon: agentikos
+# open_collective: agentikos
+# ko_fi: agentikos
+# tidelift: npm/agentik-os
+# community_bridge: agentik-os
+# liberapay: agentikos
+# issuehunt: agentikos
+# otechie: agentikos
+# lfx_crowdfunding: agentik-os
+custom: ['https://agentik-os.com/sponsor']

@@ -1,0 +1,147 @@
+# Semgrep Security Rules for Agentik OS
+# Custom security rules for agent and skill scanning
+
+rules:
+  # === CRITICAL: Command Injection ===
+  - id: command-injection-exec
+    pattern-either:
+      - pattern: exec($ARG)
+      - pattern: execSync($ARG)
+      - pattern: spawn($ARG, ...)
+    message: Potential command injection vulnerability
+    severity: ERROR
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-78"]
+      owasp: "A03:2021 - Injection"
+
+  - id: command-injection-child-process
+    pattern: |
+      require('child_process').$METHOD($USER_INPUT, ...)
+    message: User input passed to child_process - potential command injection
+    severity: ERROR
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-78"]
+
+  # === CRITICAL: Code Injection ===
+  - id: eval-usage
+    pattern-either:
+      - pattern: eval($ARG)
+      - pattern: new Function($ARG)
+    message: Use of eval() or Function() constructor - code injection risk
+    severity: ERROR
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-95"]
+      owasp: "A03:2021 - Injection"
+
+  # === HIGH: Path Traversal ===
+  - id: path-traversal
+    pattern-either:
+      - pattern: fs.readFile($USER_INPUT, ...)
+      - pattern: fs.writeFile($USER_INPUT, ...)
+      - pattern: fs.unlink($USER_INPUT, ...)
+    message: Potential path traversal vulnerability - validate file paths
+    severity: WARNING
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-22"]
+
+  # === HIGH: SQL Injection (if using raw queries) ===
+  - id: sql-injection
+    pattern: |
+      $DB.query($SQL + $USER_INPUT, ...)
+    message: Potential SQL injection - use parameterized queries
+    severity: ERROR
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-89"]
+      owasp: "A03:2021 - Injection"
+
+  # === HIGH: Hardcoded Secrets ===
+  - id: hardcoded-api-key
+    pattern-regex: |
+      (api[_-]?key|apikey|access[_-]?token|secret[_-]?key)\s*=\s*["'][a-zA-Z0-9]{20,}["']
+    message: Potential hardcoded API key or secret
+    severity: ERROR
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-798"]
+
+  # === MEDIUM: Insecure Crypto ===
+  - id: weak-crypto-algorithm
+    pattern-either:
+      - pattern: crypto.createHash('md5')
+      - pattern: crypto.createHash('sha1')
+    message: Weak cryptographic algorithm - use SHA-256 or stronger
+    severity: WARNING
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-327"]
+
+  # === MEDIUM: Unsafe Deserialization ===
+  - id: unsafe-deserialization
+    pattern: |
+      JSON.parse($USER_INPUT)
+    message: Deserializing user input - validate before parsing
+    severity: INFO
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-502"]
+
+  # === MEDIUM: Improper Error Handling ===
+  - id: empty-catch-block
+    pattern: |
+      try {
+        ...
+      } catch ($E) {
+      }
+    message: Empty catch block - handle errors appropriately
+    severity: INFO
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-391"]
+
+  # === LOW: Console Logging Sensitive Data ===
+  - id: console-log-password
+    pattern-either:
+      - pattern: console.log(..., $PASSWORD, ...)
+      - pattern: console.log(..., $TOKEN, ...)
+      - pattern: console.log(..., $SECRET, ...)
+    message: Avoid logging sensitive data like passwords or tokens
+    severity: INFO
+    languages: [javascript, typescript]
+    metadata:
+      category: security
+      cwe: ["CWE-532"]
+
+  # === Agent-Specific Rules ===
+  - id: unrestricted-skill-permissions
+    pattern: |
+      permissions: ["*"]
+    message: Wildcard permissions are insecure - specify exact permissions needed
+    severity: WARNING
+    languages: [json, yaml]
+    metadata:
+      category: security
+
+  - id: missing-permission-validation
+    pattern: |
+      async execute(...) {
+        ...
+      }
+    message: Skill execute function should validate permissions before running
+    severity: INFO
+    languages: [typescript]
+    metadata:
+      category: security

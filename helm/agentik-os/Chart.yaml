@@ -1,0 +1,21 @@
+apiVersion: v2
+name: agentik-os
+description: AI Agent Operating System - Multi-model, MCP-native, Beautiful dashboard
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ai
+  - agents
+  - mcp
+  - multi-model
+  - claude
+  - gpt
+  - gemini
+home: https://github.com/agentik-os/agentik-os
+sources:
+  - https://github.com/agentik-os/agentik-os
+maintainers:
+  - name: Agentik OS Team
+    email: team@agentik-os.com
+icon: https://agentik-os.com/icon.png

@@ -1,0 +1,237 @@
+# Default values for agentik-os
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: agentikos/agentik-os
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+
+# Dashboard Service
+dashboard:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: agentikos/agentik-os-dashboard
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+  env:
+    NODE_ENV: production
+
+# Runtime Backend Service
+runtime:
+  enabled: true
+  replicaCount: 3
+  image:
+    repository: agentikos/agentik-os-runtime
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8080
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 70
+  env:
+    NODE_ENV: production
+    AIR_GAPPED_MODE: "false"
+    MULTI_TENANT: "true"
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 50Gi
+
+# CLI Gateway Service
+cliGateway:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: agentikos/agentik-os-cli-gateway
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 9090
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Redis (caching & rate limiting)
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: true
+    password: ""
+  master:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
+    persistence:
+      enabled: true
+      size: 8Gi
+
+# Ingress
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: agentik-os.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: dashboard
+        - path: /api
+          pathType: Prefix
+          service: runtime
+        - path: /cli
+          pathType: Prefix
+          service: cliGateway
+  tls:
+    - secretName: agentik-os-tls
+      hosts:
+        - agentik-os.example.com
+
+# Monitoring
+monitoring:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+  grafana:
+    enabled: true
+    adminPassword: ""
+
+# Multi-Tenancy
+multiTenant:
+  enabled: true
+  defaultPlan: "free"
+  plans:
+    free:
+      maxAgents: 3
+      maxUsers: 1
+    pro:
+      maxAgents: 50
+      maxUsers: 10
+    enterprise:
+      maxAgents: unlimited
+      maxUsers: unlimited
+
+# External Services
+convex:
+  url: ""
+  deployKey: ""
+
+clerk:
+  publishableKey: ""
+  secretKey: ""
+
+anthropic:
+  apiKey: ""
+
+openai:
+  apiKey: ""
+
+google:
+  apiKey: ""
+  oauth:
+    clientId: ""
+    clientSecret: ""
+
+github:
+  oauth:
+    clientId: ""
+    clientSecret: ""
+
+microsoft:
+  oauth:
+    clientId: ""
+    clientSecret: ""
+
+# Air-gapped Mode
+airGapped:
+  enabled: false
+  offlineModels:
+    enabled: true
+    ollama:
+      enabled: true
+      models:
+        - llama2
+        - codellama
+  localVectorStore:
+    enabled: true
+    type: "chroma"
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

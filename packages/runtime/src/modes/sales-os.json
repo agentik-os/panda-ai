@@ -1,0 +1,81 @@
+{
+  "id": "sales-os",
+  "name": "Sales OS",
+  "description": "Complete sales workflow with lead management, pipeline tracking, and customer relationships",
+  "icon": "trending-up",
+  "color": "orange",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["sales", "crm", "leads", "pipeline", "revenue"],
+  "agents": [
+    {
+      "name": "SDR",
+      "role": "sales-development-rep",
+      "description": "Qualifies leads, manages outreach, schedules meetings",
+      "systemPrompt": "You are a Sales Development Representative focused on lead qualification, outreach personalization, and meeting scheduling. Help identify high-quality prospects, craft personalized outreach, and efficiently manage the top of funnel.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["crm", "email-composer", "lead-scorer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.6
+    },
+    {
+      "name": "Account Executive",
+      "role": "account-exec",
+      "description": "Manages deals, runs demos, closes sales",
+      "systemPrompt": "You are an Account Executive specializing in consultative selling and relationship building. Manage sales pipeline, prepare for demos, handle objections, negotiate deals, and ensure customer success from acquisition to onboarding.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["crm", "proposal-builder", "meeting-recorder"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.5
+    }
+  ],
+  "skills": ["calendar", "web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "daily-followup-reminders",
+      "name": "Daily Follow-up Reminders",
+      "description": "Remind about overdue follow-ups every morning",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 * * 1-5"
+      },
+      "action": "sdr:review-followups",
+      "enabled": true
+    },
+    {
+      "id": "weekly-pipeline-review",
+      "name": "Weekly Pipeline Review",
+      "description": "Analyze pipeline health every Monday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 10 * * 1"
+      },
+      "action": "account-exec:pipeline-analysis",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "sales-pipeline",
+      "name": "Sales Pipeline",
+      "type": "kanban",
+      "size": "large",
+      "config": {
+        "stages": ["prospecting", "qualification", "demo", "proposal", "negotiation", "closed"],
+        "showValue": true
+      }
+    },
+    {
+      "id": "revenue-forecast",
+      "name": "Revenue Forecast",
+      "type": "metric",
+      "size": "medium",
+      "config": {
+        "showMonthly": true,
+        "showQuarterly": true
+      }
+    }
+  ],
+  "memoryCategories": ["leads", "deals", "calls", "proposals", "objections"]
+}

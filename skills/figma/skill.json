@@ -1,0 +1,48 @@
+{
+  "id": "figma",
+  "name": "Figma",
+  "version": "1.0.0",
+  "description": "Figma design integration - Files, comments, exports",
+  "category": "design",
+  "permissions": ["figma.read"],
+  "actions": [
+    {
+      "name": "getFile",
+      "description": "Get file details",
+      "input": {
+        "type": "object",
+        "properties": {
+          "fileKey": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "getComments",
+      "description": "Get file comments",
+      "input": {
+        "type": "object",
+        "properties": {
+          "fileKey": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "exportImage",
+      "description": "Export nodes as images",
+      "input": {
+        "type": "object",
+        "properties": {
+          "fileKey": {"type": "string", "required": true},
+          "nodeIds": {"type": "array", "required": true},
+          "format": {"type": "string"}
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "accessToken": {"type": "string", "required": true, "secret": true}
+    }
+  }
+}

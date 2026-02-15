@@ -1,0 +1,91 @@
+{
+  "id": "learning-os",
+  "name": "Learning OS",
+  "description": "Personalized learning system with course management, progress tracking, and knowledge retention",
+  "icon": "graduation-cap",
+  "color": "indigo",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["learning", "education", "courses", "knowledge", "study"],
+  "agents": [
+    {
+      "name": "Learning Coach",
+      "role": "learning-coach",
+      "description": "Creates learning paths, recommends resources, tracks progress",
+      "systemPrompt": "You are a Learning Coach specializing in personalized education, curriculum design, and learning science. Create customized learning paths, recommend resources, track progress, and apply evidence-based learning strategies (spaced repetition, active recall, etc.).",
+      "skills": ["web-search", "file-operations", "calendar"],
+      "tools": ["course-planner", "resource-finder", "progress-tracker"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.5
+    },
+    {
+      "name": "Quiz Master",
+      "role": "quiz-master",
+      "description": "Generates quizzes, tests knowledge, provides feedback",
+      "systemPrompt": "You are a Quiz Master focused on knowledge assessment and retention. Generate targeted quizzes, test understanding, provide detailed feedback, and use spaced repetition algorithms to optimize long-term retention.",
+      "skills": ["file-operations"],
+      "tools": ["quiz-generator", "spaced-repetition", "feedback-analyzer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.4
+    }
+  ],
+  "skills": ["web-search", "file-operations", "calendar"],
+  "automations": [
+    {
+      "id": "daily-review-session",
+      "name": "Daily Review Session",
+      "description": "Spaced repetition review every morning",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 * * *"
+      },
+      "action": "quiz-master:daily-review",
+      "enabled": true
+    },
+    {
+      "id": "weekly-progress-report",
+      "name": "Weekly Progress Report",
+      "description": "Learning progress summary every Sunday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 19 * * 0"
+      },
+      "action": "learning-coach:progress-report",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "learning-progress",
+      "name": "Learning Progress",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "chartType": "line",
+        "metrics": ["courses-completed", "hours-studied", "quiz-scores"],
+        "timeRange": "30d"
+      }
+    },
+    {
+      "id": "course-list",
+      "name": "Active Courses",
+      "type": "list",
+      "size": "medium",
+      "config": {
+        "showProgress": true,
+        "sortByDeadline": true
+      }
+    },
+    {
+      "id": "knowledge-retention",
+      "name": "Retention Score",
+      "type": "metric",
+      "size": "small",
+      "config": {
+        "showTrend": true
+      }
+    }
+  ],
+  "memoryCategories": ["courses", "notes", "quizzes", "learning-paths", "achievements"]
+}

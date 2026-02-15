@@ -1,0 +1,29 @@
+{
+  "name": "@agentik/project-creator",
+  "version": "0.1.0",
+  "description": "AI Agent that orchestrates end-to-end project creation from idea to MVP",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "create": "tsx cli.ts"
+  },
+  "keywords": [
+    "ai-agent",
+    "project-creator",
+    "mvp",
+    "automation",
+    "agentik-os"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.11",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

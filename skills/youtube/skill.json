@@ -1,0 +1,47 @@
+{
+  "id": "youtube",
+  "name": "YouTube",
+  "version": "1.0.0",
+  "description": "YouTube integration - Videos, playlists, channels",
+  "category": "media",
+  "permissions": ["youtube.read"],
+  "actions": [
+    {
+      "name": "searchVideos",
+      "description": "Search for videos",
+      "input": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "required": true},
+          "maxResults": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "getVideo",
+      "description": "Get video details",
+      "input": {
+        "type": "object",
+        "properties": {
+          "videoId": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "getChannel",
+      "description": "Get channel details",
+      "input": {
+        "type": "object",
+        "properties": {
+          "channelId": {"type": "string", "required": true}
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "apiKey": {"type": "string", "required": true, "secret": true}
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@agentik-os/skill-linear",
+  "version": "1.0.0",
+  "description": "Linear skill for Agentik OS - Manage issues, projects, teams",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": ["agentik", "skill", "linear", "issues", "projects", "teams"],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@linear/sdk": "^27.0.0"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "marketing-os",
+  "name": "Marketing OS",
+  "description": "Complete marketing automation with content creation, campaign management, and analytics",
+  "icon": "megaphone",
+  "color": "purple",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["marketing", "content", "campaigns", "seo", "analytics"],
+  "agents": [
+    {
+      "name": "Content Strategist",
+      "role": "content-strategist",
+      "description": "Plans content calendar, generates ideas, optimizes for SEO",
+      "systemPrompt": "You are a content marketing strategist with expertise in SEO, content planning, and audience engagement. Create data-driven content strategies, generate creative ideas, optimize for search engines, and plan editorial calendars.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["seo-analyzer", "content-planner", "keyword-researcher"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.7
+    },
+    {
+      "name": "Campaign Manager",
+      "role": "campaign-manager",
+      "description": "Manages ad campaigns, tracks performance, optimizes ROI",
+      "systemPrompt": "You are a performance marketing specialist focused on campaign optimization, A/B testing, and ROI maximization. Manage multi-channel campaigns, analyze metrics, and make data-driven decisions to improve performance.",
+      "skills": ["calendar", "web-search", "file-operations"],
+      "tools": ["campaign-tracker", "ab-tester", "analytics-dashboard"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.4
+    }
+  ],
+  "skills": ["calendar", "web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "weekly-content-planning",
+      "name": "Weekly Content Planning",
+      "description": "Plan next week's content every Friday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 14 * * 5"
+      },
+      "action": "content-strategist:plan-week",
+      "enabled": true
+    },
+    {
+      "id": "daily-performance-check",
+      "name": "Daily Campaign Performance",
+      "description": "Review campaign metrics every morning",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 * * *"
+      },
+      "action": "campaign-manager:daily-report",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "campaign-performance",
+      "name": "Campaign Performance",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "chartType": "line",
+        "metrics": ["impressions", "clicks", "conversions", "roas"],
+        "timeRange": "30d"
+      }
+    },
+    {
+      "id": "content-calendar",
+      "name": "Content Calendar",
+      "type": "timeline",
+      "size": "medium",
+      "config": {
+        "showUpcoming": true,
+        "daysAhead": 14
+      }
+    }
+  ],
+  "memoryCategories": ["content-ideas", "campaigns", "analytics", "keywords", "audience-insights"]
+}

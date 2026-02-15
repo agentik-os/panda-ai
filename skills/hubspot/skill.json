@@ -1,0 +1,71 @@
+{
+  "id": "hubspot",
+  "name": "HubSpot",
+  "version": "1.0.0",
+  "description": "HubSpot CRM integration - Contacts, companies, deals",
+  "category": "crm",
+  "permissions": ["hubspot.read", "hubspot.write"],
+  "actions": [
+    {
+      "name": "getContact",
+      "description": "Get contact by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "contactId": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "createContact",
+      "description": "Create a new contact",
+      "input": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string", "required": true},
+          "firstName": {"type": "string"},
+          "lastName": {"type": "string"},
+          "phone": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "updateContact",
+      "description": "Update a contact",
+      "input": {
+        "type": "object",
+        "properties": {
+          "contactId": {"type": "string", "required": true},
+          "properties": {"type": "object", "required": true}
+        }
+      }
+    },
+    {
+      "name": "getCompany",
+      "description": "Get company by ID",
+      "input": {
+        "type": "object",
+        "properties": {
+          "companyId": {"type": "string", "required": true}
+        }
+      }
+    },
+    {
+      "name": "createCompany",
+      "description": "Create a new company",
+      "input": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string", "required": true},
+          "domain": {"type": "string"}
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "accessToken": {"type": "string", "required": true, "secret": true}
+    }
+  }
+}

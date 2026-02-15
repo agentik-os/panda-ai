@@ -1,0 +1,197 @@
+{
+  "id": "linear",
+  "name": "Linear",
+  "version": "1.0.0",
+  "description": "Manage issues, projects, teams via Linear API",
+  "permissions": ["linear.read", "linear.write"],
+  "actions": [
+    {
+      "name": "listIssues",
+      "description": "List all issues with filters",
+      "params": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "description": "Filter by team ID"
+          },
+          "assigneeId": {
+            "type": "string",
+            "description": "Filter by assignee ID"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Filter by project ID"
+          },
+          "state": {
+            "type": "string",
+            "description": "Filter by state name"
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results (max 250)"
+          }
+        }
+      }
+    },
+    {
+      "name": "getIssue",
+      "description": "Get issue by ID or key",
+      "params": {
+        "type": "object",
+        "properties": {
+          "issueId": {
+            "type": "string",
+            "description": "Issue ID or key (e.g., 'ENG-123')",
+            "required": true
+          }
+        },
+        "required": ["issueId"]
+      }
+    },
+    {
+      "name": "createIssue",
+      "description": "Create a new issue",
+      "params": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Issue title",
+            "required": true
+          },
+          "teamId": {
+            "type": "string",
+            "description": "Team ID",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Issue description (markdown)"
+          },
+          "assigneeId": {
+            "type": "string",
+            "description": "Assignee user ID"
+          },
+          "priority": {
+            "type": "number",
+            "description": "Priority (0=no priority, 1=urgent, 2=high, 3=medium, 4=low)"
+          },
+          "stateId": {
+            "type": "string",
+            "description": "Workflow state ID"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Project ID"
+          }
+        },
+        "required": ["title", "teamId"]
+      }
+    },
+    {
+      "name": "updateIssue",
+      "description": "Update an existing issue",
+      "params": {
+        "type": "object",
+        "properties": {
+          "issueId": {
+            "type": "string",
+            "description": "Issue ID",
+            "required": true
+          },
+          "title": {
+            "type": "string",
+            "description": "New title"
+          },
+          "description": {
+            "type": "string",
+            "description": "New description"
+          },
+          "assigneeId": {
+            "type": "string",
+            "description": "New assignee ID"
+          },
+          "priority": {
+            "type": "number",
+            "description": "New priority"
+          },
+          "stateId": {
+            "type": "string",
+            "description": "New state ID"
+          }
+        },
+        "required": ["issueId"]
+      }
+    },
+    {
+      "name": "listProjects",
+      "description": "List all projects",
+      "params": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "description": "Filter by team ID"
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results"
+          }
+        }
+      }
+    },
+    {
+      "name": "getProject",
+      "description": "Get project by ID",
+      "params": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "Project ID",
+            "required": true
+          }
+        },
+        "required": ["projectId"]
+      }
+    },
+    {
+      "name": "createProject",
+      "description": "Create a new project",
+      "params": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Project name",
+            "required": true
+          },
+          "teamId": {
+            "type": "string",
+            "description": "Team ID",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Project description"
+          }
+        },
+        "required": ["name", "teamId"]
+      }
+    },
+    {
+      "name": "listTeams",
+      "description": "List all teams",
+      "params": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "number",
+            "description": "Number of results"
+          }
+        }
+      }
+    }
+  ]
+}

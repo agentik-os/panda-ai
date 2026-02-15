@@ -1,0 +1,35 @@
+{
+  "name": "@agentik-os/skill-database",
+  "version": "1.0.0",
+  "description": "Database skill for Agentik OS - PostgreSQL, MySQL, SQLite",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik",
+    "skill",
+    "database",
+    "sql",
+    "postgres",
+    "mysql",
+    "sqlite"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.13.1",
+    "mysql2": "^3.12.0",
+    "better-sqlite3": "^12.0.0"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/pg": "^8.11.10",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.5",
+    "vitest": "^2.1.8",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "design-os",
+  "name": "Design OS",
+  "description": "Complete design workflow with UI/UX design, prototyping, and design system management",
+  "icon": "palette",
+  "color": "pink",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["design", "ui", "ux", "prototyping", "design-system"],
+  "agents": [
+    {
+      "name": "UX Designer",
+      "role": "ux-designer",
+      "description": "Conducts user research, creates wireframes, optimizes flows",
+      "systemPrompt": "You are a UX Designer specializing in user-centered design, information architecture, and usability. Conduct user research, create wireframes, design user flows, and ensure products are intuitive and accessible.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["wireframe-tool", "user-research-analyzer", "flow-designer"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.6
+    },
+    {
+      "name": "UI Designer",
+      "role": "ui-designer",
+      "description": "Creates visual designs, maintains design system, ensures consistency",
+      "systemPrompt": "You are a UI Designer focused on visual design, design systems, and component libraries. Create beautiful, consistent interfaces, maintain design tokens, ensure accessibility, and build scalable design systems.",
+      "skills": ["file-operations"],
+      "tools": ["design-system", "color-analyzer", "accessibility-checker"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.7
+    }
+  ],
+  "skills": ["web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "weekly-design-review",
+      "name": "Weekly Design Review",
+      "description": "Review design consistency and accessibility every Friday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 15 * * 5"
+      },
+      "action": "ui-designer:design-audit",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "design-system-status",
+      "name": "Design System",
+      "type": "list",
+      "size": "medium",
+      "config": {
+        "showComponents": true,
+        "showTokens": true
+      }
+    },
+    {
+      "id": "accessibility-score",
+      "name": "Accessibility Score",
+      "type": "metric",
+      "size": "small",
+      "config": {
+        "showWCAG": true
+      }
+    }
+  ],
+  "memoryCategories": ["designs", "wireframes", "user-research", "design-system", "feedback"]
+}

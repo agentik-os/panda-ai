@@ -1,0 +1,30 @@
+{
+  "name": "@agentik-os/skill-notion",
+  "version": "1.0.0",
+  "description": "Notion skill for Agentik OS - Create, read, update Notion pages and databases",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik",
+    "skill",
+    "notion",
+    "pages",
+    "databases",
+    "productivity"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

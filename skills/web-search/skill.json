@@ -1,0 +1,27 @@
+{
+  "id": "web-search",
+  "name": "Web Search",
+  "version": "1.0.0",
+  "description": "Search the web using Brave Search API with fallback to Serper",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "permissions": [
+    "network:http",
+    "network:https",
+    "api:brave",
+    "api:serper"
+  ],
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowMs": 3600000
+  },
+  "config": {
+    "maxResults": 10,
+    "safeSearch": "moderate",
+    "timeout": 5000
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0"
+  }
+}

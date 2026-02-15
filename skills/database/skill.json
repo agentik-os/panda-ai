@@ -1,0 +1,140 @@
+{
+  "id": "database",
+  "name": "Database (SQL)",
+  "version": "1.0.0",
+  "description": "Execute SQL queries against PostgreSQL, MySQL, and SQLite databases",
+  "author": "Agentik OS",
+  "permissions": [
+    "database.read",
+    "database.write"
+  ],
+  "actions": [
+    {
+      "name": "query",
+      "description": "Execute a SELECT query (read-only)",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Database provider (postgres, mysql, sqlite)",
+          "required": true
+        },
+        "sql": {
+          "type": "string",
+          "description": "SQL query to execute",
+          "required": true
+        },
+        "params": {
+          "type": "array",
+          "description": "Query parameters (for parameterized queries)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "execute",
+      "description": "Execute a SQL command (INSERT, UPDATE, DELETE, CREATE, etc.) - requires approval",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Database provider (postgres, mysql, sqlite)",
+          "required": true
+        },
+        "sql": {
+          "type": "string",
+          "description": "SQL command to execute",
+          "required": true
+        },
+        "params": {
+          "type": "array",
+          "description": "Command parameters (for parameterized queries)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "transaction",
+      "description": "Execute multiple SQL commands in a transaction - requires approval",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Database provider (postgres, mysql, sqlite)",
+          "required": true
+        },
+        "commands": {
+          "type": "array",
+          "description": "Array of SQL commands to execute in transaction",
+          "required": true
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "postgres": {
+      "host": {
+        "type": "string",
+        "description": "PostgreSQL host",
+        "required": false
+      },
+      "port": {
+        "type": "number",
+        "description": "PostgreSQL port",
+        "required": false
+      },
+      "database": {
+        "type": "string",
+        "description": "Database name",
+        "required": false
+      },
+      "user": {
+        "type": "string",
+        "description": "Database user",
+        "required": false
+      },
+      "password": {
+        "type": "string",
+        "description": "Database password",
+        "required": false
+      },
+      "ssl": {
+        "type": "boolean",
+        "description": "Use SSL connection",
+        "required": false
+      }
+    },
+    "mysql": {
+      "host": {
+        "type": "string",
+        "description": "MySQL host",
+        "required": false
+      },
+      "port": {
+        "type": "number",
+        "description": "MySQL port",
+        "required": false
+      },
+      "database": {
+        "type": "string",
+        "description": "Database name",
+        "required": false
+      },
+      "user": {
+        "type": "string",
+        "description": "Database user",
+        "required": false
+      },
+      "password": {
+        "type": "string",
+        "description": "Database password",
+        "required": false
+      }
+    },
+    "sqlite": {
+      "filename": {
+        "type": "string",
+        "description": "SQLite database file path",
+        "required": false
+      }
+    }
+  },
+  "tags": ["database", "sql", "postgres", "mysql", "sqlite", "data"]
+}

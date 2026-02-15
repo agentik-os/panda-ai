@@ -1,0 +1,30 @@
+{
+  "name": "@agentik-os/skill-jira",
+  "version": "1.0.0",
+  "description": "Jira skill for Agentik OS - Manage issues, projects, sprints, boards",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik",
+    "skill",
+    "jira",
+    "issues",
+    "projects",
+    "sprints"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "jira.js": "^4.0.2"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@agentik-os/skill-youtube",
+  "version": "1.0.0",
+  "description": "YouTube skill for Agentik OS",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": ["agentik", "skill", "youtube", "media"],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

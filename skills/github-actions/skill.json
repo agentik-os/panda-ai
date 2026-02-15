@@ -1,0 +1,37 @@
+{
+  "id": "github-actions",
+  "name": "GitHub Actions",
+  "version": "1.0.0",
+  "description": "Trigger workflows, manage CI/CD pipelines, and interact with GitHub Actions API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "development",
+  "tags": ["github", "ci-cd", "automation", "workflows", "devops"],
+  "permissions": [
+    "network:https:api.github.com",
+    "api:github",
+    "kv:read:github:*",
+    "kv:write:github:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 5000,
+    "windowMs": 3600000
+  },
+  "config": {
+    "personalAccessToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "GitHub Personal Access Token"
+    },
+    "repository": {
+      "type": "string",
+      "required": false,
+      "description": "Default repository (owner/repo)"
+    }
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.0"
+  },
+  "license": "MIT"
+}

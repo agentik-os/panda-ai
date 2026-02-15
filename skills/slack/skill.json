@@ -1,0 +1,39 @@
+{
+  "id": "slack",
+  "name": "Slack Integration",
+  "version": "1.0.0",
+  "description": "Send messages, manage channels, create threads, and interact with Slack API",
+  "author": "Agentik OS",
+  "type": "builtin",
+  "category": "communication",
+  "tags": ["slack", "messaging", "collaboration", "api", "team"],
+  "permissions": [
+    "network:https:slack.com",
+    "network:https:api.slack.com",
+    "api:slack",
+    "kv:read:slack:*",
+    "kv:write:slack:*"
+  ],
+  "rateLimit": {
+    "maxRequests": 50,
+    "windowMs": 60000
+  },
+  "config": {
+    "botToken": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Slack Bot User OAuth Token"
+    },
+    "signingSecret": {
+      "type": "string",
+      "required": true,
+      "sensitive": true,
+      "description": "Slack App Signing Secret"
+    }
+  },
+  "dependencies": {
+    "@slack/web-api": "^7.0.0"
+  },
+  "license": "MIT"
+}

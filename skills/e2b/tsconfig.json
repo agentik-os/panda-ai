@@ -1,12 +1,12 @@
 {
-  "extends": "@agentik-os/tsconfig/base.json",
+  "extends": "@agentik-os/tsconfig/node.json",
   "compilerOptions": {
     "outDir": "./dist",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "composite": false,
-    "types": []
+    "types": ["node"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "tests"]

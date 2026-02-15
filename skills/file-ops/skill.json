@@ -1,0 +1,26 @@
+{
+  "id": "file-ops",
+  "name": "File Operations",
+  "version": "1.0.0",
+  "description": "Sandboxed file operations with permission-based access control. Read, write, list, and manage files within secure boundaries.",
+  "author": "Agentik OS",
+  "tags": ["filesystem", "files", "io", "storage"],
+  "permissions": [
+    "fs:read:/data/*",
+    "fs:write:/data/*",
+    "fs:list:/data/*",
+    "fs:delete:/data/*"
+  ],
+  "type": "builtin",
+  "entrypoint": "index.ts",
+  "config": {
+    "defaultQuota": 104857600,
+    "allowedRoots": ["/data"],
+    "blockSymlinks": true,
+    "enableAuditLog": true
+  },
+  "rateLimit": {
+    "maxRequests": 1000,
+    "windowMs": 60000
+  }
+}

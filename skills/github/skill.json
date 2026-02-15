@@ -1,0 +1,437 @@
+{
+  "id": "github",
+  "name": "GitHub",
+  "version": "1.0.0",
+  "description": "Manage repositories, issues, pull requests, and workflows via GitHub API",
+  "author": "Agentik OS",
+  "permissions": [
+    "github.read",
+    "github.write",
+    "github.admin"
+  ],
+  "actions": [
+    {
+      "name": "listRepos",
+      "description": "List repositories for authenticated user or organization",
+      "parameters": {
+        "type": {
+          "type": "string",
+          "description": "Repository type (all, owner, public, private, member)",
+          "required": false
+        },
+        "org": {
+          "type": "string",
+          "description": "Organization name (if listing org repos)",
+          "required": false
+        },
+        "sort": {
+          "type": "string",
+          "description": "Sort by (created, updated, pushed, full_name)",
+          "required": false
+        },
+        "perPage": {
+          "type": "number",
+          "description": "Results per page (max 100)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "getRepo",
+      "description": "Get repository details",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "createRepo",
+      "description": "Create a new repository - requires approval",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "description": "Repository description",
+          "required": false
+        },
+        "private": {
+          "type": "boolean",
+          "description": "Make repository private",
+          "required": false
+        },
+        "org": {
+          "type": "string",
+          "description": "Organization name (if creating in org)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "deleteRepo",
+      "description": "Delete a repository - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "listIssues",
+      "description": "List issues for a repository",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "description": "Issue state (open, closed, all)",
+          "required": false
+        },
+        "labels": {
+          "type": "array",
+          "description": "Filter by labels",
+          "required": false
+        },
+        "perPage": {
+          "type": "number",
+          "description": "Results per page (max 100)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "getIssue",
+      "description": "Get issue details",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "issueNumber": {
+          "type": "number",
+          "description": "Issue number",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "createIssue",
+      "description": "Create a new issue - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue title",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "description": "Issue body",
+          "required": false
+        },
+        "labels": {
+          "type": "array",
+          "description": "Issue labels",
+          "required": false
+        },
+        "assignees": {
+          "type": "array",
+          "description": "Issue assignees",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "updateIssue",
+      "description": "Update an issue - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "issueNumber": {
+          "type": "number",
+          "description": "Issue number",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue title",
+          "required": false
+        },
+        "body": {
+          "type": "string",
+          "description": "Issue body",
+          "required": false
+        },
+        "state": {
+          "type": "string",
+          "description": "Issue state (open, closed)",
+          "required": false
+        },
+        "labels": {
+          "type": "array",
+          "description": "Issue labels",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "listPullRequests",
+      "description": "List pull requests for a repository",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "description": "PR state (open, closed, all)",
+          "required": false
+        },
+        "perPage": {
+          "type": "number",
+          "description": "Results per page (max 100)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "getPullRequest",
+      "description": "Get pull request details",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "pullNumber": {
+          "type": "number",
+          "description": "Pull request number",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "createPullRequest",
+      "description": "Create a new pull request - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Pull request title",
+          "required": true
+        },
+        "head": {
+          "type": "string",
+          "description": "Source branch",
+          "required": true
+        },
+        "base": {
+          "type": "string",
+          "description": "Target branch",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "description": "Pull request body",
+          "required": false
+        },
+        "draft": {
+          "type": "boolean",
+          "description": "Create as draft PR",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "mergePullRequest",
+      "description": "Merge a pull request - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "pullNumber": {
+          "type": "number",
+          "description": "Pull request number",
+          "required": true
+        },
+        "mergeMethod": {
+          "type": "string",
+          "description": "Merge method (merge, squash, rebase)",
+          "required": false
+        },
+        "commitMessage": {
+          "type": "string",
+          "description": "Commit message",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "listWorkflows",
+      "description": "List GitHub Actions workflows",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "listWorkflowRuns",
+      "description": "List workflow runs",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "workflowId": {
+          "type": "string",
+          "description": "Workflow ID or filename",
+          "required": false
+        },
+        "status": {
+          "type": "string",
+          "description": "Run status (queued, in_progress, completed)",
+          "required": false
+        },
+        "perPage": {
+          "type": "number",
+          "description": "Results per page (max 100)",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "triggerWorkflow",
+      "description": "Trigger a workflow run - requires approval",
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner",
+          "required": true
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name",
+          "required": true
+        },
+        "workflowId": {
+          "type": "string",
+          "description": "Workflow ID or filename",
+          "required": true
+        },
+        "ref": {
+          "type": "string",
+          "description": "Git reference (branch or tag)",
+          "required": true
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Workflow inputs",
+          "required": false
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "token": {
+      "type": "string",
+      "description": "GitHub Personal Access Token",
+      "required": true
+    },
+    "baseUrl": {
+      "type": "string",
+      "description": "GitHub API base URL (for GitHub Enterprise)",
+      "required": false
+    }
+  },
+  "tags": ["github", "git", "repository", "issues", "pull-requests", "workflows", "devtools"]
+}

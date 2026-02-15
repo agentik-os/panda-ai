@@ -1,0 +1,134 @@
+{
+  "id": "email",
+  "name": "Email (Gmail/Outlook)",
+  "version": "1.0.0",
+  "description": "Read, send, and search emails via Gmail and Outlook APIs",
+  "author": "Agentik OS",
+  "permissions": [
+    "email.read",
+    "email.send",
+    "email.search"
+  ],
+  "actions": [
+    {
+      "name": "sendEmail",
+      "description": "Send an email via Gmail or Outlook",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Email provider (gmail or outlook)",
+          "required": true
+        },
+        "to": {
+          "type": "string",
+          "description": "Recipient email address",
+          "required": true
+        },
+        "subject": {
+          "type": "string",
+          "description": "Email subject",
+          "required": true
+        },
+        "body": {
+          "type": "string",
+          "description": "Email body (plain text or HTML)",
+          "required": true
+        },
+        "cc": {
+          "type": "string",
+          "description": "CC recipients (comma-separated)",
+          "required": false
+        },
+        "bcc": {
+          "type": "string",
+          "description": "BCC recipients (comma-separated)",
+          "required": false
+        },
+        "html": {
+          "type": "boolean",
+          "description": "Whether body is HTML",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "readEmails",
+      "description": "Read emails from inbox",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Email provider (gmail or outlook)",
+          "required": true
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum number of emails to fetch",
+          "required": false
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query filter",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "searchEmails",
+      "description": "Search emails by query",
+      "parameters": {
+        "provider": {
+          "type": "string",
+          "description": "Email provider (gmail or outlook)",
+          "required": true
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query",
+          "required": true
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum results",
+          "required": false
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "gmail": {
+      "clientId": {
+        "type": "string",
+        "description": "Gmail OAuth2 client ID",
+        "required": false
+      },
+      "clientSecret": {
+        "type": "string",
+        "description": "Gmail OAuth2 client secret",
+        "required": false
+      },
+      "refreshToken": {
+        "type": "string",
+        "description": "Gmail OAuth2 refresh token",
+        "required": false
+      }
+    },
+    "outlook": {
+      "clientId": {
+        "type": "string",
+        "description": "Outlook client ID",
+        "required": false
+      },
+      "clientSecret": {
+        "type": "string",
+        "description": "Outlook client secret",
+        "required": false
+      },
+      "accessToken": {
+        "type": "string",
+        "description": "Outlook access token",
+        "required": false
+      }
+    }
+  },
+  "tags": ["email", "gmail", "outlook", "communication", "productivity"]
+}

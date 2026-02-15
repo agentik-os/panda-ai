@@ -1,0 +1,172 @@
+{
+  "name": "SaaS - Next.js + Convex Stack",
+  "description": "Full-stack SaaS template with real-time capabilities, authentication, and payments",
+  "useCase": "B2B/B2C SaaS products requiring real-time updates, user authentication, and subscription billing",
+  "stack": {
+    "frontend": {
+      "framework": "Next.js 16",
+      "routing": "App Router",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS v4",
+      "ui": "shadcn/ui",
+      "icons": "Lucide React",
+      "reasoning": "Next.js 16 App Router provides server components, streaming, and excellent SEO. Tailwind v4 offers zero-config setup. shadcn/ui gives production-ready, accessible components."
+    },
+    "backend": {
+      "platform": "Convex",
+      "functions": "TypeScript",
+      "database": "Convex (built-in)",
+      "realtime": "Convex subscriptions",
+      "reasoning": "Convex eliminates boilerplate with built-in real-time, auth, file storage, and deployment. Zero-config local dev. Scales automatically."
+    },
+    "auth": {
+      "provider": "Clerk",
+      "features": ["Email/password", "OAuth (Google, GitHub)", "Organizations", "SSO"],
+      "reasoning": "Clerk provides production-ready auth with organizations, webhooks, and excellent DX. Integrates seamlessly with Next.js and Convex."
+    },
+    "payments": {
+      "provider": "Stripe",
+      "features": ["Subscriptions", "One-time payments", "Invoicing", "Customer portal"],
+      "reasoning": "Stripe is the gold standard for payments. Excellent docs, webhooks, and customer portal. Works globally."
+    },
+    "deployment": {
+      "platform": "Vercel",
+      "features": ["Edge functions", "Image optimization", "Analytics", "Preview deployments"],
+      "reasoning": "Vercel is built by Next.js creators. Zero-config deployment, edge network, automatic HTTPS, and preview URLs."
+    },
+    "monitoring": {
+      "errors": "Sentry",
+      "analytics": "PostHog",
+      "reasoning": "Sentry catches errors before users report them. PostHog provides product analytics and feature flags."
+    },
+    "ai": {
+      "provider": "AI SDK (Vercel)",
+      "models": ["OpenAI GPT-4", "Anthropic Claude", "Google Gemini"],
+      "reasoning": "AI SDK abstracts model differences with streaming, function calling, and edge runtime support."
+    }
+  },
+  "packages": [
+    "next@16",
+    "react@19",
+    "typescript@5",
+    "tailwindcss@4",
+    "convex@latest",
+    "@clerk/nextjs@latest",
+    "stripe@latest",
+    "lucide-react@latest",
+    "ai@latest",
+    "@sentry/nextjs@latest",
+    "posthog-js@latest"
+  ],
+  "structure": {
+    "app": {
+      "(auth)": ["sign-in", "sign-up"],
+      "(dashboard)": ["dashboard", "settings", "billing"],
+      "api": ["webhooks/stripe", "webhooks/clerk"],
+      "layout.tsx": "Root layout with Providers",
+      "page.tsx": "Landing page",
+      "globals.css": "Tailwind + oklch colors"
+    },
+    "convex": {
+      "schema.ts": "Database schema",
+      "functions": ["users.ts", "projects.ts", "subscriptions.ts"],
+      "http.ts": "Webhook handlers"
+    },
+    "components": {
+      "ui": "shadcn/ui components",
+      "dashboard": "Custom dashboard components",
+      "marketing": "Landing page components"
+    },
+    "lib": {
+      "stripe.ts": "Stripe client",
+      "utils.ts": "Utility functions",
+      "constants.ts": "App constants"
+    }
+  },
+  "envVars": [
+    "NEXT_PUBLIC_CONVEX_URL",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "CLERK_SECRET_KEY",
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+    "SENTRY_DSN",
+    "NEXT_PUBLIC_POSTHOG_KEY"
+  ],
+  "devCommands": {
+    "dev": "npm run dev",
+    "convex": "npx convex dev",
+    "build": "npm run build",
+    "deploy": "vercel --prod"
+  },
+  "estimatedSetupTime": "30 minutes",
+  "estimatedBuildTime": "3-6 hours (with AI team)",
+  "monthlyCost": {
+    "convex": "$0-25 (free tier → $25/month for 1M requests)",
+    "vercel": "$0-20 (hobby free → pro $20/month)",
+    "clerk": "$0-25 (free tier → $25/month for 1000 MAU)",
+    "stripe": "2.9% + 30¢ per transaction",
+    "sentry": "$0-26 (free tier → team $26/month)",
+    "posthog": "$0-30 (free tier → paid)",
+    "total": "$0-126/month (starting free, scaling with usage)"
+  },
+  "pros": [
+    "Real-time out of the box (no WebSocket setup)",
+    "Type-safe end-to-end (TypeScript everywhere)",
+    "Zero-config local dev (Convex dev server)",
+    "Automatic migrations (Convex handles schema changes)",
+    "Built-in file storage (Convex storage)",
+    "Excellent DX (hot reload, instant deployment)",
+    "Production-ready auth (Clerk)",
+    "Global payments (Stripe)",
+    "Fast to MVP (3-6 hours with AI team)"
+  ],
+  "cons": [
+    "Vendor lock-in (Convex is proprietary, though data export available)",
+    "Learning curve (Convex patterns different from REST/GraphQL)",
+    "Costs scale with usage (free tier generous but can grow)",
+    "Limited Convex ecosystem (newer platform)"
+  ],
+  "whenToUse": [
+    "SaaS products (B2B or B2C)",
+    "Real-time collaboration tools",
+    "Chat applications",
+    "Live dashboards",
+    "Subscription-based products",
+    "Projects needing fast MVP (<1 week)"
+  ],
+  "alternatives": [
+    {
+      "name": "Next.js + Supabase",
+      "whenToChoose": "Need PostgreSQL, open-source preference, or existing SQL skills",
+      "tradeoffs": "More setup, manual real-time configuration, but more control"
+    },
+    {
+      "name": "Next.js + Firebase",
+      "whenToChoose": "Mobile app integration, Google Cloud ecosystem",
+      "tradeoffs": "NoSQL limitations, vendor lock-in to Google"
+    },
+    {
+      "name": "Next.js + Prisma + Planetscale",
+      "whenToChoose": "Need full SQL control, complex queries",
+      "tradeoffs": "No built-in real-time, more DevOps overhead"
+    }
+  ],
+  "examples": [
+    {
+      "name": "Notion",
+      "features": "Real-time collaboration, workspaces, permissions",
+      "stackFit": "Perfect - real-time editing, user management, subscriptions"
+    },
+    {
+      "name": "Linear",
+      "features": "Issue tracking, real-time updates, integrations",
+      "stackFit": "Perfect - real-time collaboration, complex permissions"
+    },
+    {
+      "name": "Loom",
+      "features": "Video recording, transcription, sharing",
+      "stackFit": "Good - file storage (Convex), auth, payments"
+    }
+  ]
+}

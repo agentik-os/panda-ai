@@ -59,13 +59,11 @@ export class E2BSkill extends SkillBase<E2BInput, E2BOutput> {
   readonly version = "1.0.0";
   readonly description = "Execute code safely in cloud sandboxes";
 
-  protected config: E2BConfig;
   private baseUrl = "https://api.e2b.dev/v1";
   private sandboxes: Map<string, Sandbox> = new Map();
 
   constructor(config: E2BConfig) {
-    super();
-    this.config = config;
+    super(config);
   }
 
   async execute(input: E2BInput): Promise<E2BOutput> {

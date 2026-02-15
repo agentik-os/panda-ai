@@ -1,0 +1,30 @@
+{
+  "name": "@agentik-os/skill-email",
+  "version": "1.0.0",
+  "description": "Email skill for Agentik OS - Gmail and Outlook integration",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "agentik",
+    "skill",
+    "email",
+    "gmail",
+    "outlook"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7"
+  },
+  "devDependencies": {
+    "@agentik-os/sdk": "workspace:*",
+    "@types/node": "^22.10.5",
+    "vitest": "^2.1.8",
+    "typescript": "^5.7.3"
+  }
+}

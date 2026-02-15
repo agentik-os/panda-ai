@@ -1,0 +1,31 @@
+{
+  "name": "@agentik-os/mode-research",
+  "version": "1.0.0",
+  "description": "Research Mode - Deep research and analysis with citations, synthesis, and fact-checking",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "agentik-os",
+    "mode",
+    "research",
+    "analysis",
+    "citations",
+    "fact-checking"
+  ],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@agentik-os/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

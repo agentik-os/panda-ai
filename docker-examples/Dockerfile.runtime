@@ -1,0 +1,76 @@
+# Agentik OS Runtime - Production Docker Image
+# Multi-stage build for minimal final image size (~50MB)
+
+# ============================================================================
+# Stage 1: Dependencies
+# Install production dependencies only
+# ============================================================================
+FROM oven/bun:1.1.38-alpine AS deps
+
+WORKDIR /app
+
+# Copy dependency manifests
+COPY package.json bun.lockb ./
+COPY packages/runtime/package.json ./packages/runtime/
+COPY packages/shared/package.json ./packages/shared/
+
+# Install production dependencies
+RUN bun install --frozen-lockfile --production
+
+# ============================================================================
+# Stage 2: Builder
+# Build TypeScript to JavaScript
+# ============================================================================
+FROM oven/bun:1.1.38-alpine AS builder
+
+WORKDIR /app
+
+# Copy dependencies from previous stage
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages/runtime/node_modules ./packages/runtime/node_modules
+COPY --from=deps /app/packages/shared/node_modules ./packages/shared/node_modules
+
+# Copy source code
+COPY . .
+
+# Build TypeScript
+RUN bun run build:runtime
+
+# ============================================================================
+# Stage 3: Runtime (Final)
+# Minimal production image
+# ============================================================================
+FROM oven/bun:1.1.38-alpine AS runtime
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+WORKDIR /app
+
+# Create non-root user
+RUN addgroup -g 1001 -S agentik && \
+    adduser -S agentik -u 1001 -G agentik
+
+# Copy built artifacts
+COPY --from=builder --chown=agentik:agentik /app/packages/runtime/dist ./dist
+COPY --from=deps --chown=agentik:agentik /app/node_modules ./node_modules
+
+# Copy config templates
+COPY --chown=agentik:agentik docker/runtime-config.json ./config.json
+
+# Switch to non-root user
+USER agentik
+
+# Expose runtime port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:3000/health || exit 1
+
+# Set environment
+ENV NODE_ENV=production \
+    PORT=3000
+
+# Start runtime
+CMD ["bun", "dist/index.js"]

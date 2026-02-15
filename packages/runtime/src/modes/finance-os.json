@@ -1,0 +1,93 @@
+{
+  "id": "finance-os",
+  "name": "Finance OS",
+  "description": "Personal finance management with budgeting, investing, and wealth tracking",
+  "icon": "dollar-sign",
+  "color": "emerald",
+  "type": "official",
+  "author": "Agentik OS",
+  "version": "1.0.0",
+  "tags": ["finance", "budgeting", "investing", "wealth", "money"],
+  "agents": [
+    {
+      "name": "Financial Advisor",
+      "role": "financial-advisor",
+      "description": "Provides investment advice, analyzes portfolios, plans wealth strategies",
+      "systemPrompt": "You are a Certified Financial Planner specializing in personal finance, investment strategies, and wealth management. Provide personalized financial advice, analyze portfolios, suggest optimizations, and help users achieve their financial goals.",
+      "skills": ["web-search", "file-operations"],
+      "tools": ["portfolio-analyzer", "tax-optimizer", "financial-planner"],
+      "defaultModel": "claude-sonnet-4-5-20250929",
+      "temperature": 0.3
+    },
+    {
+      "name": "Budget Tracker",
+      "role": "budget-tracker",
+      "description": "Tracks expenses, categorizes spending, enforces budgets",
+      "systemPrompt": "You are a Budget Management Specialist focused on expense tracking, spending analysis, and budget optimization. Help users track expenses, identify spending patterns, set realistic budgets, and achieve financial discipline.",
+      "skills": ["file-operations"],
+      "tools": ["expense-tracker", "category-analyzer", "budget-enforcer"],
+      "defaultModel": "claude-haiku-4-5-20251001",
+      "temperature": 0.3
+    }
+  ],
+  "skills": ["web-search", "file-operations"],
+  "automations": [
+    {
+      "id": "weekly-spending-review",
+      "name": "Weekly Spending Review",
+      "description": "Review spending vs budget every Sunday",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 18 * * 0"
+      },
+      "action": "budget-tracker:weekly-review",
+      "enabled": true
+    },
+    {
+      "id": "monthly-portfolio-check",
+      "name": "Monthly Portfolio Review",
+      "description": "Analyze portfolio performance on 1st of month",
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 9 1 * *"
+      },
+      "action": "financial-advisor:portfolio-review",
+      "enabled": true
+    }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": "net-worth-tracker",
+      "name": "Net Worth",
+      "type": "chart",
+      "size": "large",
+      "config": {
+        "chartType": "area",
+        "showAssets": true,
+        "showLiabilities": true,
+        "timeRange": "12m"
+      }
+    },
+    {
+      "id": "budget-overview",
+      "name": "Budget vs Actual",
+      "type": "chart",
+      "size": "medium",
+      "config": {
+        "chartType": "bar",
+        "groupByCategory": true
+      }
+    },
+    {
+      "id": "portfolio-allocation",
+      "name": "Portfolio Allocation",
+      "type": "chart",
+      "size": "small",
+      "config": {
+        "chartType": "pie",
+        "showPerformance": true
+      }
+    }
+  ],
+  "memoryCategories": ["transactions", "budgets", "investments", "financial-goals", "tax-data"]
+}

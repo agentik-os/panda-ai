@@ -1,0 +1,243 @@
+{
+  "id": "jira",
+  "name": "Jira",
+  "version": "1.0.0",
+  "description": "Jira project management integration - Issues, projects, sprints, boards",
+  "category": "productivity",
+  "permissions": [
+    "jira.read",
+    "jira.write"
+  ],
+  "actions": [
+    {
+      "name": "listProjects",
+      "description": "List all accessible projects",
+      "input": {
+        "type": "object",
+        "properties": {
+          "maxResults": {
+            "type": "number",
+            "description": "Maximum results to return (default: 50)"
+          }
+        }
+      }
+    },
+    {
+      "name": "getProject",
+      "description": "Get details of a specific project",
+      "input": {
+        "type": "object",
+        "properties": {
+          "projectIdOrKey": {
+            "type": "string",
+            "description": "Project ID or key",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "listIssues",
+      "description": "Search for issues using JQL",
+      "input": {
+        "type": "object",
+        "properties": {
+          "jql": {
+            "type": "string",
+            "description": "JQL query string"
+          },
+          "projectKey": {
+            "type": "string",
+            "description": "Filter by project key"
+          },
+          "maxResults": {
+            "type": "number",
+            "description": "Maximum results (default: 50)"
+          }
+        }
+      }
+    },
+    {
+      "name": "getIssue",
+      "description": "Get details of a specific issue",
+      "input": {
+        "type": "object",
+        "properties": {
+          "issueIdOrKey": {
+            "type": "string",
+            "description": "Issue ID or key",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "createIssue",
+      "description": "Create a new issue",
+      "input": {
+        "type": "object",
+        "properties": {
+          "projectKey": {
+            "type": "string",
+            "description": "Project key",
+            "required": true
+          },
+          "summary": {
+            "type": "string",
+            "description": "Issue summary/title",
+            "required": true
+          },
+          "issueType": {
+            "type": "string",
+            "description": "Issue type (Bug, Task, Story, etc.)",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Issue description"
+          },
+          "assignee": {
+            "type": "string",
+            "description": "Assignee account ID"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority name"
+          },
+          "labels": {
+            "type": "array",
+            "description": "Array of labels"
+          }
+        }
+      }
+    },
+    {
+      "name": "updateIssue",
+      "description": "Update an existing issue",
+      "input": {
+        "type": "object",
+        "properties": {
+          "issueIdOrKey": {
+            "type": "string",
+            "description": "Issue ID or key",
+            "required": true
+          },
+          "summary": {
+            "type": "string",
+            "description": "New summary/title"
+          },
+          "description": {
+            "type": "string",
+            "description": "New description"
+          },
+          "assignee": {
+            "type": "string",
+            "description": "New assignee account ID"
+          },
+          "priority": {
+            "type": "string",
+            "description": "New priority name"
+          },
+          "labels": {
+            "type": "array",
+            "description": "New labels array"
+          }
+        }
+      }
+    },
+    {
+      "name": "transitionIssue",
+      "description": "Transition issue to a new status",
+      "input": {
+        "type": "object",
+        "properties": {
+          "issueIdOrKey": {
+            "type": "string",
+            "description": "Issue ID or key",
+            "required": true
+          },
+          "transitionId": {
+            "type": "string",
+            "description": "Transition ID",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "addComment",
+      "description": "Add a comment to an issue",
+      "input": {
+        "type": "object",
+        "properties": {
+          "issueIdOrKey": {
+            "type": "string",
+            "description": "Issue ID or key",
+            "required": true
+          },
+          "body": {
+            "type": "string",
+            "description": "Comment body",
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "listBoards",
+      "description": "List all boards",
+      "input": {
+        "type": "object",
+        "properties": {
+          "projectKeyOrId": {
+            "type": "string",
+            "description": "Filter by project"
+          },
+          "maxResults": {
+            "type": "number",
+            "description": "Maximum results (default: 50)"
+          }
+        }
+      }
+    },
+    {
+      "name": "listSprints",
+      "description": "List sprints for a board",
+      "input": {
+        "type": "object",
+        "properties": {
+          "boardId": {
+            "type": "number",
+            "description": "Board ID",
+            "required": true
+          },
+          "state": {
+            "type": "string",
+            "description": "Sprint state (active, closed, future)"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "type": "object",
+    "properties": {
+      "host": {
+        "type": "string",
+        "description": "Jira instance host (e.g., yourcompany.atlassian.net)",
+        "required": true
+      },
+      "email": {
+        "type": "string",
+        "description": "User email",
+        "required": true
+      },
+      "apiToken": {
+        "type": "string",
+        "description": "API token",
+        "required": true,
+        "secret": true
+      }
+    }
+  }
+}

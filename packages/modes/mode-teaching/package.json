@@ -1,0 +1,23 @@
+{
+  "name": "@agentik-os/mode-teaching",
+  "version": "1.0.0",
+  "description": "teaching Mode - Agentik OS specialized mode",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "keywords": ["agentik-os", "mode"],
+  "author": "Agentik OS",
+  "license": "MIT",
+  "dependencies": {
+    "@agentik-os/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

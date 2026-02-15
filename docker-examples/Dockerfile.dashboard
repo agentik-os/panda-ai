@@ -1,0 +1,71 @@
+# Agentik OS Dashboard - Production Docker Image
+# Next.js static export served by Nginx
+
+# ============================================================================
+# Stage 1: Dependencies
+# ============================================================================
+FROM oven/bun:1.1.38-alpine AS deps
+
+WORKDIR /app
+
+COPY package.json bun.lockb ./
+COPY packages/dashboard/package.json ./packages/dashboard/
+COPY packages/shared/package.json ./packages/shared/
+
+RUN bun install --frozen-lockfile
+
+# ============================================================================
+# Stage 2: Builder
+# Build Next.js for production
+# ============================================================================
+FROM oven/bun:1.1.38-alpine AS builder
+
+WORKDIR /app
+
+# Copy dependencies
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages/dashboard/node_modules ./packages/dashboard/node_modules
+COPY --from=deps /app/packages/shared/node_modules ./packages/shared/node_modules
+
+# Copy source
+COPY . .
+
+# Build Next.js (static export)
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN bun run build:dashboard && \
+    cd packages/dashboard && \
+    bun run export
+
+# ============================================================================
+# Stage 3: Nginx Server
+# Serve static files with Nginx
+# ============================================================================
+FROM nginx:1.27-alpine AS runtime
+
+# Copy Nginx config
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+# Copy static build
+COPY --from=builder /app/packages/dashboard/out /usr/share/nginx/html
+
+# Add custom error pages
+COPY docker/error-pages /usr/share/nginx/html/errors
+
+# Create non-root user (Nginx already has 'nginx' user)
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid
+
+# Switch to non-root
+USER nginx
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3001/health || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

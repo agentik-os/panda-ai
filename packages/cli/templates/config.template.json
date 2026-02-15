@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agentik-os.com/schema/config.json",
+  "version": "1.0.0",
+  "runtime": {
+    "port": 3000,
+    "host": "localhost",
+    "dataDir": "~/.agentik-os/data"
+  },
+  "models": {
+    "anthropic": {
+      "apiKey": "",
+      "defaultModel": "claude-sonnet-4.5",
+      "enabled": false
+    },
+    "openai": {
+      "apiKey": "",
+      "defaultModel": "gpt-4o",
+      "enabled": false
+    },
+    "google": {
+      "apiKey": "",
+      "defaultModel": "gemini-2.0-flash-exp",
+      "enabled": false
+    },
+    "ollama": {
+      "baseUrl": "http://localhost:11434",
+      "defaultModel": "llama3.1",
+      "enabled": false
+    }
+  },
+  "router": {
+    "enabled": true,
+    "strategy": "cost-aware",
+    "fallbackModel": "ollama/llama3.1"
+  },
+  "memory": {
+    "enabled": true,
+    "backend": "convex",
+    "vectorDimensions": 1536
+  },
+  "security": {
+    "sandboxMode": "wasm",
+    "allowedDomains": [],
+    "maxExecutionTime": 30000
+  },
+  "dashboard": {
+    "enabled": true,
+    "port": 3001,
+    "auth": false
+  }
+}
